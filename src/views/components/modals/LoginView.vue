@@ -1,92 +1,101 @@
 <template>
   <PersistentDialog
-   :width="'700px'" 
-   :maxWidth="'80vh'"
-   :backgroundColor="'bg-red-400'"
-   >
+    :width="'500px'"
+    :maxWidth="'80vh'"
+    :backgroundColor="'bg-red-400'"
+  >
     <template v-slot:open-button="{ open }">
-
-    
-    
-   
-      <div  v-if="user==null" >
-        <q-btn flat label="Login" @click="open" />
-      </div>
-      <div v-else>
-        <q-btn flat label="Logout" @click="store.logout"   />
-      </div>
-      
-    
+      <q-btn flat label="Login" @click="open" v-if="!user" />
+      <q-btn flat label="Logout" @click="store.logout" v-else />
     </template>
 
     <template v-slot:title>
-      <span>Login</span>  </template>
+      
+
+      <div class="px-5 row items-center">
+        <q-icon size="2rem" name="vpn_key" />
+        <span class="text-2xl text-bold">Login</span>
+      </div>
+    </template>
 
     <template v-slot:content>
-      <div >
+      <div class="p-5">
         <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
-        <q-input
-          filled
-          v-model="loginForm.email"
-          label="Email"
-          hint="example@email.com"
-          lazy-rules
-         
-        /> 
-        <!-- :rules="[(val) => (val && val.length > 0) || 'Please type something']" -->
+          <q-input
+            dense
+            outlined
+            v-model="loginForm.email"
+            label="Email"
+            hint="example@email.com"
+            lazy-rules
+          />
+          <!-- :rules="[(val) => (val && val.length > 0) || 'Please type something']" -->
 
-        <q-input
-          filled
-          type="password"
-          v-model="loginForm.password"
-          label="password"
-          lazy-rules
-        
-        />
+          <q-input
+            dense
+            outlined
+            type="password"
+            v-model="loginForm.password"
+            label="password"
+            lazy-rules
+          />
 
-        <q-toggle v-model="accept" label="I accept the license and terms" />
-
-        <div>
-          <q-btn label="Submit" type="submit" color="primary" />
-         
-        </div>
-      </q-form>
-
+          <div class="row justify-end">
+            <q-btn
+              :loading="loading"
+              label="Submit"
+              type="submit"
+              color="primary"
+            >
+              <template v-slot:loading>
+                <div class="row items-center">
+                  <q-spinner-clock  size="1rem" />
+                <span class="ml-2 text-[10px]">Loading...</span>
+                </div>
+                
+              </template>
+            </q-btn>
+          </div>
+        </q-form>
       </div>
-    
     </template>
   </PersistentDialog>
+
+
+  
 </template>
 
 <script>
 import PersistentDialog from "@/components/PersistentDialog.vue";
 import { useAuthStore } from "@/store/auth";
-import { storeToRefs } from 'pinia';
+import { storeToRefs } from "pinia";
+import { ref } from "vue";
 
 export default {
-  components:{PersistentDialog},
-  setup(){
+  components: { PersistentDialog },
+  setup() {
+    const store = useAuthStore();
 
-    const store = useAuthStore()
+    const { user, loginForm } = storeToRefs(store);
 
-    const {
-      user,
-      loginForm
-    } =storeToRefs(store)
+    const loading = ref(false);
 
+    console.log(user);
 
-
-    console.log(user)
-
-    return{
+    return {
       store,
       loginForm,
       user,
-      onSubmit:()=>{
-        store.login()
-      }
-    }
-  }
+      loading,
+      onSubmit: async () => {
+        loading.value = true;
+        const delayDuration = 2000; // in milliseconds
+        await new Promise((resolve) => setTimeout(resolve, delayDuration));
+        //await store.login();
+        loading.value = false;
+      },
+    };
+  },
 };
 </script>
 

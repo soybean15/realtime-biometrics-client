@@ -18,16 +18,21 @@
       -->
 
     <LoginView/>
-      <q-btn flat label="Register" />
+     <RegisterView/>
     </q-toolbar>
   </q-header>
 </template>
 
 <script>
 import LoginView from './modals/LoginView.vue';
+import RegisterView from './modals/RegisterView.vue';
+ 
 
 export default {
-  components: { LoginView },
+  components: { 
+    LoginView ,
+    RegisterView
+  },
   props: ["toggleLeftDrawer"],
 };
 </script>
