@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-md q-gutter-sm">
-    <slot name="open-button" :open="open" :data="data"></slot>
+    <slot name="open-button" :open="open" :close="close"></slot>
 
     <q-dialog
       v-model="persistent"
@@ -16,7 +16,7 @@
 
         <q-card-section class="q-pt-none">
        
-            <slot name="content"></slot>
+            <slot name="content" :close="close"></slot>
         </q-card-section>
 
         <q-card-actions align="right" class="bg-white text-teal">
@@ -33,7 +33,7 @@ import {  ref } from "vue";
 export default {
  
   props:['width','maxWidth','backgroundColor'],
-  setup(props) {
+  setup() {
     const persistent = ref(false);
   
   
@@ -45,9 +45,13 @@ export default {
       persistent,
    
       open: () => {
-        console.log(props.size)
+     
         persistent.value = true;
       },
+      close: () => {
+       
+        persistent.value = false;
+      }
       
       
     

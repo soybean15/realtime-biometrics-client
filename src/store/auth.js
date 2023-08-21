@@ -11,6 +11,12 @@ export const useAuthStore = defineStore('auth', () => {
         email: '',
         password: ''
     })
+    const registerForm = ref({
+        email: '',
+        name:'',
+        password: '',
+        password_confirmation:''
+    })
 
     const user = computed(() => _user.value)
 
@@ -35,16 +41,24 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     const logout = async () => {
-
         await axios.post('logout')
         _user.value = null
 
     }
+
+    const register = async ()=>{
+
+        await axios.post('register',registerForm.value)
+
+    }
+
     return {
         user,
         getUser,
         login,
         logout,
-        loginForm
+        register,
+        loginForm,
+        registerForm
     }
 })

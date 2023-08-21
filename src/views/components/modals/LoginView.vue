@@ -18,9 +18,9 @@
       </div>
     </template>
 
-    <template v-slot:content>
+    <template v-slot:content="{close}">
       <div class="p-5">
-        <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+        <q-form @submit="onSubmit(close)" @reset="onReset" class="q-gutter-md">
           <q-input
             dense
             outlined
@@ -87,12 +87,21 @@ export default {
       loginForm,
       user,
       loading,
-      onSubmit: async () => {
+      onSubmit: async (close) => {
         loading.value = true;
-        const delayDuration = 2000; // in milliseconds
-        await new Promise((resolve) => setTimeout(resolve, delayDuration));
+
+        try{
+          const delayDuration = 2000; 
+          await new Promise((resolve) => setTimeout(resolve, delayDuration));
         //await store.login();
         loading.value = false;
+        }catch(error){
+          loading.value = false;
+        }
+     
+        
+      
+        close()
       },
     };
   },

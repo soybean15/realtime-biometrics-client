@@ -1,6 +1,6 @@
 <template>
   <PersistentDialog
-    :width="'700px'"
+    :width="'500px'"
     :maxWidth="'80vh'"
     :backgroundColor="'bg-red-400'"
   >
@@ -9,7 +9,9 @@
     </template>
 
     <template v-slot:title>
-      <span class="text-2xl text-bold">Register</span>
+      <div class="p-5">
+        <span class="text-2xl text-bold">Register</span>
+      </div>
     </template>
 
     <template v-slot:content>
@@ -17,6 +19,7 @@
         <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
           <q-input
             outlined
+            v-model="registerForm.email"
             dense
             label="Email"
             hint="example@email.com"
@@ -24,6 +27,7 @@
           />
           <q-input
             outlined
+            v-model="registerForm.name"
             dense
             label="Username"
             hint="example123"
@@ -34,6 +38,7 @@
           <q-input
             outlined
             dense
+            v-model="registerForm.password"
             type="password"
             hint="Must be atleast 8 characters"
             label="password"
@@ -42,16 +47,27 @@
           <q-input
             outlined
             dense
+            v-model="registerForm.password_confirmation"
             type="password"
             label="Confirm Password"
             hint="Must match password"
             lazy-rules
           />
 
-          <q-toggle v-model="accept" label="I accept the license and terms" />
-          
           <div class="row justify-end">
-            <q-btn label="Submit" type="submit" color="primary" />
+            <q-btn
+              :loading="loading"
+              label="Submit"
+              type="submit"
+              color="primary"
+            >
+              <template v-slot:loading>
+                <div class="row items-center">
+                  <q-spinner-clock size="1rem" />
+                  <span class="ml-2 text-[10px]">Loading...</span>
+                </div>
+              </template>
+            </q-btn>
           </div>
         </q-form>
       </div>
@@ -64,15 +80,32 @@
 import PersistentDialog from "@/components/PersistentDialog.vue";
 import { useAuthStore } from "@/store/auth";
 import { storeToRefs } from "pinia";
+import { ref } from "vue";
 export default {
   components: { PersistentDialog },
   setup() {
     const store = useAuthStore();
+    const loading = ref(false);
 
-    const { user } = storeToRefs(store);
+    const { user, registerForm } = storeToRefs(store);
 
     return {
       user,
+      registerForm,
+      store,
+      loading,
+      onSubmit: async () => {
+        loading.value = true;
+
+        const delayDuration = 2000;
+        try {
+          await new Promise((resolve) => setTimeout(resolve, delayDuration));
+          await store.register();
+          loading.value = false;
+        } catch (error) {
+          loading.value = false;
+        }
+      },
     };
   },
 };
