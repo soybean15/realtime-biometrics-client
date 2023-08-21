@@ -4,6 +4,7 @@ import { Quasar } from 'quasar'
 import { createPinia } from 'pinia'
 import quasarUserOptions from './quasar-user-options'
 import router from './router'
+import './components/axios'
 import '@/css/index.css'
 
 

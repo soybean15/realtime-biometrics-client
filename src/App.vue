@@ -27,8 +27,9 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import HeaderView from '@/views/components/HeaderView.vue'
+import {useAuthStore} from '@/store/auth'
 
 export default {
   components:{
@@ -36,7 +37,12 @@ export default {
   },
   setup () {
     const leftDrawerOpen = ref(false)
-  
+    const { getUser} = useAuthStore()
+
+    onMounted(()=>{
+      getUser()
+    })
+    
 
     return {
       leftDrawerOpen,
