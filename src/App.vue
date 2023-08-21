@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh lpR fFf">
 
-    <HeaderView @toggleLeftDrawer="toggleLeftDrawer"/>
+    <HeaderView :toggleLeftDrawer="toggleLeftDrawer"/>
 
     <q-drawer show-if-above v-model="leftDrawerOpen" side="left" overlay bordered>
       <!-- drawer content -->
@@ -41,10 +41,9 @@ export default {
     return {
       leftDrawerOpen,
       toggleLeftDrawer () {
+        console.log('toggle')
         leftDrawerOpen.value = !leftDrawerOpen.value
       },
-
-     
      
       tab:ref('admin')
     }

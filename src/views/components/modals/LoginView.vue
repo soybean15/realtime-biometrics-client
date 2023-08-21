@@ -1,5 +1,9 @@
 <template>
-  <PersistentDialog :width="'700px'" :maxWidth="'80vh'">
+  <PersistentDialog
+   :width="'700px'" 
+   :maxWidth="'80vh'"
+   :backgroundColor="'bg-red-400'"
+   >
     <template v-slot:open-button="{ open }">
     
       <q-btn flat label="Login" @click="open" />
@@ -8,7 +12,8 @@
     <template v-slot:title> Login </template>
 
     <template v-slot:content>
-      <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+      <div >
+        <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
         <q-input
           filled
           v-model="name"
@@ -43,6 +48,9 @@
           />
         </div>
       </q-form>
+
+      </div>
+    
     </template>
   </PersistentDialog>
 </template>

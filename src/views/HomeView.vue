@@ -1,6 +1,6 @@
 <template>
  
- <div>Home</div>
+ <div class="bg-red-400 m-52">Home</div>
  </template>
 <script>
 

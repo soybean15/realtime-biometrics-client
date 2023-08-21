@@ -9,7 +9,7 @@
       transition-show="scale"
       transition-hide="scale"
     >
-      <q-card class="bg-teal text-white" :style="{'width': width ?? '300px', 'max-width': maxWidth ?? '80vh'}">
+      <q-card :class="backgroundColor" class=" text-white" :style="{'width': width ?? '300px', 'max-width': maxWidth ?? '80vh'}">
         <q-card-section>
             <slot name="title"></slot>
         </q-card-section>
@@ -20,7 +20,7 @@
         </q-card-section>
 
         <q-card-actions align="right" class="bg-white text-teal">
-          <q-btn flat label="OK" v-close-popup />
+          <q-btn flat label="Close" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -32,7 +32,7 @@ import {  ref } from "vue";
 
 export default {
  
-  props:['width','maxWidth'],
+  props:['width','maxWidth','backgroundColor'],
   setup(props) {
     const persistent = ref(false);
   
