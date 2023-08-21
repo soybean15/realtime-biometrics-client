@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh lpR fFf">
 
-    <HeaderView @toggleLeftDrawer="toggleLeftDrawer"/>
+    <HeaderView :toggleLeftDrawer="toggleLeftDrawer"/>
 
     <q-drawer show-if-above v-model="leftDrawerOpen" side="left" overlay bordered>
       <!-- drawer content -->
@@ -27,8 +27,9 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import HeaderView from '@/views/components/HeaderView.vue'
+import {useAuthStore} from '@/store/auth'
 
 export default {
   components:{
@@ -36,15 +37,19 @@ export default {
   },
   setup () {
     const leftDrawerOpen = ref(false)
-  
+    const { getUser} = useAuthStore()
+
+    onMounted(()=>{
+      getUser()
+    })
+    
 
     return {
       leftDrawerOpen,
       toggleLeftDrawer () {
+        console.log('toggle')
         leftDrawerOpen.value = !leftDrawerOpen.value
       },
-
-     
      
       tab:ref('admin')
     }
