@@ -20,6 +20,8 @@ export const useAuthStore = defineStore('auth', () => {
 
     const user = computed(() => _user.value)
 
+    const errors = ref([])
+
 
 
     const getUser = async () => {
@@ -27,17 +29,28 @@ export const useAuthStore = defineStore('auth', () => {
         try {
             _user.value = (await axios.get('api/user')).data
 
-
         } catch (error) {
-            console.log(error)
+            console.log('error')
         }
 
     }
 
-    const login = async () => {
+    const login = async (close) => {
 
-        await axios.post('login', loginForm.value)
+        errors.value=[]
+        try{
+            await axios.post('login', loginForm.value)
+            close()
+            loginForm.value= null
+        }catch(error){
+            if(error.response.status === 422){
+                errors.value = error.response.data.errors
+               
+            }
+
+        }
         getUser()
+       
     }
 
     const logout = async () => {
@@ -46,10 +59,23 @@ export const useAuthStore = defineStore('auth', () => {
 
     }
 
-    const register = async ()=>{
+    const register = async (close)=>{
 
-        await axios.post('register',registerForm.value)
+        errors.value=[]
+        try{
+            await axios.post('register',registerForm.value)
+            registerForm.value=null
+            close()
 
+        }catch(error){
+            if(error.response.status === 422){
+                errors.value = error.response.data.errors
+               
+            }
+
+        }
+        getUser()
+       
     }
 
     return {
@@ -59,6 +85,7 @@ export const useAuthStore = defineStore('auth', () => {
         logout,
         register,
         loginForm,
-        registerForm
+        registerForm,
+        errors
     }
 })

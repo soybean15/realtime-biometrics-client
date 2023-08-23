@@ -17,23 +17,36 @@
         as child of QToolbar
       -->
 
-    <LoginView/>
-     <RegisterView/>
+      <q-btn flat :to="{name:'admin'}" label="Administrator" v-if="user && user.isAdmin"/>
+      <LoginView />
+      <RegisterView />
     </q-toolbar>
   </q-header>
 </template>
 
 <script>
-import LoginView from './modals/LoginView.vue';
-import RegisterView from './modals/RegisterView.vue';
- 
+import LoginView from "./modals/LoginView.vue";
+import RegisterView from "./modals/RegisterView.vue";
+import { useAuthStore } from "@/store/auth";
+import { storeToRefs } from 'pinia';
 
 export default {
-  components: { 
-    LoginView ,
-    RegisterView
+  components: {
+    LoginView,
+    RegisterView,
   },
   props: ["toggleLeftDrawer"],
+  setup(){
+    const store = useAuthStore()
+
+    console.log('header')
+    const {user} = storeToRefs(store)
+
+    return {
+      user
+    }
+
+  }
 };
 </script>
 

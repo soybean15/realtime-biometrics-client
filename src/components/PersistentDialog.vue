@@ -9,7 +9,7 @@
       transition-show="scale"
       transition-hide="scale"
     >
-      <q-card :class="backgroundColor" class=" text-white" :style="{'width': width ?? '300px', 'max-width': maxWidth ?? '80vh'}">
+      <q-card :class="backgroundColor" class="" :style="{'width': width ?? '300px', 'max-width': maxWidth ?? '80vh'}">
         <q-card-section>
             <slot name="title"></slot>
         </q-card-section>
