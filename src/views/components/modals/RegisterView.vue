@@ -2,7 +2,7 @@
   <PersistentDialog
     :width="'500px'"
     :maxWidth="'80vh'"
-    :backgroundColor="'bg-red-400'"
+  
   >
     <template v-slot:open-button="{ open }">
       <q-btn flat label="Register" @click="open" v-if="!user" />
@@ -16,8 +16,11 @@
 
     <template v-slot:content>
       <div class="p-3">
-        <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+     
+        <q-form @submit="onSubmit" class="q-gutter-md">
+          <span class="text-red-500 text-xs" v-if="errors.email">{{`*${errors.email[0]}`}}</span>
           <q-input
+           class="mt-0 mb-3"
             outlined
             v-model="registerForm.email"
             dense
@@ -25,7 +28,9 @@
             hint="example@email.com"
             lazy-rules
           />
+          <span class="text-red-500 text-xs" v-if="errors.name">{{`*${errors.name[0]}`}}</span>
           <q-input
+          class="mt-0"
             outlined
             v-model="registerForm.name"
             dense
@@ -34,8 +39,9 @@
             lazy-rules
           />
           <!-- :rules="[(val) => (val && val.length > 0) || 'Please type something']" -->
-
+          <span class="text-red-500 text-xs" v-if="errors.password">{{`*${errors.password[0]}`}}</span>
           <q-input
+        
             outlined
             dense
             v-model="registerForm.password"
@@ -87,13 +93,14 @@ export default {
     const store = useAuthStore();
     const loading = ref(false);
 
-    const { user, registerForm } = storeToRefs(store);
+    const { user, registerForm ,errors} = storeToRefs(store);
 
     return {
       user,
       registerForm,
       store,
       loading,
+      errors,
       onSubmit: async () => {
         loading.value = true;
 

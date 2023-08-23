@@ -2,7 +2,7 @@
   <PersistentDialog
     :width="'500px'"
     :maxWidth="'80vh'"
-    :backgroundColor="'bg-red-400'"
+    
   >
     <template v-slot:open-button="{ open }">
       <q-btn flat label="Login" @click="open" v-if="!user" />
