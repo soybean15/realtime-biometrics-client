@@ -26,13 +26,8 @@ const routes = [
       const store = useAuthStore()
 
       const {user} = storeToRefs(store)
-
-      if (user) {
-        await store.getUser()
-      }
-      const isAdmin = user.isAdmin;
-
-      if (isAdmin) {
+ 
+      if (user.value.isAdmin) {
 
         next();
       } else {

@@ -84,7 +84,7 @@ export default {
 
     const loading = ref(false);
 
-    console.log(user);
+
 
     return {
       store,

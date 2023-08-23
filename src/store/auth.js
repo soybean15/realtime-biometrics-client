@@ -29,9 +29,6 @@ export const useAuthStore = defineStore('auth', () => {
         try {
             _user.value = (await axios.get('api/user')).data
 
-            _user.value.isAdmin = user.value.roles.contains('Admin') || user.value.roles.contains('SuperAdmin');
-
-
         } catch (error) {
             console.log('error')
         }

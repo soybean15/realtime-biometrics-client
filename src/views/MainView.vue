@@ -37,8 +37,9 @@
     },
     setup () {
       const leftDrawerOpen = ref(false)
-      const { getUser} = useAuthStore()
+      const { getUser } = useAuthStore()
   
+      console.log('main')
       onMounted(()=>{
         getUser()
       })
