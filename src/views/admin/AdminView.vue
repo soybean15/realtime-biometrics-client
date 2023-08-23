@@ -68,14 +68,13 @@
 
 const menuList = [
   {
-    icon: 'inbox',
-    label: 'Inbox',
-    
+    icon: 'dashboard',
+    label: 'Dashboard',
     separator: true
   },
   {
-    icon: 'send',
-    label: 'Outbox',
+    icon: 'group',
+    label: 'Users',
     separator: false
   },
   {

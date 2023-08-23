@@ -3,6 +3,7 @@ import Home from '@/views/HomeView'
 import { useAuthStore } from '@/store/auth'
 import { storeToRefs } from 'pinia'
 
+
 const routes = [
   {
     path: '/',
@@ -26,7 +27,10 @@ const routes = [
       const store = useAuthStore()
 
       const {user} = storeToRefs(store)
- 
+      if(user){
+       await store.getUser()
+      }
+    
       if (user.value.isAdmin) {
 
         next();

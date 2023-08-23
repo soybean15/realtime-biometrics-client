@@ -27,9 +27,11 @@
   </template>
   
   <script>
-  import { onMounted, ref } from 'vue'
+  import { onMounted, ref,provide } from 'vue'
   import HeaderView from '@/views/components/HeaderView.vue'
   import {useAuthStore} from '@/store/auth'
+import { storeToRefs } from 'pinia'
+
   
   export default {
     components:{
@@ -37,11 +39,14 @@
     },
     setup () {
       const leftDrawerOpen = ref(false)
-      const { getUser } = useAuthStore()
+      const store= useAuthStore()
+
+      const {user}=storeToRefs(store)
   
       console.log('main')
       onMounted(()=>{
-        getUser()
+        store.getUser()
+        provide('user',user)
       })
       
   
