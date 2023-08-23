@@ -75,6 +75,7 @@ const menuList = [
   {
     icon: 'group',
     label: 'Users',
+    to: 'user',
     separator: false
   },
   {
