@@ -21,23 +21,28 @@
     <template v-slot:content="{close}">
       <div class="p-5">
         <q-form @submit="onSubmit(close)" @reset="onReset" class="q-gutter-md">
+          <span class="text-red-500 text-xs" v-if="errors.email">{{`*${errors.email[0]}`}}</span>
           <q-input
             dense
             outlined
             v-model="loginForm.email"
             label="Email"
             hint="example@email.com"
-            lazy-rules
+            :rules="[val => !!val || 'Email is missing', val=>isValidEmail(val)]"
           />
           <!-- :rules="[(val) => (val && val.length > 0) || 'Please type something']" -->
-
+          <span class="text-red-500 text-xs" v-if="errors.password">{{`*${errors.password[0]}`}}</span>
           <q-input
             dense
             outlined
             type="password"
             v-model="loginForm.password"
             label="password"
-            lazy-rules
+           
+            :rules="[
+          val => !!val || '* Required',
+          val => val.length > 8 || 'Please enter mininum of 8 characters',
+        ]"
           />
 
           <div class="row justify-end">
@@ -76,7 +81,7 @@ export default {
   setup() {
     const store = useAuthStore();
 
-    const { user, loginForm } = storeToRefs(store);
+    const { user, loginForm,errors } = storeToRefs(store);
 
     const loading = ref(false);
 
@@ -87,13 +92,14 @@ export default {
       loginForm,
       user,
       loading,
+      errors,
       onSubmit: async (close) => {
         loading.value = true;
 
         try{
           const delayDuration = 2000; 
           await new Promise((resolve) => setTimeout(resolve, delayDuration));
-        //await store.login();
+        await store.login(close);
         loading.value = false;
         }catch(error){
           loading.value = false;
@@ -101,8 +107,12 @@ export default {
      
         
       
-        close()
+      
       },
+      isValidEmail (val) {
+    const emailPattern = /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
+    return emailPattern.test(val) || 'Invalid email';
+  }
     };
   },
 };

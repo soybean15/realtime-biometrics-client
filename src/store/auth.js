@@ -29,6 +29,8 @@ export const useAuthStore = defineStore('auth', () => {
         try {
             _user.value = (await axios.get('api/user')).data
 
+            _user.value.isAdmin = user.value.roles.contains('Admin') || user.value.roles.contains('SuperAdmin');
+
 
         } catch (error) {
             console.log('error')
@@ -36,10 +38,22 @@ export const useAuthStore = defineStore('auth', () => {
 
     }
 
-    const login = async () => {
+    const login = async (close) => {
 
-        await axios.post('login', loginForm.value)
+        errors.value=[]
+        try{
+            await axios.post('login', loginForm.value)
+            close()
+            loginForm.value= null
+        }catch(error){
+            if(error.response.status === 422){
+                errors.value = error.response.data.errors
+               
+            }
+
+        }
         getUser()
+       
     }
 
     const logout = async () => {
@@ -50,8 +64,10 @@ export const useAuthStore = defineStore('auth', () => {
 
     const register = async (close)=>{
 
+        errors.value=[]
         try{
             await axios.post('register',registerForm.value)
+            registerForm.value=null
             close()
 
         }catch(error){
@@ -61,6 +77,7 @@ export const useAuthStore = defineStore('auth', () => {
             }
 
         }
+        getUser()
        
     }
 

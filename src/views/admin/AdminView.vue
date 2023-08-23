@@ -104,6 +104,7 @@ const menuList = [
   {
     icon: 'exit_to_app',
     label: 'Exit',
+    to:'main',
     separator: false
   },
 ]
