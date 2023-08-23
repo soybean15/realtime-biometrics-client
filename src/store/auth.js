@@ -31,7 +31,7 @@ export const useAuthStore = defineStore('auth', () => {
 
 
         } catch (error) {
-            console.log(error)
+            console.log('error')
         }
 
     }
@@ -48,15 +48,16 @@ export const useAuthStore = defineStore('auth', () => {
 
     }
 
-    const register = async ()=>{
+    const register = async (close)=>{
 
         try{
             await axios.post('register',registerForm.value)
+            close()
 
         }catch(error){
             if(error.response.status === 422){
                 errors.value = error.response.data.errors
-                console.log(errors.value)
+               
             }
 
         }

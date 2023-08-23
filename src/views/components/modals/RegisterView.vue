@@ -14,10 +14,10 @@
       </div>
     </template>
 
-    <template v-slot:content>
+    <template v-slot:content="{close}">
       <div class="p-3">
      
-        <q-form @submit="onSubmit" class="q-gutter-md">
+        <q-form @submit="onSubmit(close)" class="q-gutter-md">
           <span class="text-red-500 text-xs" v-if="errors.email">{{`*${errors.email[0]}`}}</span>
           <q-input
            class="mt-0 mb-3"
@@ -69,7 +69,7 @@
             >
               <template v-slot:loading>
                 <div class="row items-center">
-                  <q-spinner-clock size="1rem" />
+                  <q-spinner-clock size="1em" />
                   <span class="ml-2 text-[10px]">Loading...</span>
                 </div>
               </template>
@@ -101,14 +101,19 @@ export default {
       store,
       loading,
       errors,
-      onSubmit: async () => {
+      onSubmit: async (close) => {
         loading.value = true;
 
         const delayDuration = 2000;
         try {
           await new Promise((resolve) => setTimeout(resolve, delayDuration));
-          await store.register();
+           await store.register(close);
+
+      
           loading.value = false;
+       
+        
+          
         } catch (error) {
           loading.value = false;
         }
