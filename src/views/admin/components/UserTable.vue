@@ -1,6 +1,13 @@
 <template>
-  <DataTable :title="'Users'" :rows="rows" :columns="columns"/>
-  {{ users }}
+  <DataTable :title="'Users'" :rows="users" :columns="columns" v-if="users">
+
+    <template v-slot:top-right>
+
+     <SearchBar/>
+        
+    </template>
+</DataTable>
+ 
 </template>
 
 <script>
@@ -8,6 +15,7 @@ import DataTable from '@/components/DataTable.vue'
 import { useUserStore } from '@/store/user'
 import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
+import SearchBar from '@/components/SearchBar.vue'
 
 
 
@@ -34,7 +42,8 @@ const columns = [
 
 export default {
     components:{
-        DataTable
+        DataTable,
+        SearchBar
     },
     setup(){
 

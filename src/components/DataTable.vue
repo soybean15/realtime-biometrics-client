@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md">
+  <div >
     <q-table
       class="my-sticky-header-table"
       flat
@@ -8,7 +8,12 @@
       :rows="rows"
       :columns="columns"
       row-key="name"
-    />
+    >
+    <template v-slot:top-right>
+      <slot name="top-right"></slot>
+
+    </template>
+  </q-table>
   </div>
 </template>
   
