@@ -31,7 +31,7 @@ const routes = [
        await store.getUser()
       }
     
-      if (user.value.isAdmin) {
+      if (user.value.admin) {
 
         next();
       } else {

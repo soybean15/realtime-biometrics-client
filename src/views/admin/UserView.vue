@@ -1,13 +1,15 @@
 <template>
-  <DataTableVue/>
+
+<UserTable/>
 </template>
 
 <script>
-import DataTableVue from '@/components/DataTable.vue'
+import UserTable from './components/UserTable.vue'
+
 
 export default {
     components:{
-        DataTableVue
+      UserTable
     },
     setup(){
 
