@@ -46,7 +46,12 @@ const routes = [
         path: 'users',
         name: 'user',
         component:() => import( '@/views/admin/UserView'),
+      },{
+        path: 'employee',
+        name: 'employee',
+        component:() => import( '@/views/admin/EmployeeView'),
       }
+
     ],
   
   },

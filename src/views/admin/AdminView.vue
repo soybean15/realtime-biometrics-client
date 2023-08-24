@@ -71,6 +71,14 @@ const menuList = [
     icon: 'dashboard',
     label: 'Dashboard',
     separator: true
+
+
+  },
+  {
+    icon: 'badge',
+    label: 'Employee',
+    to: 'employee',
+    separator: false
   },
   {
     icon: 'group',
@@ -78,12 +86,7 @@ const menuList = [
     to: 'user',
     separator: false
   },
-  {
-    icon: 'delete',
-    label: 'Trash',
-    to: 'users',
-    separator: false
-  },
+
   {
     icon: 'error',
     label: 'Spam',
