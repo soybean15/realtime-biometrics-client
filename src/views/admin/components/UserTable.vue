@@ -12,7 +12,7 @@
 
 <script>
 import DataTable from '@/components/DataTable.vue'
-import { useUserStore } from '@/store/user'
+import { useAuthStore } from '@/store/auth'
 import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
 import SearchBar from '@/components/SearchBar.vue'
@@ -47,7 +47,7 @@ export default {
     },
     setup(){
 
-        const store = useUserStore()
+        const store = useAuthStore()
 
         const {users} = storeToRefs(store)
 
