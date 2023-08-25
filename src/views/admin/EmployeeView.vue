@@ -5,6 +5,7 @@
     <script>
 import EmployeeTable from "./components/EmployeeTable.vue";
 
+
 export default {
   components: {
     EmployeeTable,

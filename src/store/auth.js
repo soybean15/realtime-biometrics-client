@@ -7,6 +7,16 @@ export const useAuthStore = defineStore('auth', () => {
 
     const _user = ref(null)
 
+    const user = computed(() => _user.value)
+
+
+
+    const _users = ref(null)
+    const users = computed(()=>_users.value)
+
+
+
+
     const loginForm = ref({
         email: '',
         password: ''
@@ -18,9 +28,10 @@ export const useAuthStore = defineStore('auth', () => {
         password_confirmation:''
     })
 
-    const user = computed(() => _user.value)
-
+  
     const errors = ref([])
+
+
 
 
 
@@ -34,6 +45,15 @@ export const useAuthStore = defineStore('auth', () => {
         }
 
     }
+
+    const getUsers = async()=>{
+
+        _users.value  = (await axios.get('api/admin/user')).data.users
+
+        console.log(_users.value)
+
+    }
+
 
     const login = async (close) => {
 
@@ -79,8 +99,10 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     return {
+        users,
         user,
         getUser,
+        getUsers,
         login,
         logout,
         register,

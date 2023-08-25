@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div>
     <q-table
       class="my-sticky-header-table"
       flat
@@ -9,17 +9,22 @@
       :columns="columns"
       row-key="name"
     >
-    <template v-slot:top-right>
-      <slot name="top-right"></slot>
+      <!-- <slot v-for="cell in cells" :key="cell" name="cell"></slot> -->
 
-    </template>
-  </q-table>
+      <template v-for="cell in cells" :key="cell" v-slot:[`body-cell-${cell}`]="props">
+        
+        <slot :name="cell" :props="props"></slot>
+      </template>
+      <template v-slot:top-right>
+        <slot name="top-right"></slot>
+      </template>
+    </q-table>
   </div>
 </template>
   
   <script>
 export default {
-  props: ["rows", "columns",'title'],
+  props: ["rows", "columns", "title", "cells"],
   setup() {
     return {};
   },
@@ -58,5 +63,4 @@ export default {
   /* height of all previous header rows */
   scroll-margin-top: 48px;
 }
-
 </style>
