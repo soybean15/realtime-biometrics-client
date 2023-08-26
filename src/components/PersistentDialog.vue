@@ -1,10 +1,19 @@
+
 <template>
+<!-- 
+  #slots : 
+    -title
+    -content
+  #props :
+    -width
+    -maxWidth
+    -backgroundColor
+ -->
   <div class="q-pa-md q-gutter-sm">
     <slot name="open-button" :open="open" :close="close"></slot>
 
     <q-dialog
       v-model="persistent"
-
       persistent
       transition-show="scale"
       transition-hide="scale"
@@ -52,7 +61,6 @@ export default {
        
         persistent.value = false;
       }
-      
       
     
     };
