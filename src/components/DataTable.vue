@@ -18,6 +18,10 @@
       <template v-slot:top-right>
         <slot name="top-right"></slot>
       </template>
+
+      <template v-slot:top>
+        <slot name="top"></slot>
+      </template>
     </q-table>
   </div>
 </template>

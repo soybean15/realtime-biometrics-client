@@ -1,19 +1,17 @@
 <template>
   <DataTable
-    :title="'Employee'"
     :rows="employees.data"
     :columns="columns"
-    :cells="['contacts', 'actions','image']"
+    :cells="['contacts', 'actions', 'image']"
     v-if="employees"
   >
-
-  <template v-slot:image="{props}">
-    <q-td :props="props">
-      <q-avatar>
-      <img :src="props.row.image">
-    </q-avatar>
-    </q-td>
-  </template>
+    <template v-slot:image="{ props }">
+      <q-td :props="props">
+        <q-avatar>
+          <img :src="props.row.image" />
+        </q-avatar>
+      </q-td>
+    </template>
     <template v-slot:contacts="{ props }">
       <q-td :props="props">
         <div class="row bg-transparent justify-center">
@@ -24,7 +22,7 @@
             size="1.5rem"
           >
             <q-tooltip anchor="top middle" self="top middle">
-            {{props.row.email}}
+              {{ props.row.email }}
             </q-tooltip>
           </q-icon>
           <q-icon
@@ -33,43 +31,89 @@
             class="mx-1 cursor-pointer"
             size="1.5rem"
           >
-        
-          <q-tooltip anchor="top middle" self="top middle">
-            {{props.row.contact_number}}
+            <q-tooltip anchor="top middle" self="top middle">
+              {{ props.row.contact_number }}
             </q-tooltip>
-        </q-icon>
+          </q-icon>
         </div>
       </q-td>
     </template>
     <template v-slot:actions="{ props }">
       <q-td :props="props">
-      
-    <q-btn-group push>
-      <q-btn dense class="w-20 text-xs " color="primary" glossy text-color="white" push label="Edit" icon="edit" />
-      <q-btn dense class="w-20 text-xs" color="red" glossy text-color="white" push label="Delete" icon="delete" />
-      
-    </q-btn-group>
+        <q-btn-group push>
+          <q-btn
+            dense
+            class="w-20 text-xs"
+            color="primary"
+            glossy
+            text-color="white"
+            push
+            label="Edit"
+            icon="edit"
+          />
+          <q-btn
+            dense
+            class="w-20 text-xs"
+            color="red"
+            glossy
+            text-color="white"
+            push
+            label="Delete"
+            icon="delete"
+          />
+        </q-btn-group>
       </q-td>
     </template>
 
-    <template v-slot:top-right>
+    <template v-slot:top>
+      <div class="col-1 q-table__title">Employees</div>
 
-        <q-btn color="primary" label="Create"  dense class="mr-3" icon-right="add_circle"/>
-      <SearchBar />
+      <SearchBar class="col-9 px-2" />
+
+      <div class="col-2">
+        <CreateEditEmployeeModal :title="'Add New Employees'">
+          <template v-slot:button="{ open }">
+            <q-btn-group push>
+              <q-btn
+                color="primary"
+                label="Create"
+                @click="open"
+                glossy
+                rounded
+                class="px-2"
+                icon-right="add_circle"
+              />
+
+              <q-btn
+                color="primary"
+                label="Archive"
+                glossy
+                rounded
+                class="px-2"
+                icon-right="archive"
+              />
+            </q-btn-group>
+          </template>
+
+
+
+        </CreateEditEmployeeModal>
+      </div>
     </template>
+
   </DataTable>
 </template>
   
   <script>
 import DataTable from "@/components/DataTable.vue";
-
+import CreateEditEmployeeModal from "./CreateEditEmployeeModal.vue";
 import { useEmployeeStore } from "@/store/employee";
 import SearchBar from "@/components/SearchBar.vue";
 import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
 
 const columns = [
-{
+  {
     name: "image",
     required: true,
     label: "",
@@ -113,6 +157,7 @@ export default {
   components: {
     DataTable,
     SearchBar,
+    CreateEditEmployeeModal,
   },
   setup() {
     const store = useEmployeeStore();
