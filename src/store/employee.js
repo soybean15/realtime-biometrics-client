@@ -41,12 +41,30 @@ export const useEmployeeStore = defineStore('employee', () => {
         
     }
 
+    const deleteEmployee= async(employee_id)=>{
+
+
+        try{
+            await axios.post('api/admin/employee/delete',{
+                id:employee_id
+            })
+
+
+        }catch(error){
+
+
+            console.log('test')
+        }
+       
+    }
+
 
     return {
         getEmployees,
         employees,
         employeeForm,
         addEmployee,
-        errors
+        errors,
+        deleteEmployee
     }
 })

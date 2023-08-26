@@ -56,6 +56,8 @@
             class="w-20 text-xs"
             color="red"
             glossy
+            :loading="loading[props.row.id]"
+            @click="onDelete(props.row.id)"
             text-color="white"
             push
             label="Delete"
@@ -109,7 +111,7 @@ import DataTable from "@/components/DataTable.vue";
 import CreateEditEmployeeModal from "./CreateEditEmployeeModal.vue";
 import { useEmployeeStore } from "@/store/employee";
 import SearchBar from "@/components/SearchBar.vue";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { storeToRefs } from "pinia";
 
 const columns = [
@@ -164,6 +166,8 @@ export default {
 
     const { employees } = storeToRefs(store);
 
+    const loading = ref([])
+
     onMounted(() => {
       store.getEmployees();
     });
@@ -171,6 +175,16 @@ export default {
     return {
       columns,
       employees,
+      store,
+      loading,
+      onDelete:async(employee_id)=>{
+
+        loading.value[employee_id] = true
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await store.deleteEmployee(employee_id)
+      
+        loading.value[employee_id]= false
+      }
     };
   },
 };
