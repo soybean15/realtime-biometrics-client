@@ -3,9 +3,17 @@
     :title="'Employee'"
     :rows="employees.data"
     :columns="columns"
-    :cells="['contacts', 'actions']"
+    :cells="['contacts', 'actions','image']"
     v-if="employees"
   >
+
+  <template v-slot:image="{props}">
+    <q-td :props="props">
+      <q-avatar>
+      <img :src="props.row.image">
+    </q-avatar>
+    </q-td>
+  </template>
     <template v-slot:contacts="{ props }">
       <q-td :props="props">
         <div class="row bg-transparent justify-center">
@@ -35,10 +43,12 @@
     </template>
     <template v-slot:actions="{ props }">
       <q-td :props="props">
-        <div class="row bg-transparent">
-          <q-icon name="mail" />
-          <q-icon name="call" />
-        </div>
+      
+    <q-btn-group push>
+      <q-btn dense class="w-20 text-xs " color="primary" glossy text-color="white" push label="Edit" icon="edit" />
+      <q-btn dense class="w-20 text-xs" color="red" glossy text-color="white" push label="Delete" icon="delete" />
+      
+    </q-btn-group>
       </q-td>
     </template>
 
@@ -59,6 +69,12 @@ import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
 
 const columns = [
+{
+    name: "image",
+    required: true,
+    label: "",
+    align: "center",
+  },
   {
     name: "fullName",
     required: true,
