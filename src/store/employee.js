@@ -8,6 +8,8 @@ export const useEmployeeStore = defineStore('employee', () => {
     const _employees = ref(null)
     const employees = computed(()=>_employees.value)
 
+    const errors = ref([])
+
     const employeeForm = ref({
         firstname:'',
         lastname:'',
@@ -24,10 +26,27 @@ export const useEmployeeStore = defineStore('employee', () => {
         
     }
 
+    const addEmployee= async()=>{
+        errors.value = []
+        try{
+            (await axios.post('api/admin/employee/add',employeeForm.value))
+        }catch(error){
+            if(error.response.status === 410){
+
+                errors.value = error.response.data.errors
+                console.log(errors.value)
+
+            }
+        }
+        
+    }
+
 
     return {
         getEmployees,
         employees,
-        employeeForm
+        employeeForm,
+        addEmployee,
+        errors
     }
 })
