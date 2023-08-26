@@ -9,7 +9,13 @@ export const useEmployeeStore = defineStore('employee', () => {
     const employees = computed(()=>_employees.value)
 
     const employeeForm = ref({
-        firstname:''
+        firstname:'',
+        lastname:'',
+        middlename:'',
+        gender:'',
+        birthdate:'',
+        address:'',
+        contact_number:''
 
     })
 
