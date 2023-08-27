@@ -1,13 +1,18 @@
 import axios from 'axios'
 import { defineStore } from 'pinia'
-import { computed, ref } from 'vue'
+import {  ref } from 'vue'
 
 export const useEmployeeStore = defineStore('employee', () => {
 
 
-    const _employees = ref(null)
-    const trashed = ref(null)
-    const employees = computed(()=>_employees.value)
+
+    const data = ref({
+        employees:null,
+        trashed:null
+    })
+    // const employees = ref(null)
+    // const trashed = ref(null)
+    //const employees = computed(()=>_employees.value)
 
     const errors = ref([])
 
@@ -26,9 +31,14 @@ export const useEmployeeStore = defineStore('employee', () => {
     const getEmployees =async()=>{
        
         
-        const data = (await axios.get('api/admin/employee'))
-        _employees.value = data.data.employees
-        trashed.value =data.data.trashed
+        const response = (await axios.get('api/admin/employee'))
+        data.value['employees'] = response.data.employees
+        data.value['trashed'] =response.data.trashed
+    }
+
+    const paginate = async (name, path)=>{
+        const response = await axios.get(path)
+        data.value[name] = response.data[name]
     }
 
     const add= async(image)=>{
@@ -62,7 +72,7 @@ export const useEmployeeStore = defineStore('employee', () => {
                 id:employee_id
             })
           
-            _employees.value.data = _employees.value.data.filter(employee=> employee.id != employee_id)        
+            data.value['employees'].data =  data.value['employees'].data.filter(employee=> employee.id != employee_id)        
 
         }catch(error){
 
@@ -75,11 +85,18 @@ export const useEmployeeStore = defineStore('employee', () => {
 
     const restore = async(employee_id)=>{
         try{
-            await axios.post('api/admin/employee/restore',{
+            const data = await axios.post('api/admin/employee/restore',{
                 id:employee_id
             })
 
-            trashed.value.data = trashed.value.data.filter(employee=> employee.id != employee_id)        
+            const restoredEmployee = data.data.employee; // Assuming the API response contains the updated employee data
+
+            const index =  data.value['trashed'].data.findIndex(employee => employee.id === employee_id);
+            if (index !== -1) {
+                data.value['trashed'].splice(index, 1, restoredEmployee);
+            }
+
+//           trashed.value.data = trashed.value.data.filter(employee=> employee.id != employee_id)        
         }catch(error){
 
 
@@ -90,12 +107,12 @@ export const useEmployeeStore = defineStore('employee', () => {
 
     return {
         getEmployees,
-        employees,
+        data,
         employeeForm,
         add,
         errors,
-        trashed,
         restore,
-        destroy
+        destroy,
+        paginate
     }
 })

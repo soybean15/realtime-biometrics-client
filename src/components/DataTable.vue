@@ -8,6 +8,7 @@
       :rows="rows"
       :columns="columns"
       row-key="name"
+      :rows-per-page-options="[0]"
     >
       <!-- <slot v-for="cell in cells" :key="cell" name="cell"></slot> -->
 
@@ -15,6 +16,7 @@
         
         <slot :name="cell" :props="props"></slot>
       </template>
+
       <template v-slot:top-right>
         <slot name="top-right"></slot>
       </template>
@@ -22,22 +24,47 @@
       <template v-slot:top>
         <slot name="top"></slot>
       </template>
+      <template v-slot:bottom>
+        <div class="row  w-full justify-end" >
+          <q-pagination
+      v-model="current"
+      color="purple"
+      :max="pagination.max"
+      :max-pages="pagination.max_pages"
+      boundary-numbers
+    />
+
+        </div>
+       
+      </template>
     </q-table>
   </div>
 </template>
   
   <script>
+import { ref, watch } from 'vue';
 export default {
-  props: ["rows", "columns", "title", "cells"],
-  setup() {
-    return {};
+  props: ["rows", "columns", "title", "cells","pagination"],
+  emits:['onChangePage'],
+  setup(props,{emit}) {
+    const current = ref(1)
+
+    watch(current,()=>{
+    
+      emit('onChangePage',current.value)
+
+    })
+    
+    return {
+      current
+    };
   },
 };
 </script>
 <style scoped>
 .my-sticky-header-table {
   /* height or max-height is important */
-  max-height: 500px;
+  max-height: 750px;
 }
 
 .my-sticky-header-table .q-table__top,

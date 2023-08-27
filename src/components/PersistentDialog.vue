@@ -29,7 +29,7 @@
         </q-card-section>
 
         <q-card-actions align="right" class="bg-white text-teal">
-          <q-btn flat label="Close" v-close-popup />
+          <q-btn flat label="Close" @click="close" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -42,7 +42,8 @@ import {  ref } from "vue";
 export default {
  
   props:['width','maxWidth','backgroundColor'],
-  setup() {
+  emits:['onClose'],
+  setup(props,{emit}) {
     const persistent = ref(false);
   
   
@@ -59,6 +60,7 @@ export default {
       },
       close: () => {
        
+        emit('onClose')
         persistent.value = false;
       }
       
