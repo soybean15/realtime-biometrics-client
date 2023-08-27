@@ -1,7 +1,17 @@
 <template>
   <PersistentDialog :width="'800px'">
     <template v-slot:open-button="{ open }">
-      <slot name="button" :open="open"></slot>
+    
+      <q-btn
+                color="primary"
+                label="Create"
+                @click="open"
+                glossy
+                rounded  
+                class="mx-1"      
+                size=".7rem"
+                icon-right="add_circle"
+              />
     </template>
 
     <template v-slot:title>

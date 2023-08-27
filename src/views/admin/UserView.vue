@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import UserTable from './components/UserTable.vue'
+import UserTable from './components/tables/UserTable.vue'
 
 
 export default {

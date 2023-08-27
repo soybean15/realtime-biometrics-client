@@ -6,6 +6,7 @@ export const useEmployeeStore = defineStore('employee', () => {
 
 
     const _employees = ref(null)
+    const trashed = ref(null)
     const employees = computed(()=>_employees.value)
 
     const errors = ref([])
@@ -22,8 +23,11 @@ export const useEmployeeStore = defineStore('employee', () => {
     })
 
     const getEmployees =async()=>{
-        _employees.value = (await axios.get('api/admin/employee')).data.employees
+       
         
+        const data = (await axios.get('api/admin/employee'))
+        _employees.value = data.data.employees
+        trashed.value =data.data.trashed
     }
 
     const addEmployee= async()=>{
@@ -65,6 +69,7 @@ export const useEmployeeStore = defineStore('employee', () => {
         employeeForm,
         addEmployee,
         errors,
-        deleteEmployee
+        deleteEmployee,
+        trashed
     }
 })

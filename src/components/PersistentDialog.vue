@@ -9,7 +9,7 @@
     -maxWidth
     -backgroundColor
  -->
-  <div class="q-pa-md q-gutter-sm">
+  <div class="">
     <slot name="open-button" :open="open" :close="close"></slot>
 
     <q-dialog
