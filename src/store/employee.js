@@ -85,15 +85,14 @@ export const useEmployeeStore = defineStore('employee', () => {
 
     const restore = async(employee_id)=>{
         try{
-            const data = await axios.post('api/admin/employee/restore',{
+            const response = await axios.post('api/admin/employee/restore',{
                 id:employee_id
             })
 
-            const restoredEmployee = data.data.employee; // Assuming the API response contains the updated employee data
-
+            const restoredEmployee = response.data.employee;  
             const index =  data.value['trashed'].data.findIndex(employee => employee.id === employee_id);
             if (index !== -1) {
-                data.value['trashed'].splice(index, 1, restoredEmployee);
+                data.value['trashed'].data.splice(index, 1, restoredEmployee);
             }
 
 //           trashed.value.data = trashed.value.data.filter(employee=> employee.id != employee_id)        
