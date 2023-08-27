@@ -160,7 +160,7 @@ export default {
 
         loading.value[employee_id] = true
         await new Promise((resolve) => setTimeout(resolve, 1000));
-        await store.deleteEmployee(employee_id)
+        await store.destroy(employee_id)
       
         loading.value[employee_id]= false
       }

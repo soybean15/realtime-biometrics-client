@@ -1,17 +1,16 @@
 <template>
   <PersistentDialog :width="'800px'">
     <template v-slot:open-button="{ open }">
-    
       <q-btn
-                color="primary"
-                label="Create"
-                @click="open"
-                glossy
-                rounded  
-                class="mx-1"      
-                size=".7rem"
-                icon-right="add_circle"
-              />
+        color="primary"
+        label="Create"
+        @click="open"
+        glossy
+        rounded
+        class="mx-1"
+        size=".7rem"
+        icon-right="add_circle"
+      />
     </template>
 
     <template v-slot:title>
@@ -22,6 +21,35 @@
 
     <template v-slot:content>
       <q-form @submit="onSubmit" class="p-5">
+        <div class="column">
+          <div class="row mb-5 self-center">
+            <div class="relative">
+              <q-avatar size="100px">
+                <img :src="image ? image : require('@/assets/img/user.png')" />
+              </q-avatar>
+
+              <q-file
+                ref="fileInputRef"
+                clearable
+                class="hidden"
+                filled
+                color="purple-12"
+                v-model="imageFile"
+                label="Label"
+                @update:model-value="print"
+              ></q-file>
+              <q-icon
+                class="absolute bottom-2 right-0 cursor-pointer"
+                @click="upload"
+                color="blue-grey-1"
+                label="Click"
+                name="photo_camera"
+                size="2.2em"
+              ></q-icon>
+            </div>
+          </div>
+        </div>
+
         <div class="row my-1">
           <div class="col-6 px-1">
             <span class="text-red-400" v-if="errors.firstname">
@@ -107,25 +135,22 @@
               {{ errors.gender[0] }}</span
             >
             <div class="row">
-
               <span class="pt-2">Gender:</span>
-            <q-radio
-              v-model="employeeForm.gender"
-              checked-icon="task_alt"
-              unchecked-icon="panorama_fish_eye"
-              val="Male"
-              label="Male"
-            />
-            <q-radio
-              v-model="employeeForm.gender"
-              checked-icon="task_alt"
-              unchecked-icon="panorama_fish_eye"
-              val="Female"
-              label="Female"
-            />
+              <q-radio
+                v-model="employeeForm.gender"
+                checked-icon="task_alt"
+                unchecked-icon="panorama_fish_eye"
+                val="Male"
+                label="Male"
+              />
+              <q-radio
+                v-model="employeeForm.gender"
+                checked-icon="task_alt"
+                unchecked-icon="panorama_fish_eye"
+                val="Female"
+                label="Female"
+              />
             </div>
-
-            
           </div>
         </div>
         <div class="row my-1">
@@ -174,6 +199,7 @@
 import PersistentDialog from "@/components/PersistentDialog.vue";
 import { useEmployeeStore } from "@/store/employee";
 import { storeToRefs } from "pinia";
+import { ref } from "vue";
 
 export default {
   components: {
@@ -183,13 +209,29 @@ export default {
   setup() {
     const store = useEmployeeStore();
 
+    const fileInputRef = ref(null);
+    const imageFile = ref(null);
+    const image = ref(null);
+
     const { errors, employeeForm } = storeToRefs(store);
 
     return {
       employeeForm,
       errors,
+      image,
+      imageFile,
+      fileInputRef,
       onSubmit: () => {
-        store.addEmployee();
+        store.add(imageFile.value);
+      },
+      upload: () => {
+        fileInputRef.value.pickFiles();
+      },
+
+      print: () => {
+        image.value = URL.createObjectURL(imageFile.value);
+
+        console.log("printt");
       },
     };
   },

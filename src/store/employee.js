@@ -12,14 +12,15 @@ export const useEmployeeStore = defineStore('employee', () => {
     const errors = ref([])
 
     const employeeForm = ref({
-        firstname:'',
-        lastname:'',
+        firstname:'Marlon',
+        lastname:'Padilla',
         middlename:'',
-        gender:'',
-        birthdate:'',
-        address:'',
-        contact_number:''
-
+        gender:'Male',
+        birthdate:'2000/08/08',
+        address:'Test',
+        contact_number:'',
+        image:null,
+        email:''
     })
 
     const getEmployees =async()=>{
@@ -30,10 +31,18 @@ export const useEmployeeStore = defineStore('employee', () => {
         trashed.value =data.data.trashed
     }
 
-    const addEmployee= async()=>{
+    const add= async(image)=>{
+    
         errors.value = []
         try{
-            (await axios.post('api/admin/employee/add',employeeForm.value))
+            employeeForm.value.image = image
+
+            await axios.post('api/admin/employee/add',employeeForm.value,
+            {
+                headers:{
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
         }catch(error){
             if(error.response.status === 410){
 
@@ -45,14 +54,15 @@ export const useEmployeeStore = defineStore('employee', () => {
         
     }
 
-    const deleteEmployee= async(employee_id)=>{
+    const destroy= async(employee_id)=>{
 
 
         try{
             await axios.post('api/admin/employee/delete',{
                 id:employee_id
             })
-
+          
+            _employees.value.data = _employees.value.data.filter(employee=> employee.id != employee_id)        
 
         }catch(error){
 
@@ -63,13 +73,29 @@ export const useEmployeeStore = defineStore('employee', () => {
     }
 
 
+    const restore = async(employee_id)=>{
+        try{
+            await axios.post('api/admin/employee/restore',{
+                id:employee_id
+            })
+
+            trashed.value.data = trashed.value.data.filter(employee=> employee.id != employee_id)        
+        }catch(error){
+
+
+            console.log('test')
+        }
+    }
+
+
     return {
         getEmployees,
         employees,
         employeeForm,
-        addEmployee,
+        add,
         errors,
-        deleteEmployee,
-        trashed
+        trashed,
+        restore,
+        destroy
     }
 })

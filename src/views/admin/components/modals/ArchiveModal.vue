@@ -19,30 +19,26 @@
       <DataTable :columns="columns" :rows="trashed.data" :cells="['actions']">
         <template v-slot:top> Trash </template>
 
-        <template v-slot:actions="{props}">
-
-            <q-td :props="props">
-                <div class="column items-end">
-                    <span class="text-xs">{{props.row.deleted_at}}</span>
-                    <q-btn
-            dense
-            class="text-xs w-28"
-            color="primary"
-            glossy  
-            text-color="white"
-            push
-            label="Restore"
-            icon="restore_from_trash"
-          />
-                </div>
-            
-            
-            </q-td>
-        
+        <template v-slot:actions="{ props }">
+          <q-td :props="props">
+            <div class="column items-end">
+              <span class="text-xs">{{ props.row.deleted_at }}</span>
+              <q-btn
+                dense
+                class="text-xs w-28"
+                color="primary"
+                glossy
+                @click="onRestore(props.row.id)"
+                text-color="white"
+                push
+                :loading="loading[props.row.id]"
+                label="Restore"
+                icon="restore_from_trash"
+              />
+            </div>
+          </q-td>
         </template>
       </DataTable>
-
-     
     </template>
   </PersistentDialog>
 </template>
@@ -52,6 +48,7 @@ import PersistentDialog from "@/components/PersistentDialog.vue";
 import DataTable from "@/components/DataTable.vue";
 import { useEmployeeStore } from "@/store/employee";
 import { storeToRefs } from "pinia";
+import { ref } from 'vue';
 
 const columns = [
   {
@@ -67,11 +64,11 @@ const columns = [
     sortable: true,
   },
   {
-    name:'actions',
+    name: "actions",
     required: true,
-    label: 'Actions',
-    align: 'right'
-  }
+    label: "Actions",
+    align: "right",
+  },
 ];
 export default {
   components: {
@@ -81,11 +78,22 @@ export default {
   setup() {
     const store = useEmployeeStore();
 
+    const loading = ref([])
     const { trashed } = storeToRefs(store);
 
     return {
       trashed,
       columns,
+      store,
+      loading,
+      onRestore:async(id)=>{
+    
+        
+        loading.value[id] = true
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await store.restore(id)
+        loading.value[id] =false
+      }
     };
   },
 };
