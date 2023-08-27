@@ -56,6 +56,8 @@
             class="w-20 text-xs"
             color="red"
             glossy
+            :loading="loading[props.row.id]"
+            @click="onDelete(props.row.id)"
             text-color="white"
             push
             label="Delete"
@@ -70,34 +72,11 @@
 
       <SearchBar class="col-9 px-2" />
 
-      <div class="col-2">
+      <div class="row">
         <CreateEditEmployeeModal :title="'Add New Employees'">
-          <template v-slot:button="{ open }">
-            <q-btn-group push>
-              <q-btn
-                color="primary"
-                label="Create"
-                @click="open"
-                glossy
-                rounded
-                class="px-2"
-                icon-right="add_circle"
-              />
-
-              <q-btn
-                color="primary"
-                label="Archive"
-                glossy
-                rounded
-                class="px-2"
-                icon-right="archive"
-              />
-            </q-btn-group>
-          </template>
-
-
-
+          
         </CreateEditEmployeeModal>
+        <ArchiveModal />
       </div>
     </template>
 
@@ -106,10 +85,11 @@
   
   <script>
 import DataTable from "@/components/DataTable.vue";
-import CreateEditEmployeeModal from "./CreateEditEmployeeModal.vue";
+import CreateEditEmployeeModal from "../modals/CreateEditEmployeeModal.vue";
+import ArchiveModal from "../modals/ArchiveModal.vue";
 import { useEmployeeStore } from "@/store/employee";
 import SearchBar from "@/components/SearchBar.vue";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { storeToRefs } from "pinia";
 
 const columns = [
@@ -158,11 +138,14 @@ export default {
     DataTable,
     SearchBar,
     CreateEditEmployeeModal,
+    ArchiveModal
   },
   setup() {
     const store = useEmployeeStore();
 
     const { employees } = storeToRefs(store);
+
+    const loading = ref([])
 
     onMounted(() => {
       store.getEmployees();
@@ -171,6 +154,16 @@ export default {
     return {
       columns,
       employees,
+      store,
+      loading,
+      onDelete:async(employee_id)=>{
+
+        loading.value[employee_id] = true
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await store.destroy(employee_id)
+      
+        loading.value[employee_id]= false
+      }
     };
   },
 };
