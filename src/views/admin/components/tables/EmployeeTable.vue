@@ -1,9 +1,11 @@
 <template>
   <DataTable
-    :rows="employees.data"
+    :rows="data['employees'].data"
     :columns="columns"
     :cells="['contacts', 'actions', 'image']"
-    v-if="employees"
+    @onChangePage="onChangePage"
+    :pagination="{max:data['employees'].last_page, max_pages:6 }"
+    v-if="data['employees']"
   >
     <template v-slot:image="{ props }">
       <q-td :props="props">
@@ -143,7 +145,7 @@ export default {
   setup() {
     const store = useEmployeeStore();
 
-    const { employees } = storeToRefs(store);
+    const { data } = storeToRefs(store);
 
     const loading = ref([])
 
@@ -153,16 +155,24 @@ export default {
 
     return {
       columns,
-      employees,
+      data,
       store,
       loading,
       onDelete:async(employee_id)=>{
 
         loading.value[employee_id] = true
         await new Promise((resolve) => setTimeout(resolve, 1000));
-        await store.destroy(employee_id)
-      
+        await store.destroy(employee_id)   
         loading.value[employee_id]= false
+      },
+
+      onChangePage:(page)=>{
+        console.log(data.value['employees'].links[page].url)
+        console.log(page)
+
+        let name = 'employees'
+
+        store.paginate(name,data.value[name].links[page].url)
       }
     };
   },
