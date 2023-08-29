@@ -20,7 +20,23 @@
     </template>
 
     <template v-slot:content>
-      <q-form @submit="onSubmit" class="p-5">
+
+      <q-stepper
+      v-model="step"
+      ref="stepper"
+      animated
+      done-color="primary"
+      active-color="purple"
+      inactive-color="secondary"
+    >
+      <q-step
+        :name="1"
+        title="Employee Details"
+        icon="settings"
+        :done="step > 1"
+      >
+       
+      <q-form class="p-5 py-1">
         <div class="column">
           <div class="row mb-5 self-center">
             <div class="relative">
@@ -187,10 +203,69 @@
           />
         </div>
 
-        <div class="row my-1 justify-end">
-          <q-btn color="primary" type="submit" glossy label="Submit" />
-        </div>
+       
       </q-form>
+      </q-step>
+
+      <q-step
+        :name="2"
+        title="Job Detail"
+     
+        icon="create_new_folder"
+        :done="step > 2"
+      >
+       
+
+
+      
+
+
+
+      </q-step>
+
+      <q-step
+        :name="3"
+        title="Create an ad"
+        icon="add_comment"
+      >
+        Try out different ad text to see what brings in the most customers, and learn how to
+        enhance your ads using features like ad extensions. If you run into any problems with
+        your ads, find out how to tell if they're running and how to resolve approval issues.
+      </q-step>
+
+      <template v-slot:navigation>
+        <q-stepper-navigation>
+          <q-btn @click="step === 3 ?onSubmit : $refs.stepper.next()" color="deep-orange" :label="step === 3 ? 'Finish' : 'Continue'" />
+          <q-btn v-if="step > 1" flat color="deep-orange" @click="$refs.stepper.previous()" label="Back" class="q-ml-sm" />
+        </q-stepper-navigation>
+      </template>
+    </q-stepper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </template>
   </PersistentDialog>
 </template>
@@ -233,6 +308,7 @@ export default {
 
         console.log("printt");
       },
+      step: ref(1)
     };
   },
 };
