@@ -28,9 +28,10 @@
           max: data['trashed'].last_page,
           max_pages: 6,
         }"
+        @onChangePage="onChangePage"
       >
         <template v-slot:top>
-          <div class="bg-red-300 w-full row justify-between">
+          <div class=" w-full row justify-between">
             <span class="">Trash</span>
             <SearchBar />
           </div>
@@ -121,6 +122,10 @@ export default {
         await store.restore(id);
         loading.value[id] = false;
       },
+      onChangePage:(page)=>{
+        store.paginate('trashed',data.value['trashed'].links[page].url)
+
+      }
     };
   },
 };
