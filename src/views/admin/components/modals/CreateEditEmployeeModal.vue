@@ -8,6 +8,7 @@
         glossy
         rounded
         class="mx-1"
+        
         size=".7rem"
         icon-right="add_circle"
       />
@@ -25,6 +26,7 @@
       v-model="step"
       ref="stepper"
       animated
+      alternative-labels
       done-color="primary"
       active-color="purple"
       inactive-color="secondary"
@@ -43,19 +45,30 @@
 
       <q-step
         :name="2"
-        title="Job Detail"
+        title="Select Position"
      
         icon="create_new_folder"
         :done="step > 2"
       >
+
+      <PositionStep/>
        
-      <JobDetails/>
-
-
+    
       </q-step>
-
       <q-step
         :name="3"
+        title="Select Department"
+     
+        icon="create_new_folder"
+        :done="step > 3"
+      >
+       
+    
+      </q-step>
+
+
+      <q-step
+        :name="4"
         title="Create an ad"
         icon="add_comment"
       >
@@ -66,7 +79,7 @@
 
       <template v-slot:navigation>
         <q-stepper-navigation>
-          <q-btn @click="step === 3 ?onSubmit : $refs.stepper.next()" color="deep-orange" :label="step === 3 ? 'Finish' : 'Continue'" />
+          <q-btn @click="step === 4 ?onSubmit : $refs.stepper.next()" color="deep-orange" :label="step === 4 ? 'Finish' : 'Continue'" />
           <q-btn v-if="step > 1" flat color="deep-orange" @click="$refs.stepper.previous()" label="Back" class="q-ml-sm" />
         </q-stepper-navigation>
       </template>
@@ -81,7 +94,7 @@
 <script>
 import PersistentDialog from "@/components/PersistentDialog.vue";
 import EmployeeForm from '@/views/admin/components/modals/children/EmployeeForm.vue'
-import JobDetails from './children/JobDetailForm.vue'
+import PositionStep from "./children/PositionStep.vue";
 import { ref } from "vue";
 
 
@@ -89,7 +102,8 @@ export default {
   components: {
     PersistentDialog,
     EmployeeForm,
-    JobDetails
+    PositionStep
+    
   },
   props: ["title"],
   setup() {
