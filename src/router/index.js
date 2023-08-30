@@ -27,11 +27,12 @@ const routes = [
       const store = useAuthStore()
 
       const {user} = storeToRefs(store)
-      if(user){
+      if(!user.value){
        await store.getUser()
       }
     
-      if (user.value.admin) {
+      if (user.value && user.value.admin) {
+        
 
         next();
       } else {
@@ -46,10 +47,16 @@ const routes = [
         path: 'users',
         name: 'user',
         component:() => import( '@/views/admin/UserView'),
-      },{
+      },
+      {
         path: 'employee',
         name: 'employee',
         component:() => import( '@/views/admin/EmployeeView'),
+      },
+      {
+        path: 'employee/:id',
+        name: 'employeeDetails',
+        component:() => import( '@/views/admin/components/EmployeeDetails'),
       }
 
     ],

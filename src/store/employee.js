@@ -28,6 +28,8 @@ export const useEmployeeStore = defineStore('employee', () => {
         email:''
     })
 
+    const selectedEmployee =ref(null)
+
     const getEmployees =async()=>{
        
         
@@ -103,15 +105,22 @@ export const useEmployeeStore = defineStore('employee', () => {
         }
     }
 
+    const selectEmployee = (employee)=>{
+
+        selectedEmployee.value = employee
+    }
+
 
     return {
         getEmployees,
         data,
         employeeForm,
+        selectedEmployee,
         add,
         errors,
         restore,
         destroy,
-        paginate
+        paginate,
+        selectEmployee
     }
 })

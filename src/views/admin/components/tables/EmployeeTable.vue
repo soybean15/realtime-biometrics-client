@@ -41,31 +41,22 @@
       </q-td>
     </template>
     <template v-slot:actions="{ props }">
-      <q-td :props="props">
-        <q-btn-group push>
+      <q-td   :props="props">
+        
           <q-btn
             dense
-            class="w-20 text-xs"
+            :to="{ name: 'employeeDetails', params: { id: props.row.id } }"
+            class="w-28 text-xs"
             color="primary"
             glossy
+            @click="store.selectEmployee(props.row)"
             text-color="white"
             push
-            label="Edit"
-            icon="edit"
+            label="View Details"
+            icon="preview"
           />
-          <q-btn
-            dense
-            class="w-20 text-xs"
-            color="red"
-            glossy
-            :loading="loading[props.row.id]"
-            @click="onDelete(props.row.id)"
-            text-color="white"
-            push
-            label="Delete"
-            icon="delete"
-          />
-        </q-btn-group>
+  
+        
       </q-td>
     </template>
 
