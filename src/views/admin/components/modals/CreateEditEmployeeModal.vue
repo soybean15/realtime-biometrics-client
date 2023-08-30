@@ -62,6 +62,8 @@
         icon="create_new_folder"
         :done="step > 3"
       >
+
+      <DepartmentStep/>
        
     
       </q-step>
@@ -95,6 +97,7 @@
 import PersistentDialog from "@/components/PersistentDialog.vue";
 import EmployeeForm from '@/views/admin/components/modals/children/EmployeeForm.vue'
 import PositionStep from "./children/PositionStep.vue";
+import DepartmentStep from "./children/DepartmentStep.vue";
 import { ref } from "vue";
 
 
@@ -102,7 +105,8 @@ export default {
   components: {
     PersistentDialog,
     EmployeeForm,
-    PositionStep
+    PositionStep,
+    DepartmentStep
     
   },
   props: ["title"],

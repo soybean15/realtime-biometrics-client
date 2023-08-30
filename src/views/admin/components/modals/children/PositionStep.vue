@@ -30,13 +30,13 @@
 <script>
 import { usePositionStore } from "@/store/position";
 import { storeToRefs } from "pinia";
-import { ref } from "vue";
+
 export default {
   setup() {
     const store = usePositionStore();
-    const { positions } = storeToRefs(store);
+    const { positions,selectedPositions } = storeToRefs(store);
 
-    const selectedPositions = ref([]);
+    // const selectedPositions = ref([]);
 
     return {
       positions,
