@@ -71,12 +71,10 @@
 
       <q-step
         :name="4"
-        title="Create an ad"
+        title="Summary"
         icon="add_comment"
       >
-        Try out different ad text to see what brings in the most customers, and learn how to
-        enhance your ads using features like ad extensions. If you run into any problems with
-        your ads, find out how to tell if they're running and how to resolve approval issues.
+       <SummaryStep/>
       </q-step>
 
       <template v-slot:navigation>
@@ -98,6 +96,7 @@ import PersistentDialog from "@/components/PersistentDialog.vue";
 import EmployeeForm from '@/views/admin/components/modals/children/EmployeeForm.vue'
 import PositionStep from "./children/PositionStep.vue";
 import DepartmentStep from "./children/DepartmentStep.vue";
+import SummaryStep from "./children/SummaryStep.vue";
 import { ref } from "vue";
 
 
@@ -106,7 +105,8 @@ export default {
     PersistentDialog,
     EmployeeForm,
     PositionStep,
-    DepartmentStep
+    DepartmentStep,
+    SummaryStep
     
   },
   props: ["title"],
