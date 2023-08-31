@@ -68,6 +68,10 @@ export default {
         const {selectedDepartments} = storeToRefs(department)
         const {selectedPositions} = storeToRefs(position)
 
+        console.log(selectedDepartments.value)
+        employeeForm.value.departments = selectedDepartments.value
+        employeeForm.value.positions = selectedPositions.value
+
         return {
             employeeForm,
             selectedDepartments,

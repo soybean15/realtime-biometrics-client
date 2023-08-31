@@ -54,6 +54,20 @@ export default {
 
     // const selectedDepartments = ref([]);
 
+    const updateDepartments = ()=>{
+      _departments.value.forEach((val) => {
+          if (
+            selectedDepartments.value.some(
+              (selectedItem) => selectedItem.id === val.id
+            )
+          ) {
+            val.selected = true;
+          }
+        });
+    }
+
+    updateDepartments()
+
     return {
       departments,
       select: (department) => {
@@ -79,15 +93,8 @@ export default {
           cloned.filter((v) => v.name.toLowerCase().indexOf(needle) > -1)
         );
 
-        _departments.value.forEach((val) => {
-          if (
-            selectedDepartments.value.some(
-              (selectedItem) => selectedItem.id === val.id
-            )
-          ) {
-            val.selected = true;
-          }
-        });
+        updateDepartments()
+        
       },
     };
   },

@@ -125,7 +125,8 @@ export default {
       onChangePage:(page)=>{
         store.paginate('trashed',data.value['trashed'].links[page].url)
 
-      }
+      },
+      
     };
   },
 };
