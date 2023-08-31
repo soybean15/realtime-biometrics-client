@@ -79,7 +79,7 @@
 
       <template v-slot:navigation>
         <q-stepper-navigation>
-          <q-btn @click="step === 4 ?onSubmit : $refs.stepper.next()" color="deep-orange" :label="step === 4 ? 'Finish' : 'Continue'" />
+          <q-btn @click="step === 4 ? onSubmit() : $refs.stepper.next()" color="deep-orange" :label="step === 4 ? 'Finish' : 'Continue'" />
           <q-btn v-if="step > 1" flat color="deep-orange" @click="$refs.stepper.previous()" label="Back" class="q-ml-sm" />
         </q-stepper-navigation>
       </template>
@@ -98,7 +98,7 @@ import PositionStep from "./children/PositionStep.vue";
 import DepartmentStep from "./children/DepartmentStep.vue";
 import SummaryStep from "./children/SummaryStep.vue";
 import { ref } from "vue";
-
+import { useEmployeeStore } from "@/store/employee";
 
 export default {
   components: {
@@ -112,11 +112,17 @@ export default {
   props: ["title"],
   setup() {
  
-  
+    const store =useEmployeeStore()
 
     return {
    
-      step: ref(1)
+      step: ref(1),
+
+      onSubmit:()=>{
+
+        
+        store.add()
+      }
     };
   },
 };

@@ -7,9 +7,13 @@
 }
 
 .bg-surface{
-    background-color:#cac8c8 ;
+    background-color:#f2eeee ;
 }
 
+.font-primary{
+    color:#252424 ;
+
+}
 .font-secondary{
     color:#605e5e ;
 }

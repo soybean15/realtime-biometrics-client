@@ -25,7 +25,9 @@ export const useEmployeeStore = defineStore('employee', () => {
         address:'Test',
         contact_number:'',
         image:null,
-        email:''
+        email:'',
+        departments:[],
+        positions:[]
     })
 
     const selectedEmployee =ref(null)
@@ -43,11 +45,11 @@ export const useEmployeeStore = defineStore('employee', () => {
         data.value[name] = response.data[name]
     }
 
-    const add= async(image)=>{
+    const add= async()=>{
     
         errors.value = []
         try{
-            employeeForm.value.image = image
+            //employeeForm.value.image = image
 
             await axios.post('api/admin/employee/add',employeeForm.value,
             {
