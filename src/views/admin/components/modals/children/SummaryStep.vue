@@ -27,13 +27,13 @@
 
             <div class="text-semibold font-secondary">Department/s:</div>
             <div class="flex flex-wrap">
-                {{ _department }}
+                {{ _department.name }}
                 
             </div>
 
             <div class="text-semibold font-secondary">Positions/s:</div>
             <div>
-               {{ _position }}
+               {{ _position.name }}
                 
             </div>
 
@@ -65,8 +65,8 @@ export default {
         const {_position} = storeToRefs(position)
 
 
-        employeeForm.value.department = _department.value
-        employeeForm.value.position = _position.value
+        employeeForm.value.department_id = _department.value.id
+        employeeForm.value.position_id = _position.value.id
 
         return {
             employeeForm,

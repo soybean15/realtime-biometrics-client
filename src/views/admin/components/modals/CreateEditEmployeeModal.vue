@@ -68,7 +68,9 @@
 
       <template v-slot:navigation>
         <q-stepper-navigation>
-          <q-btn @click="step ===3? onSubmit() : $refs.stepper.next()" color="deep-orange" :label="step === 3 ? 'Finish' : 'Continue'" />
+
+          <!-- step===2 ? !_position || !_department <--this line disables the button if department or position is null -->
+          <q-btn :disable="step===2 ? !_position || !_department : false" @click="step ===3? onSubmit() : $refs.stepper.next()" color="deep-orange" :label="step === 3 ? 'Finish' : 'Continue'" />
           <q-btn v-if="step > 1" flat color="deep-orange" @click="$refs.stepper.previous()" label="Back" class="q-ml-sm" />
         </q-stepper-navigation>
       </template>
@@ -89,6 +91,10 @@ import PositionAndDepartmentStep from "./children/PositionAndDepartmentStep.vue"
 import SummaryStep from "./children/SummaryStep.vue";
 import { ref } from "vue";
 import { useEmployeeStore } from "@/store/employee";
+import { usePositionStore } from "@/store/position";
+
+import { storeToRefs } from 'pinia';
+import { useDepartmentStore } from '@/store/department';
 
 export default {
   components: {
@@ -102,11 +108,17 @@ export default {
   setup() {
  
     const store =useEmployeeStore()
+    const positionsStore = usePositionStore()
+    const departmentStore = useDepartmentStore()
+
+    const {_position} = storeToRefs(positionsStore)
+    const {_department} =storeToRefs(departmentStore)
 
     return {
    
       step: ref(1),
-
+      _position,
+      _department,
       onSubmit:()=>{
 
         

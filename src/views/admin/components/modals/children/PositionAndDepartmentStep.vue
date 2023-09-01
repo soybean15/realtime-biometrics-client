@@ -1,3 +1,5 @@
+
+
 <template>
   <div class="q-gutter-md">
     <span>Select Position</span>
@@ -9,6 +11,7 @@
       fill-input
       input-debounce="0"
       :options="positionOptions"
+      option-label="name"
       @filter="filterPosition"
       hint="Basic filtering"
     >
@@ -30,6 +33,7 @@
       fill-input
       input-debounce="0"
       :options="departmentOptions"
+      option-label="name"
       @filter="filterDepartment"
       hint="Basic filtering"
     >
@@ -40,6 +44,8 @@
       </template>
     </q-select>
   </div>
+
+
 </template>
 
 <script>
@@ -48,11 +54,16 @@ import { useDepartmentStore } from "@/store/department";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
 
+
+//To do Add value
 const getOptions = (arr) => {
   const newArr = [];
 
+  
+
   arr.forEach((element) => {
-    newArr.push(element.name);
+
+    newArr.push({id: element.id, name: element.name});
   });
 
   return newArr;
@@ -77,7 +88,7 @@ export default {
         update(() => {
           const needle = val.toLowerCase();
           positionOptions.value = getOptions(positions.value).filter(
-            (v) => v.toLowerCase().indexOf(needle) > -1
+            (v) => v.name.toLowerCase().indexOf(needle) > -1
           );
         });
       },
@@ -86,7 +97,7 @@ export default {
         update(() => {
           const needle = val.toLowerCase();
           departmentOptions.value = getOptions(departments.value).filter(
-            (v) => v.toLowerCase().indexOf(needle) > -1
+            (v) => v.name.toLowerCase().indexOf(needle) > -1
           );
         });
       },
