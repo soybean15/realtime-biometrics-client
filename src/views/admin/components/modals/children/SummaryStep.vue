@@ -27,17 +27,13 @@
 
             <div class="text-semibold font-secondary">Department/s:</div>
             <div class="flex flex-wrap">
-                <div v-for="department in selectedDepartments" :key="department.id">
-                    <q-chip dense >{{department.name}}</q-chip>
-                </div>
+                {{ _department.name }}
                 
             </div>
 
             <div class="text-semibold font-secondary">Positions/s:</div>
             <div>
-                <div v-for="position in selectedPositions" :key="position.id">
-                    <q-chip dense >{{position.name}}</q-chip>
-                </div>
+               {{ _position.name }}
                 
             </div>
 
@@ -65,17 +61,17 @@ export default {
         const position = usePositionStore()
 
         const {employeeForm} = storeToRefs(employee)
-        const {selectedDepartments} = storeToRefs(department)
-        const {selectedPositions} = storeToRefs(position)
+        const {_department} = storeToRefs(department)
+        const {_position} = storeToRefs(position)
 
-        console.log(selectedDepartments.value)
-        employeeForm.value.departments = selectedDepartments.value
-        employeeForm.value.positions = selectedPositions.value
+
+        employeeForm.value.department_id = _department.value.id
+        employeeForm.value.position_id = _position.value.id
 
         return {
             employeeForm,
-            selectedDepartments,
-            selectedPositions,
+            _department,
+            _position,
             set:(str)=>{
                 if(str==null || str.replace(/ /g, '').length === 0){
                     return 'N/A';

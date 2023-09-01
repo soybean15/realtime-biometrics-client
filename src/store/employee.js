@@ -26,8 +26,8 @@ export const useEmployeeStore = defineStore('employee', () => {
         contact_number:'',
         image:null,
         email:'',
-        departments:[],
-        positions:[]
+        department_id:null,
+        position_id:null
     })
 
     const selectedEmployee =ref(null)
@@ -51,12 +51,18 @@ export const useEmployeeStore = defineStore('employee', () => {
         try{
             //employeeForm.value.image = image
 
-            await axios.post('api/admin/employee/add',employeeForm.value,
+             await axios.post('api/admin/employee/add',employeeForm.value,
             {
                 headers:{
                     'Content-Type': 'multipart/form-data'
                 }
             })
+        
+            // console.log( data.value['employees'].data)
+            // data.value['employees'].data.push(response.data.employee)
+            // console.log( data.value['employees'].data)
+            getEmployees()
+
         }catch(error){
             if(error.response.status === 410){
 
