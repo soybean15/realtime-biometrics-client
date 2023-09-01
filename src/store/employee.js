@@ -26,8 +26,8 @@ export const useEmployeeStore = defineStore('employee', () => {
         contact_number:'',
         image:null,
         email:'',
-        departments:[],
-        positions:[]
+        department:null,
+        positions:null
     })
 
     const selectedEmployee =ref(null)

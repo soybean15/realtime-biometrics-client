@@ -6,6 +6,8 @@ export const useDepartmentStore = defineStore('department', () => {
 
     const departments = ref()
     const selectedDepartments = ref([])
+
+    const _department = ref(null)
     
 
     const getDepartments = async()=>{
@@ -16,7 +18,8 @@ export const useDepartmentStore = defineStore('department', () => {
     return {
         getDepartments,
         departments,
-        selectedDepartments
+        selectedDepartments,
+        _department
     }
 
 })

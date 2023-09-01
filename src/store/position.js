@@ -6,6 +6,8 @@ export const usePositionStore = defineStore('position', () => {
 
     const positions = ref(null)
 
+    const _position = ref(null)
+
     const selectedPositions = ref([])
     const getPositions=async()=>{
         positions.value = (await axios.get('api/admin/position')).data.positions
@@ -16,7 +18,8 @@ export const usePositionStore = defineStore('position', () => {
     return {
         positions,
         getPositions,
-        selectedPositions
+        selectedPositions,
+        _position
     }
 
 
