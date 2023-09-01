@@ -5,12 +5,12 @@
       <span class="text-md"> Employee Details</span>
     </div>
 
-    <div class="row">
-      <span class="bg-surface">{{ selectedEmployee.created_at }}</span>
+    <div class="row items-center px-2" >
+      <span class="bg-surface p-1 mx-2 rounded-md shadow-sm font-secondary">{{ `Created at: ${formatTime(selectedEmployee.created_at)}` }}</span>
 
       <ConfirmDialog :pos="'top'">
         <template v-slot:open-button="{open}">
-          <q-btn @click="open" outline label="delete" color="red"></q-btn>
+          <q-btn @click="open" dense label="delete" color="red"></q-btn>
         </template>
 
         <template v-slot:title>Delete Employee</template>
@@ -122,6 +122,7 @@ import { storeToRefs } from "pinia";
 import router from "@/router";
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
 import { ref } from "vue";
+import moment from 'moment';
 
 export default {
   components:{ConfirmDialog},
@@ -146,7 +147,10 @@ export default {
           _employee.destroy()
           loading.value = false
           router.go(-1);
-      }
+      },
+      formatTime(timestamp) {
+          return moment(timestamp).format("MMM D, YYYY");
+    },
     };
   },
 };
