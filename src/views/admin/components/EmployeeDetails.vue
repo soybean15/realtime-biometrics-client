@@ -5,9 +5,27 @@
       <span class="text-md"> Employee Details</span>
     </div>
 
-    <div>
+    <div class="row">
       <span class="bg-surface">{{ selectedEmployee.created_at }}</span>
-      <q-btn outline label="delete" color="red"></q-btn>
+
+      <ConfirmDialog :pos="'top'">
+        <template v-slot:open-button="{open}">
+          <q-btn @click="open" outline label="delete" color="red"></q-btn>
+        </template>
+
+        <template v-slot:title>Delete Employee</template>
+
+        <template v-slot:message>{{ `Delete ${selectedEmployee.full_name}?` }}</template>
+
+        <template v-slot:buttons="{close}">
+          <div class="m-2">
+            <q-btn  outline @click="onDelete"  :loading="loading" size=".8rem" class="mx-1" dense label="Confirm" color="red"></q-btn>
+          <q-btn @click="close" outline size=".8rem"  class="mx-1" dense label="Cancel" color="primary"></q-btn>
+          </div>
+     
+        </template>
+      </ConfirmDialog>
+      
     </div>
   </div>
 
@@ -102,19 +120,33 @@
 import { useEmployeeStore } from "@/store/employee";
 import { storeToRefs } from "pinia";
 import router from "@/router";
+import ConfirmDialog from "@/components/ConfirmDialog.vue";
 import { ref } from "vue";
 
 export default {
+  components:{ConfirmDialog},
   setup() {
     const _employee = useEmployeeStore();
     const { selectedEmployee } = storeToRefs(_employee);
 
+    const loading = ref(false)
+    
     return {
       selectedEmployee,
+      _employee,
+      loading,
       tab: ref("profile"),
       back: () => {
         router.go(-1);
       },
+      onDelete: async()=>{
+        loading.value= true
+        const delayDuration = 500;
+          await new Promise((resolve) => setTimeout(resolve, delayDuration));
+          _employee.destroy()
+          loading.value = false
+          router.go(-1);
+      }
     };
   },
 };

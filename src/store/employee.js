@@ -74,15 +74,15 @@ export const useEmployeeStore = defineStore('employee', () => {
         
     }
 
-    const destroy= async(employee_id)=>{
+    const destroy= async()=>{
 
 
         try{
             await axios.post('api/admin/employee/delete',{
-                id:employee_id
+                id:selectedEmployee.value.id
             })
           
-            data.value['employees'].data =  data.value['employees'].data.filter(employee=> employee.id != employee_id)        
+            data.value['employees'].data =  data.value['employees'].data.filter(employee=> employee.id != selectedEmployee.value.id)        
 
         }catch(error){
 
