@@ -36,6 +36,11 @@
                {{ _position.name }}
                 
             </div>
+            <div class="text-semibold font-secondary">User:</div>
+            <div>
+               {{ employeeForm.user_id }}
+                
+            </div>
 
         </div>
 

@@ -105,6 +105,27 @@
                   {{ selectedEmployee.address }}
                 </div>
               </div>
+
+              <div class="mb-5">
+                <div class="font-secondary text-sm">Date Created:</div>
+                <div class="  font-bold font-primary">
+                  {{ formatTime(selectedEmployee.created_at) }}
+                </div>
+              </div>
+              <div class="mb-5">
+                <div class="font-secondary text-sm">Last Updated:</div>
+                <div class="  font-bold font-primary">
+                  {{ formatTime(selectedEmployee.updated_at) }}
+                </div>
+              </div>
+
+
+              <div class="mb-5">
+                <div class="font-secondary text-sm">Added By:</div>
+                <div class="  font-bold font-primary">
+                  {{ selectedEmployee.user.name}}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -122,7 +143,8 @@ import { storeToRefs } from "pinia";
 import router from "@/router";
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
 import { ref } from "vue";
-import moment from 'moment';
+import DateTimeFormatter from '@/composables/DateTimeFormat'
+//import moment from 'moment';
 
 export default {
   components:{ConfirmDialog},
@@ -149,7 +171,8 @@ export default {
           router.go(-1);
       },
       formatTime(timestamp) {
-          return moment(timestamp).format("MMM D, YYYY");
+        return new DateTimeFormatter(timestamp).format("MMM D, YYYY");
+        //  return moment(timestamp).format("MMM D, YYYY");
     },
     };
   },
