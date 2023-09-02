@@ -1,10 +1,15 @@
 import axios from 'axios'
-import { defineStore } from 'pinia'
+import { defineStore, storeToRefs } from 'pinia'
 import {  ref } from 'vue'
+import { useAuthStore } from './auth'
 
 export const useEmployeeStore = defineStore('employee', () => {
 
 
+
+    const authStore = useAuthStore()
+    const {user} = storeToRefs(authStore)
+    console.log(user.value)
 
     const data = ref({
         employees:null,
@@ -27,7 +32,8 @@ export const useEmployeeStore = defineStore('employee', () => {
         image:null,
         email:'',
         department_id:null,
-        position_id:null
+        position_id:null,
+        user_id:user.value.id
     })
 
     const selectedEmployee =ref(null)
@@ -113,6 +119,14 @@ export const useEmployeeStore = defineStore('employee', () => {
         }
     }
 
+    const update = async(attribute,val)=>{
+        await axios.post('api/admin/employee/update',{
+            id:selectedEmployee.value.id,
+            attribute:attribute,
+            value:val
+        })
+    }
+
     const selectEmployee = (employee)=>{
 
         selectedEmployee.value = employee
@@ -129,6 +143,7 @@ export const useEmployeeStore = defineStore('employee', () => {
         restore,
         destroy,
         paginate,
-        selectEmployee
+        selectEmployee,
+        update
     }
 })
