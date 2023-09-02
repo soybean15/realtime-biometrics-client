@@ -5,27 +5,46 @@
       <span class="text-md"> Employee Details</span>
     </div>
 
-    <div class="row items-center px-2" >
-      <span class="bg-surface p-1 mx-2 rounded-md shadow-sm font-secondary">{{ `Created at: ${formatTime(selectedEmployee.created_at)}` }}</span>
+    <div class="row items-center px-2">
+      <span class="bg-surface p-1 mx-2 rounded-md shadow-sm font-secondary">{{
+        `Created at: ${formatTime(selectedEmployee.created_at)}`
+      }}</span>
 
       <ConfirmDialog :pos="'top'">
-        <template v-slot:open-button="{open}">
+        <template v-slot:open-button="{ open }">
           <q-btn @click="open" dense label="delete" color="red"></q-btn>
         </template>
 
         <template v-slot:title>Delete Employee</template>
 
-        <template v-slot:message>{{ `Delete ${selectedEmployee.full_name}?` }}</template>
+        <template v-slot:message>{{
+          `Delete ${selectedEmployee.full_name}?`
+        }}</template>
 
-        <template v-slot:buttons="{close}">
+        <template v-slot:buttons="{ close }">
           <div class="m-2">
-            <q-btn  outline @click="onDelete"  :loading="loading" size=".8rem" class="mx-1" dense label="Confirm" color="red"></q-btn>
-          <q-btn @click="close" outline size=".8rem"  class="mx-1" dense label="Cancel" color="primary"></q-btn>
+            <q-btn
+              outline
+              @click="onDelete"
+              :loading="loading"
+              size=".8rem"
+              class="mx-1"
+              dense
+              label="Confirm"
+              color="red"
+            ></q-btn>
+            <q-btn
+              @click="close"
+              outline
+              size=".8rem"
+              class="mx-1"
+              dense
+              label="Cancel"
+              color="primary"
+            ></q-btn>
           </div>
-     
         </template>
       </ConfirmDialog>
-      
     </div>
   </div>
 
@@ -61,24 +80,46 @@
                 >{{ `ID: ${selectedEmployee.employee_id}` }}</span
               >
 
-              <div class="self-start p-3 m-2">
-                <div class="font-secondary text-sm">Email</div>
-                <div class="text-md font-bold font-primary">{{ selectedEmployee.email }}</div>
-                <div class="font-secondary text-sm ">
-                  Contact Number
-                </div>
-                <div class="text-md  font-bold font-primary">{{ selectedEmployee.contact_number }}</div>
+              <div class="self-start p-3 m-2 w-full">
+                <LabelInput
+                  :title="'Email'"
+                  :titleClass="'font-secondary font-bold'"
+                  :value="selectedEmployee.email"
+                  :attribute="'email'"
+                  @update="onUpdate"
+                />
+                <!-- <div class="font-secondary text-sm">Email</div>
+                <div class="text-md font-bold font-primary">{{ selectedEmployee.email }}</div> -->
+                <!-- <div class="font-secondary text-sm">Contact Number</div>
+                <div class="text-md font-bold font-primary">
+                  {{ selectedEmployee.contact_number }}
+                </div> -->
+
+                <LabelInput
+                  :title="'Contact Number'"
+                  :titleClass="'font-secondary font-bold'"
+                  :value="selectedEmployee.contact_number"
+                  :attribute="'contact_number'"
+                  @update="onUpdate"
+                />
+
+
+
                 <div class="font-secondary text-sm">Birth Date</div>
-                <div class="text-md  font-bold font-primary">{{ selectedEmployee.birthdate }}</div>
+                <div class="text-md font-bold font-primary">
+                  {{ selectedEmployee.birthdate }}
+                </div>
                 <div class="font-secondary text-sm">Gender</div>
-                <div class="text-md  font-bold font-primary">{{ selectedEmployee.gender }}</div>
+                <div class="text-md font-bold font-primary">
+                  {{ selectedEmployee.gender }}
+                </div>
               </div>
             </div>
 
-            <div class="col-6  column">
+            <div class="col-6 column">
               <div class="mb-5">
                 <div class="font-secondary text-sm">Position</div>
-                <div class="column  font-bold font-primary">
+                <div class="column font-bold font-primary">
                   <div
                     v-for="position in selectedEmployee.positions"
                     :key="position.id"
@@ -90,7 +131,7 @@
 
               <div class="mb-5">
                 <div class="font-secondary text-sm">Deparment/s</div>
-                <div class="column  font-bold font-primary">
+                <div class="column font-bold font-primary">
                   <div
                     v-for="department in selectedEmployee.departments"
                     :key="department.id"
@@ -101,29 +142,28 @@
               </div>
               <div class="mb-5">
                 <div class="font-secondary text-sm">Address</div>
-                <div class="  font-bold font-primary">
+                <div class="font-bold font-primary">
                   {{ selectedEmployee.address }}
                 </div>
               </div>
 
               <div class="mb-5">
                 <div class="font-secondary text-sm">Date Created:</div>
-                <div class="  font-bold font-primary">
+                <div class="font-bold font-primary">
                   {{ formatTime(selectedEmployee.created_at) }}
                 </div>
               </div>
               <div class="mb-5">
                 <div class="font-secondary text-sm">Last Updated:</div>
-                <div class="  font-bold font-primary">
+                <div class="font-bold font-primary">
                   {{ formatTime(selectedEmployee.updated_at) }}
                 </div>
               </div>
 
-
               <div class="mb-5">
                 <div class="font-secondary text-sm">Added By:</div>
-                <div class="  font-bold font-primary">
-                  {{ selectedEmployee.user.name}}
+                <div class="font-bold font-primary">
+                  {{ selectedEmployee.user.name }}
                 </div>
               </div>
             </div>
@@ -143,17 +183,18 @@ import { storeToRefs } from "pinia";
 import router from "@/router";
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
 import { ref } from "vue";
-import DateTimeFormatter from '@/composables/DateTimeFormat'
+import DateTimeFormatter from "@/composables/DateTimeFormat";
+import LabelInput from "@/components/LabelInput.vue";
 //import moment from 'moment';
 
 export default {
-  components:{ConfirmDialog},
+  components: { ConfirmDialog, LabelInput },
   setup() {
     const _employee = useEmployeeStore();
     const { selectedEmployee } = storeToRefs(_employee);
 
-    const loading = ref(false)
-    
+    const loading = ref(false);
+
     return {
       selectedEmployee,
       _employee,
@@ -162,18 +203,22 @@ export default {
       back: () => {
         router.go(-1);
       },
-      onDelete: async()=>{
-        loading.value= true
+      onDelete: async () => {
+        loading.value = true;
         const delayDuration = 500;
-          await new Promise((resolve) => setTimeout(resolve, delayDuration));
-          _employee.destroy()
-          loading.value = false
-          router.go(-1);
+        await new Promise((resolve) => setTimeout(resolve, delayDuration));
+        _employee.destroy();
+        loading.value = false;
+        router.go(-1);
       },
       formatTime(timestamp) {
         return new DateTimeFormatter(timestamp).format("MMM D, YYYY");
         //  return moment(timestamp).format("MMM D, YYYY");
-    },
+      },
+      onUpdate:(attribute,val)=>{
+        _employee.update(attribute,val)
+
+      }
     };
   },
 };

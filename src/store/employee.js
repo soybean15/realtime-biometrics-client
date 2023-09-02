@@ -119,6 +119,14 @@ export const useEmployeeStore = defineStore('employee', () => {
         }
     }
 
+    const update = async(attribute,val)=>{
+        await axios.post('api/admin/employee/update',{
+            id:selectedEmployee.value.id,
+            attribute:attribute,
+            value:val
+        })
+    }
+
     const selectEmployee = (employee)=>{
 
         selectedEmployee.value = employee
@@ -135,6 +143,7 @@ export const useEmployeeStore = defineStore('employee', () => {
         restore,
         destroy,
         paginate,
-        selectEmployee
+        selectEmployee,
+        update
     }
 })
