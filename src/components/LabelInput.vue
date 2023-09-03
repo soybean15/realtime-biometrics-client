@@ -43,6 +43,13 @@
             typeof type === 'undefined'
           "
         />
+
+        <SelectInput :data="data" :value="val"  @onSelect="onSelect"  v-if="type==='select'"/>
+
+
+
+
+
       </div>
 
       <q-btn
@@ -60,8 +67,17 @@
 
 <script>
 import { ref } from "vue";
+import SelectInput from "./SelectInput.vue";
+
 export default {
-  props: ["title", "titleClass", "value", "valueClass", "attribute", "type"],
+components:{ SelectInput },
+  props: ["title", 
+  "titleClass", 
+  "value", 
+  "valueClass", 
+  "attribute",
+   "type", 
+   'data'],
 
   emit: ["update"],
 
@@ -77,10 +93,21 @@ export default {
         onEdit.value = !onEdit.value;
       },
       onEnter: () => {
+       
         emit("update", props.attribute, val.value);
+
+        
 
         onEdit.value = false;
       },
+      onSelect:async(v)=>{
+
+        val.value = v
+        emit("update", props.attribute, v);
+      
+        onEdit.value = false;
+
+      }
     };
   },
 };

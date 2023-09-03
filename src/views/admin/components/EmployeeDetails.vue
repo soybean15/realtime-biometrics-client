@@ -114,12 +114,18 @@
                 />
 
 
+                <LabelInput
+                  :title="'Gender'"
+                  :titleClass="'font-secondary font-bold'"
+                  :value="selectedEmployee.gender"
+                  :type="'select'"
+                  :data="['Male', 'Female']"
+                  :valueClass="'text-md font-bold font-primary'"
+                  :attribute="'gender'"
+                  @update="onUpdate"
+                />
 
 
-                <div class="font-secondary text-sm">Gender</div>
-                <div class="text-md font-bold font-primary">
-                  {{ selectedEmployee.gender }}
-                </div>
               </div>
             </div>
 
@@ -135,6 +141,8 @@
                   </div>
                 </div>
               </div>
+            
+
 
               <div class="mb-5">
                 <div class="font-secondary text-sm">Deparment/s</div>
@@ -147,12 +155,17 @@
                   </div>
                 </div>
               </div>
-              <div class="mb-5">
-                <div class="font-secondary text-sm">Address</div>
-                <div class="font-bold font-primary">
-                  {{ selectedEmployee.address }}
-                </div>
-              </div>
+              
+
+              <LabelInput
+                  :title="'Address'"
+                  :titleClass="'font-secondary font-bold'"
+                  :value="selectedEmployee.address"
+                
+                  :valueClass="'text-md font-bold font-primary'"
+                  :attribute="'address'"
+                  @update="onUpdate"
+                />
 
               <div class="mb-5">
                 <div class="font-secondary text-sm">Date Created:</div>
@@ -194,6 +207,7 @@ import ConfirmDialog from "@/components/ConfirmDialog.vue";
 import {  onMounted, ref } from "vue";
 import DateTimeFormatter from "@/composables/DateTimeFormat";
 import LabelInput from "@/components/LabelInput.vue";
+import { usePositionStore } from "@/store/position";
 //import moment from 'moment';
 
 export default {
@@ -201,6 +215,8 @@ export default {
   setup() {
     const _employee = useEmployeeStore();
     const { selectedEmployee } = storeToRefs(_employee);
+    const _position = usePositionStore()
+    const {positions } = storeToRefs(_position)
 
     const loading = ref(false);
 
@@ -217,6 +233,7 @@ export default {
     return {
       selectedEmployee,
       _employee,
+      positions,
       loading,
       tab: ref("profile"),
       back: () => {
@@ -236,7 +253,7 @@ export default {
       },
       onUpdate:(attribute,val)=>{
         _employee.update(attribute,val)
-
+     
       }
     };
   },
