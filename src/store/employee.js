@@ -55,7 +55,7 @@ export const useEmployeeStore = defineStore('employee', () => {
     
         errors.value = []
         try{
-            //employeeForm.value.image = image
+    
 
              await axios.post('api/admin/employee/add',employeeForm.value,
             {
@@ -64,9 +64,7 @@ export const useEmployeeStore = defineStore('employee', () => {
                 }
             })
         
-            // console.log( data.value['employees'].data)
-            // data.value['employees'].data.push(response.data.employee)
-            // console.log( data.value['employees'].data)
+
             getEmployees()
 
         }catch(error){
@@ -78,6 +76,10 @@ export const useEmployeeStore = defineStore('employee', () => {
             }
         }
         
+    }
+
+    const get =async (id)=>{
+        selectedEmployee.value = (await axios.get(`api/admin/employee/${id}`)).data.employee
     }
 
     const destroy= async()=>{
@@ -144,6 +146,7 @@ export const useEmployeeStore = defineStore('employee', () => {
         destroy,
         paginate,
         selectEmployee,
-        update
+        update,
+        get
     }
 })

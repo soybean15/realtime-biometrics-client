@@ -1,51 +1,90 @@
 <template>
-    <div class="column ">
-        <div :class="titleClass ?? 'text-black'" class=" text-sm " >{{ title }}</div>
+  <div class="column">
+    <div :class="titleClass ?? 'text-black'" class="text-sm">{{ title }}</div>
 
+    <div class="row items-center w-full">
+      <div class="col-10 py-1" :class="valueClass" v-if="!onEdit">
+        {{ val }}
+      </div>
 
-        <div class="row items-center  w-full">
-            <div  class="col-10 py-1" v-if="!onEdit">{{ val }}</div>
-            <q-input class="col-10" @keyup.enter="onEnter" v-model="val" dense v-else />
-            <q-btn  class="col-1" round flat size=".7em" @click="change" color="primary" :icon="!onEdit ? 'edit': 'edit_off'" />
+      <div class="col-10" v-else>
+        <q-input
+          dense
+          v-model="val"
+          mask="date"
+          :rules="['date']"
+          v-if="type === 'date'"
+        >
+          <template v-slot:append>
+            <q-icon name="event" class="cursor-pointer">
+              <q-popup-proxy
+                cover
+                transition-show="scale"
+                transition-hide="scale"
+              >
+                <q-date v-model="val">
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="primary" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
 
-        </div>
-     
+        <q-input
+          @keyup.enter="onEnter"
+          v-model="val"
+          dense
+          v-if="
+            type === null ||
+            type === '' ||
+            type === 'text' ||
+            typeof type === 'undefined'
+          "
+        />
+      </div>
 
+      <q-btn
+        class="col-1"
+        round
+        flat
+        size=".7em"
+        @click="change"
+        color="primary"
+        :icon="!onEdit ? 'edit' : 'edit_off'"
+      />
     </div>
-  
+  </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref } from "vue";
 export default {
-    props:[
-        'title',
-        'titleClass',
-        'value',
-        'attribute'
-    ],
+  props: ["title", "titleClass", "value", "valueClass", "attribute", "type"],
 
-    emit:['update'],
+  emit: ["update"],
 
-    setup(props,{emit}){
-        const onEdit = ref(false)
-        const val = ref(props.value)
-        return {
-            onEdit,
-            val,
-            change(){
-                onEdit.value = !onEdit.value
-            },
-            onEnter:()=>{
-                emit('update',props.attribute, val.value)
+  setup(props, { emit }) {
+    const onEdit = ref(false);
+    const val = ref(props.value);
 
-                onEdit.value = false
-            }
-        }
-    }
-}
+    console.log(props.type);
+    return {
+      onEdit,
+      val,
+      change() {
+        onEdit.value = !onEdit.value;
+      },
+      onEnter: () => {
+        emit("update", props.attribute, val.value);
+
+        onEdit.value = false;
+      },
+    };
+  },
+};
 </script>
 
 <style>
-
 </style>

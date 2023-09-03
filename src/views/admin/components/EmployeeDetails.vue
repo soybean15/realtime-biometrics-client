@@ -1,5 +1,7 @@
 <template>
-  <div class="row p-2 items-center justify-between">
+  <div v-if="selectedEmployee">
+
+    <div class="row p-2 items-center justify-between">
     <div class="row items-center cursor-pointer">
       <q-icon @click="back" size="1.5rem" name="arrow_back"></q-icon>
       <span class="text-md"> Employee Details</span>
@@ -86,29 +88,34 @@
                   :titleClass="'font-secondary font-bold'"
                   :value="selectedEmployee.email"
                   :attribute="'email'"
+                  :valueClass="'text-md font-bold font-primary'"
                   @update="onUpdate"
                 />
-                <!-- <div class="font-secondary text-sm">Email</div>
-                <div class="text-md font-bold font-primary">{{ selectedEmployee.email }}</div> -->
-                <!-- <div class="font-secondary text-sm">Contact Number</div>
-                <div class="text-md font-bold font-primary">
-                  {{ selectedEmployee.contact_number }}
-                </div> -->
+  
 
                 <LabelInput
                   :title="'Contact Number'"
                   :titleClass="'font-secondary font-bold'"
                   :value="selectedEmployee.contact_number"
+                  :valueClass="'text-md font-bold font-primary'"
                   :attribute="'contact_number'"
                   @update="onUpdate"
                 />
 
 
+                <LabelInput
+                  :title="'Birth Date'"
+                  :titleClass="'font-secondary font-bold'"
+                  :value="selectedEmployee.birthdate"
+                  :type="'date'"
+                  :valueClass="'text-md font-bold font-primary'"
+                  :attribute="'birthdate'"
+                  @update="onUpdate"
+                />
 
-                <div class="font-secondary text-sm">Birth Date</div>
-                <div class="text-md font-bold font-primary">
-                  {{ selectedEmployee.birthdate }}
-                </div>
+
+
+
                 <div class="font-secondary text-sm">Gender</div>
                 <div class="text-md font-bold font-primary">
                   {{ selectedEmployee.gender }}
@@ -175,14 +182,16 @@
       <div class="col-6 bg-surface rounded-lg h-40"></div>
     </div>
   </div>
-</template>
+
+  </div>
+  </template>
 
 <script>
 import { useEmployeeStore } from "@/store/employee";
 import { storeToRefs } from "pinia";
 import router from "@/router";
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
-import { ref } from "vue";
+import {  onMounted, ref } from "vue";
 import DateTimeFormatter from "@/composables/DateTimeFormat";
 import LabelInput from "@/components/LabelInput.vue";
 //import moment from 'moment';
@@ -194,6 +203,16 @@ export default {
     const { selectedEmployee } = storeToRefs(_employee);
 
     const loading = ref(false);
+
+    onMounted(()=>{
+      if(!selectedEmployee.value){
+        console.log("null")
+        const id = router.currentRoute.value.params.id
+        _employee.get(id)
+      }
+    })
+    
+    console.log(selectedEmployee.value)
 
     return {
       selectedEmployee,
