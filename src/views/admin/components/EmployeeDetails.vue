@@ -70,9 +70,15 @@
           <div class="column">
             <div class="row">
               <div class="col-6 column items-center justify-center">
-                <q-avatar size="120px" rounded>
+
+                <PhotoUpload @upload="upload" :imageVal="selectedEmployee.image"/>
+
+                <!-- <q-avatar size="120px" rounded>
                   <img :src="selectedEmployee.image" />
-                </q-avatar>
+                </q-avatar> -->
+
+
+
                 <span class="p-2 pb-0 font-semibold">{{
                   selectedEmployee.full_name
                 }}</span>
@@ -239,10 +245,11 @@ import { onMounted, ref } from "vue";
 import DateTimeFormatter from "@/composables/DateTimeFormat";
 import LabelInput from "@/components/LabelInput.vue";
 import { usePositionStore } from "@/store/position";
+import PhotoUpload from "@/components/PhotoUpload.vue";
 //import moment from 'moment';
 
 export default {
-  components: { ConfirmDialog, LabelInput },
+  components: { ConfirmDialog, LabelInput,PhotoUpload },
   setup() {
     const _employee = useEmployeeStore();
     const { selectedEmployee } = storeToRefs(_employee);
@@ -285,6 +292,11 @@ export default {
       onUpdate: (attribute, val) => {
         _employee.update(attribute, val);
       },
+
+      upload:(val)=>{
+
+        _employee.upload(val)
+      }
     };
   },
 };
