@@ -8,29 +8,10 @@
       </div>
 
       <div class="col-10" v-else>
-        <q-input
-          dense
-          v-model="val"
-          mask="date"
-          :rules="['date']"
-          v-if="type === 'date'"
-        >
-          <template v-slot:append>
-            <q-icon name="event" class="cursor-pointer">
-              <q-popup-proxy
-                cover
-                transition-show="scale"
-                transition-hide="scale"
-              >
-                <q-date v-model="val">
-                  <div class="row items-center justify-end">
-                    <q-btn v-close-popup label="Close" color="primary" flat />
-                  </div>
-                </q-date>
-              </q-popup-proxy>
-            </q-icon>
-          </template>
-        </q-input>
+
+        <DateTime :dateVal="val" @onChange="onUpdate"  v-if="type === 'date'"/>
+       
+        
 
         <q-input
           @keyup.enter="onEnter"
@@ -44,7 +25,7 @@
           "
         />
 
-        <SelectInput :data="data" :value="val"  @onSelect="onSelect"  v-if="type==='select'"/>
+        <SelectInput :data="data" :value="val"  @onSelect="onUpdate"  v-if="type==='select'"/>
 
 
 
@@ -66,11 +47,12 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import {  ref } from "vue";
 import SelectInput from "./SelectInput.vue";
+import DateTime from "./DateTime.vue";
 
 export default {
-components:{ SelectInput },
+components:{ SelectInput,DateTime },
   props: ["title", 
   "titleClass", 
   "value", 
@@ -100,7 +82,7 @@ components:{ SelectInput },
 
         onEdit.value = false;
       },
-      onSelect:async(v)=>{
+      onUpdate :async(v)=>{
 
         val.value = v
         emit("update", props.attribute, v);

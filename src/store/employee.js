@@ -134,6 +134,22 @@ export const useEmployeeStore = defineStore('employee', () => {
         selectedEmployee.value = employee
     }
 
+    const upload=async(image)=>{
+        const response = await axios.post('api/admin/employee/update-photo',{
+            id:selectedEmployee.value.id,
+            image:image
+        },
+        {
+            headers:{
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+
+        selectedEmployee.value.image = response.data.image
+
+
+    }
+
 
     return {
         getEmployees,
@@ -147,6 +163,7 @@ export const useEmployeeStore = defineStore('employee', () => {
         paginate,
         selectEmployee,
         update,
-        get
+        get,
+        upload
     }
 })
