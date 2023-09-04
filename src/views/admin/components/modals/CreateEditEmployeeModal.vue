@@ -86,8 +86,7 @@
 import PersistentDialog from "@/components/PersistentDialog.vue";
 import EmployeeForm from '@/views/admin/components/modals/children/EmployeeForm.vue'
 import PositionAndDepartmentStep from "./children/PositionAndDepartmentStep.vue";
-//import PositionStep from "./children/PositionStep.vue";/
-//import DepartmentStep from "./children/DepartmentStep.vue";
+
 import SummaryStep from "./children/SummaryStep.vue";
 import { ref } from "vue";
 import { useEmployeeStore } from "@/store/employee";
