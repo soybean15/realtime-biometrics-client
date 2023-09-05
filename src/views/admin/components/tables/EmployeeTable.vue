@@ -19,7 +19,7 @@
 
         <div class="column">
           <span>
-            <span class="font-bold mr-1"> <Emb></Emb>ID:</span>
+            <span class="font-bold mr-1"> ID:</span>
             <span>{{ props.row.employee_id }}</span>
           </span>
           <span>
