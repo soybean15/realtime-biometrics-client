@@ -52,7 +52,7 @@ export default {
       print: () => {
         image.value = URL.createObjectURL(imageFile.value);
 
-        console.log("printt");
+      
       },
     };
   },
