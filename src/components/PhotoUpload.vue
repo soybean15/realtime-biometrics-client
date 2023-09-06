@@ -23,12 +23,13 @@
       size="2.2em"
     ></q-icon>
   </div>
+  <div class="text-red-400" v-if="errors && errors[attribute]">{{ onFail(errors[attribute][0]) }}</div>
 </template>
 
 <script>
 import { ref, watch } from "vue";
 export default {
-  props: ["imageVal"],
+  props: ["imageVal","errors",'attribute'],
     emits:['upload'],
   setup(props,{emit}) {
     const fileInputRef = ref(null);
@@ -54,6 +55,10 @@ export default {
 
       
       },
+      onFail(error){
+        image.value = props.imageVal;
+        return error
+      }
     };
   },
 };

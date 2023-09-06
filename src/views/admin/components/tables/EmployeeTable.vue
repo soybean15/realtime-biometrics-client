@@ -50,7 +50,7 @@
         <div class="row bg-transparent justify-center">
           <q-icon
             name="mail"
-            color="grey-9"
+            color="primary"
             class="mx-1 cursor-pointer"
             size="1.5rem"
           >
@@ -60,7 +60,7 @@
           </q-icon>
           <q-icon
             name="call"
-            color="grey-9"
+            color="primary"
             class="mx-1 cursor-pointer"
             size="1.5rem"
           >

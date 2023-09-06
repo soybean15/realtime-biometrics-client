@@ -71,7 +71,7 @@
             <div class="row">
               <div class="col-6 column items-center justify-center">
 
-                <PhotoUpload @upload="upload" :imageVal="selectedEmployee.image"/>
+                <PhotoUpload @upload="upload" :attribute="'image'" :imageVal="selectedEmployee.image" :errors="errors"/>
 
                 <!-- <q-avatar size="120px" rounded>
                   <img :src="selectedEmployee.image" />
@@ -82,10 +82,13 @@
                 <span class="p-2 pb-0 font-semibold">{{
                   selectedEmployee.full_name
                 }}</span>
-                <span
+                <!-- <span
                   class="bg-gray-800 text-white text-sm font-bold p-1 rounded-md"
                   >{{ `ID: ${selectedEmployee.employee_id}` }}</span
-                >
+                > -->
+                <q-chip size="md" text-color="white" color="secondary"> Employee ID: <b> {{`${selectedEmployee.employee_id}`}}</b> </q-chip>
+
+                <q-chip size="md" text-color="white" color="primary"> Biometrics ID: <b> {{`${selectedEmployee.biometrics_id}`}}</b> </q-chip>
 
                 <div class="self-start p-3 m-2 w-full">
                   <div class="row">
@@ -97,6 +100,7 @@
                         :attribute="'firstname'"
                         :valueClass="'text-md font-bold font-primary'"
                         @update="onUpdate"
+                        :errors="errors"
                       />
 
                     </div>
@@ -108,6 +112,7 @@
                         :attribute="'lastname'"
                         :valueClass="'text-md font-bold font-primary'"
                         @update="onUpdate"
+                        :errors="errors"
                       />
                       
                     </div>
@@ -123,6 +128,7 @@
                         :attribute="'middlename'"
                         :valueClass="'text-md font-bold font-primary'"
                         @update="onUpdate"
+                        
                       />
 
                     </div>
@@ -137,6 +143,7 @@
                     :attribute="'email'"
                     :valueClass="'text-md font-bold font-primary'"
                     @update="onUpdate"
+                    :errors="errors"
                   />
 
                   <LabelInput
@@ -146,6 +153,7 @@
                     :valueClass="'text-md font-bold font-primary'"
                     :attribute="'contact_number'"
                     @update="onUpdate"
+                    :errors="errors"
                   />
 
                   <LabelInput
@@ -252,7 +260,7 @@ export default {
   components: { ConfirmDialog, LabelInput,PhotoUpload },
   setup() {
     const _employee = useEmployeeStore();
-    const { selectedEmployee } = storeToRefs(_employee);
+    const { selectedEmployee, errors } = storeToRefs(_employee);
     const _position = usePositionStore();
     const { positions } = storeToRefs(_position);
 
@@ -273,6 +281,7 @@ export default {
       _employee,
       positions,
       loading,
+      errors,
       tab: ref("profile"),
       back: () => {
         router.go(-1);

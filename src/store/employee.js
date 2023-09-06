@@ -116,7 +116,7 @@ export const useEmployeeStore = defineStore('employee', () => {
                 data.value['trashed'].data.splice(index, 1, restoredEmployee);
             }
 
-            //           trashed.value.data = trashed.value.data.filter(employee=> employee.id != employee_id)        
+        
         } catch (error) {
 
 
@@ -125,11 +125,23 @@ export const useEmployeeStore = defineStore('employee', () => {
     }
 
     const update = async (attribute, val) => {
-        await axios.post('api/admin/employee/update', {
-            id: selectedEmployee.value.id,
-            attribute: attribute,
-            value: val
-        })
+
+        errors.value =[]
+        try{
+            await axios.post('api/admin/employee/update', {
+                id: selectedEmployee.value.id,
+                attribute: attribute,
+                value: val
+            })
+        }catch(error){
+            if (error.response.status === 412) {
+
+                errors.value = error.response.data.errors
+               
+
+            }
+        }
+     
     }
 
     const selectEmployee = (employee) => {
@@ -138,17 +150,28 @@ export const useEmployeeStore = defineStore('employee', () => {
     }
 
     const upload = async (image) => {
-        const response = await axios.post('api/admin/employee/update-photo', {
-            id: selectedEmployee.value.id,
-            image: image
-        },
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            })
+        errors.value =[]
+        try{
+            const response = await axios.post('api/admin/employee/update-photo', {
+                id: selectedEmployee.value.id,
+                image: image
+            },
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+    
+            selectedEmployee.value.image = response.data.image
+    
+        }catch(error){
+            if (error.response.status === 412) {
 
-        selectedEmployee.value.image = response.data.image
+                errors.value = error.response.data.errors
+               
+
+            }
+        }
 
 
     }

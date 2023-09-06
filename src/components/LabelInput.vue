@@ -42,6 +42,8 @@
         color="primary"
         :icon="!onEdit ? 'edit' : 'edit_off'"
       />
+
+      <div class="text-red-400" v-if="errors && errors[attribute]">{{ onFail(errors[attribute][0]) }}</div>
     </div>
   </div>
 </template>
@@ -59,7 +61,9 @@ components:{ SelectInput,DateTime },
   "valueClass", 
   "attribute",
    "type", 
-   'data'],
+   'data',
+   'errors'
+  ],
 
   emit: ["update"],
 
@@ -89,6 +93,12 @@ components:{ SelectInput,DateTime },
       
         onEdit.value = false;
 
+      },
+      onFail(value){
+        onEdit.value = true;
+       
+        
+        return value
       }
     };
   },
