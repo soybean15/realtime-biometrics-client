@@ -3,6 +3,8 @@ import Home from '@/views/HomeView'
 import { useAuthStore } from '@/store/auth'
 import { storeToRefs } from 'pinia'
 
+import setActiveOwner from '@/composables/setActiveOwners'
+
 
 const routes = [
   {
@@ -44,18 +46,29 @@ const routes = [
 
     children:[
       {
+        path: 'dashboard',
+        name: 'dashboard',
+        meta: { owner: 'dashboard' } ,
+        component:() => import( '@/views/admin/DashboardView'),
+        beforeEnter:  setActiveOwner
+      },
+      {
         path: 'users',
         name: 'user',
+        meta: { owner: 'user' } ,
         component:() => import( '@/views/admin/UserView'),
       },
       {
         path: 'employee',
         name: 'employee',
+        meta: { owner: 'employee' } ,
         component:() => import( '@/views/admin/EmployeeView'),
+        beforeEnter: setActiveOwner
       },
       {
         path: 'employee/:id',
         name: 'employeeDetails',
+        meta: { owner: 'employee' } ,
         component:() => import( '@/views/admin/components/EmployeeDetails'),
       }
 

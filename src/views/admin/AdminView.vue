@@ -28,7 +28,7 @@
           <q-list>
 
             <template v-for="(menuItem, index) in menuList" :key="index">
-              <q-item :to="{name:menuItem.to}" clickable :active="menuItem.label === 'Outbox'" v-ripple>
+              <q-item   @click="onClick" :to="{name:menuItem.to}" clickable :active="menuItem.to ===active" v-ripple>
                 <q-item-section avatar>
                   <q-icon :name="menuItem.icon" />
                 </q-item-section>
@@ -70,6 +70,7 @@ const menuList = [
   {
     icon: 'dashboard',
     label: 'Dashboard',
+    to: 'dashboard',
     separator: true
 
 
@@ -112,14 +113,23 @@ const menuList = [
   },
 ]
   import { ref } from 'vue'
+  import { useNavStore } from '@/store/nav'
+import { storeToRefs } from 'pinia'
   
   export default {
     setup () {
       const leftDrawerOpen = ref(false)
+      
+      const nav = useNavStore()
   
+      const {active } = storeToRefs(nav)
       return {
         leftDrawerOpen,
         menuList,
+        active,
+        onClick:()=>{
+          nav.getActive()
+        },
         toggleLeftDrawer () {
           leftDrawerOpen.value = !leftDrawerOpen.value
         }
