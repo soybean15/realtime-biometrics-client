@@ -1,10 +1,27 @@
 <template>
-  <DataTable :title="'Users'" :rows="users" :columns="columns" v-if="users">
+  <DataTable :title="'Users'" :rows="users.data" :columns="columns"
+  :cells="['actions']"
+  :pagination="{max:users.last_page, max_pages:6 }"
+  v-if="users">
 
-    <template v-slot:top-right>
-
+    <template v-slot:top>
      <SearchBar/>
         
+    </template>
+
+    <template v-slot:actions="{props}">
+      <q-td :props="props">
+
+        <ConfirmDialog >
+          <template v-slot:open-button="{open}">
+          
+            <q-btn :color="props.row.enable?'primary':'blue-grey-7'" :label="props.row.enable ? 'Disable' : 'Enable' " @click="open"></q-btn>
+          </template>
+
+        </ConfirmDialog>
+      
+        
+      </q-td>
     </template>
 </DataTable>
  
@@ -16,6 +33,7 @@ import { useAuthStore } from '@/store/auth'
 import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
 import SearchBar from '@/components/SearchBar.vue'
+import ConfirmDialog from '@/components/ConfirmDialog.vue'
 
 
 
@@ -30,20 +48,33 @@ const columns = [
       format: val => `${val}`,
       sortable: true
     },
+    {
+      name: 'email',
+      required: true,
+      label: 'Email',
+      align: 'left',
+      field: row => row.name,
+      format: val => `${val}`,
+      sortable: true
+    },
+    {
+      name: 'actions',
+      required: true,
+      label: 'Actions',
+      align: 'center',
+
+    },
     
   ]
 
-  const rows = [
-   { "id": 1, "name": "Miguel Gorczany III", "email": "mparker@example.org", "email_verified_at": "2023-08-23T10:46:34.000000Z", "two_factor_secret": null, "two_factor_recovery_codes": null, "two_factor_confirmed_at": null, "created_at": "2023-08-23T10:46:34.000000Z", "updated_at": "2023-08-23T10:46:34.000000Z", "roles": [], "admin": false }, 
-  ]
 
-  
 
 
 export default {
     components:{
         DataTable,
-        SearchBar
+        SearchBar,
+        ConfirmDialog
     },
     setup(){
 
@@ -63,7 +94,7 @@ export default {
         return{
             users,
             columns,
-            rows
+            
         }
     }
 
