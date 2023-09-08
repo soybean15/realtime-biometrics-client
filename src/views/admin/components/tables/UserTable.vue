@@ -3,20 +3,36 @@
     :title="'Users'"
     :rows="users.data"
     :columns="columns"
-    :cells="['actions']"
+    :cells="['actions','role']"
     :pagination="{ max: users.last_page, max_pages: 6 }"
     v-if="users"
   >
+    <template v-slot:role="{props}">
+      <q-td :props="props">
+
+        <div v-for="role in props.row.roles" :key="role.id">
+         
+          <q-chip size="md" :icon="role.name  === 'Admin' ? 'admin_panel_settings': 'person'">
+            {{ role.name }}
+      </q-chip>
+
+        </div>
+      
+      </q-td>
+    </template>
+
+
     <template v-slot:top>
       <SearchBar />
     </template>
+
 
     <template v-slot:actions="{ props }">
       <q-td :props="props">
         <ConfirmDialog :title="'Disable User'" :width="'400px'">
           <template v-slot:open-button="{ open }">
             <q-btn
-              :color="!props.row.enable ? 'blue-grey-7' : 'primary'"
+              :color="!props.row.enable ? 'blue-grey-5' : 'green'"
               :label="!props.row.enable ? 'Enable' : 'Disable'"
               @click="open"
             ></q-btn>
@@ -81,9 +97,16 @@ const columns = [
     required: true,
     label: "Email",
     align: "left",
-    field: (row) => row.name,
+    field: (row) => row.email,
     format: (val) => `${val}`,
     sortable: true,
+  },
+  {
+    name: "role",
+    required: true,
+    label: "Role",
+    align: "center",
+
   },
   {
     name: "actions",

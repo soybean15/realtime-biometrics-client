@@ -56,7 +56,7 @@
             <!-- step===2 ? !_position || !_department <--this line disables the button if department or position is null -->
             <q-btn
               :loading="loading"
-              :disable="step === 2 ? !_position || !_department : false"
+              :disable="step === 2 ? !position || !department : false"
               @click="step === 3 ? onSubmit(close) : $refs.stepper.next()"
               color="deep-orange"
               :label="step === 3 ? 'Finish' : 'Continue'"
@@ -139,9 +139,9 @@ export default {
     const positionsStore = usePositionStore();
     const departmentStore = useDepartmentStore();
 
-    const { _position } = storeToRefs(positionsStore);
+    const { position } = storeToRefs(positionsStore);
     const { selectedEmployee } = storeToRefs(store);
-    const { _department } = storeToRefs(departmentStore);
+    const { department } = storeToRefs(departmentStore);
 
     const loading = ref(false);
 
@@ -149,8 +149,8 @@ export default {
 
     return {
       step: ref(1),
-      _position,
-      _department,
+      position,
+      department,
       loading,
       messageDialog,
       selectedEmployee,

@@ -68,9 +68,8 @@ const routes = [
           }
         
           if (user.value && user.value.admin) {
-            
-    
-            next();
+            setActiveOwner(to, from, next)
+           
           } else {
     
             next(from.path);
