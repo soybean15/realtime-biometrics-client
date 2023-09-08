@@ -15,7 +15,7 @@
     <template v-slot:content="{ close }">
       <div class="p-5">
         <q-form @submit="onSubmit(close)" @reset="onReset" class="q-gutter-md">
-          <span class="text-red-500 text-xs" v-if="errors.email">{{
+          <span class="text-red-500 text-xs" v-if="errors &&  errors.email">{{
             `*${errors.email[0]}`
           }}</span>
           <q-input
@@ -30,7 +30,7 @@
             ]"
           />
           <!-- :rules="[(val) => (val && val.length > 0) || 'Please type something']" -->
-          <span class="text-red-500 text-xs" v-if="errors.password">{{
+          <span class="text-red-500 text-xs" v-if="errors && errors.password">{{
             `*${errors.password[0]}`
           }}</span>
           <q-input
@@ -45,6 +45,15 @@
             ]"
           />
 
+
+          <div class="row justify-center">
+
+            <span class="text-red-500 text-md " v-if="errors && errors.message">{{
+            `${errors.message}`
+          }}</span>
+
+          </div>
+       
           <div class="row justify-end">
             <q-btn
               :loading="loading"

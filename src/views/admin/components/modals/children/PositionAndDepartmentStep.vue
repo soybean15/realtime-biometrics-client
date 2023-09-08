@@ -5,7 +5,7 @@
     <span>Select Position</span>
     <q-select
       outlined
-      v-model="_position"
+      v-model="position"
       use-input
       hide-selected
       fill-input
@@ -27,7 +27,7 @@
     <span>Select Position</span>
     <q-select
       outlined
-      v-model="_department"
+      v-model="department"
       use-input
       hide-selected
       fill-input
@@ -70,18 +70,18 @@ const getOptions = (arr) => {
 };
 export default {
   setup() {
-    const position = usePositionStore();
-    const deparment = useDepartmentStore();
+    const positionStore = usePositionStore();
+    const deparmentStore = useDepartmentStore();
 
-    const { positions, _position } = storeToRefs(position);
-    const { departments, _department } = storeToRefs(deparment);
+    const { positions, position } = storeToRefs(positionStore);
+    const { departments, department } = storeToRefs(deparmentStore);
 
     const departmentOptions = ref(getOptions(departments.value));
     const positionOptions = ref(getOptions(positions.value));
 
     return {
-      _position,
-      _department,
+      position,
+      department,
       positionOptions,
       departmentOptions,
       filterPosition(val, update) {

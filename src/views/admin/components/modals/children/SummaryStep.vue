@@ -27,13 +27,13 @@
 
             <div class="text-semibold font-secondary">Department/s:</div>
             <div class="flex flex-wrap">
-                {{ _department.name }}
+                {{ department.name }}
                 
             </div>
 
             <div class="text-semibold font-secondary">Positions/s:</div>
             <div>
-               {{ _position.name }}
+               {{ position.name }}
                 
             </div>
             <div class="text-semibold font-secondary">User:</div>
@@ -62,21 +62,21 @@ export default {
 
     setup(){
         const employee = useEmployeeStore()
-        const department = useDepartmentStore()
-        const position = usePositionStore()
+        const dept = useDepartmentStore()
+        const pos = usePositionStore()
 
         const {employeeForm} = storeToRefs(employee)
-        const {_department} = storeToRefs(department)
-        const {_position} = storeToRefs(position)
+        const {department} = storeToRefs(dept)
+        const {position} = storeToRefs(pos)
 
 
-        employeeForm.value.department_id = _department.value.id
-        employeeForm.value.position_id = _position.value.id
+        employeeForm.value.department_id = department.value.id
+        employeeForm.value.position_id = position.value.id
 
         return {
             employeeForm,
-            _department,
-            _position,
+            position,
+            department,
             set:(str)=>{
                 if(str==null || str.replace(/ /g, '').length === 0){
                     return 'N/A';

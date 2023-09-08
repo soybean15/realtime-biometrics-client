@@ -17,7 +17,7 @@
         as child of QToolbar
       -->
 
-      <q-btn flat :to="{name:'admin'}" label="Administrator" v-if="user && user.admin"/>
+      <q-btn flat :to="{name:'admin'}" label="Administrator" v-if="user && user.enable"/>
       <LoginView />
       <RegisterView />
     </q-toolbar>

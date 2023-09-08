@@ -6,7 +6,7 @@ export const usePositionStore = defineStore('position', () => {
 
     const positions = ref(null)
 
-    const _position = ref(null)
+    const position = ref(null)
 
     const selectedPositions = ref([])
     const getPositions=async()=>{
@@ -19,7 +19,7 @@ export const usePositionStore = defineStore('position', () => {
         positions,
         getPositions,
         selectedPositions,
-        _position
+        position
     }
 
 
