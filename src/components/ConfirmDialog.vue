@@ -21,7 +21,7 @@
       </q-card>
     </q-dialog>
   </div>
-  {{width ?? '350px'  }}
+
 </template>
 
 <script>

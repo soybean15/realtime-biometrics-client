@@ -16,8 +16,8 @@
         <ConfirmDialog :title="'Disable User'" :width="'400px'">
           <template v-slot:open-button="{ open }">
             <q-btn
-              :color="props.row.enable ? 'primary' : 'blue-grey-7'"
-              :label="props.row.enable ? 'Disable' : 'Enable'"
+              :color="!props.row.enable ? 'blue-grey-7' : 'primary'"
+              :label="!props.row.enable ? 'Enable' : 'Disable'"
               @click="open"
             ></q-btn>
           </template>
@@ -42,7 +42,7 @@
               class="m-1"
               color="primary"
               @click="onEnable(props.row.id ,close)"
-              label="Enable"
+              :label=" props.row.enable ? 'Disable' : 'Enable'"
             />
             <q-btn
               dense

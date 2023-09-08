@@ -35,12 +35,25 @@ export const useAuthStore = defineStore('auth', () => {
 
     const getUser = async () => {
         await axios.get('sanctum/csrf-cookie')
+        errors.value = []
         try {
             user.value = (await axios.get('api/user')).data
 
+        
         } catch (error) {
             console.log('error')
+            if (error.response.status === 403) {
+                errors.value = error.response.data
+
+                logout()
+                console.log(error.response.data
+                    )
+
+            }
+            return false
+
         }
+        return true
 
     }
 
@@ -56,17 +69,33 @@ export const useAuthStore = defineStore('auth', () => {
         errors.value = []
         try {
             await axios.post('login', loginForm.value)
-            close()
-            loginForm.value = null
+
+           if( await getUser()){
+                close()
+                loginForm.value.email =''
+                loginForm.value.password =''
+            
+           }
+            // if(!user.value.enable){
+            //     logout()
+            //     throw new Error("User is not enabled");
+    
+            // }else{
+                
+    
+
+      
         } catch (error) {
             if (error.response.status === 422) {
                 errors.value = error.response.data.errors
 
             }
+         
+
+            //catch here
 
         }
-        getUser()
-
+        
     }
 
     const logout = async () => {

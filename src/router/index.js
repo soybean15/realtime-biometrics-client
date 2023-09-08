@@ -33,7 +33,7 @@ const routes = [
        await store.getUser()
       }
     
-      if (user.value && user.value.admin) {
+      if (user.value && user.value.enable) {
         
 
         next();
@@ -57,6 +57,25 @@ const routes = [
         name: 'user',
         meta: { owner: 'user' } ,
         component:() => import( '@/views/admin/UserView'),
+        beforeEnter: async (to, from, next) => {
+          const store = useAuthStore()
+          console.log(from.path)
+          console.log(to.path)
+    
+          const {user} = storeToRefs(store)
+          if(!user.value){
+           await store.getUser()
+          }
+        
+          if (user.value && user.value.admin) {
+            
+    
+            next();
+          } else {
+    
+            next(from.path);
+          }
+        }
       },
       {
         path: 'employee',
