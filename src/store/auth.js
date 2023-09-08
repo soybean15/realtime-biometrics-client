@@ -1,18 +1,16 @@
 import axios from 'axios'
 import { defineStore } from 'pinia'
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 
 export const useAuthStore = defineStore('auth', () => {
 
 
-    const _user = ref(null)
-
-    const user = computed(() => _user.value)
+    const user = ref(null)
 
 
 
-    const _users = ref(null)
-    const users = computed(()=>_users.value)
+    const users = ref(null)
+
 
 
 
@@ -23,12 +21,12 @@ export const useAuthStore = defineStore('auth', () => {
     })
     const registerForm = ref({
         email: '',
-        name:'',
+        name: '',
         password: '',
-        password_confirmation:''
+        password_confirmation: ''
     })
 
-  
+
     const errors = ref([])
 
 
@@ -38,7 +36,7 @@ export const useAuthStore = defineStore('auth', () => {
     const getUser = async () => {
         await axios.get('sanctum/csrf-cookie')
         try {
-            _user.value = (await axios.get('api/user')).data
+            user.value = (await axios.get('api/user')).data
 
         } catch (error) {
             console.log('error')
@@ -46,68 +44,86 @@ export const useAuthStore = defineStore('auth', () => {
 
     }
 
-    const getUsers = async()=>{
+    const getUsers = async () => {
 
-        _users.value  = (await axios.get('api/admin/user')).data.users
-
-        console.log(_users.value)
+        users.value = (await axios.get('api/admin/user')).data.users
 
     }
 
 
     const login = async (close) => {
 
-        errors.value=[]
-        try{
+        errors.value = []
+        try {
             await axios.post('login', loginForm.value)
             close()
-            loginForm.value= null
-        }catch(error){
-            if(error.response.status === 422){
+            loginForm.value = null
+        } catch (error) {
+            if (error.response.status === 422) {
                 errors.value = error.response.data.errors
-               
+
             }
 
         }
         getUser()
-       
+
     }
 
     const logout = async () => {
         await axios.post('logout')
-        _user.value = null
+        user.value = null
 
     }
 
-    const register = async (close)=>{
+    const register = async (close) => {
 
-        errors.value=[]
-        try{
-            await axios.post('register',registerForm.value)
-            registerForm.value=null
+        errors.value = []
+        try {
+            await axios.post('register', registerForm.value)
+            registerForm.value = null
             close()
 
-        }catch(error){
-            if(error.response.status === 422){
+        } catch (error) {
+            if (error.response.status === 422) {
                 errors.value = error.response.data.errors
-               
+
             }
 
         }
         getUser()
-       
+
+
+
     }
 
-    return {
-        users,
-        user,
-        getUser,
-        getUsers,
-        login,
-        logout,
-        register,
-        loginForm,
-        registerForm,
-        errors
+
+    const enable = async (id) => {
+
+        const response = await axios.post('api/admin/user/enable',{id:id})
+
+
+        const userIndex = users.value.data.findIndex(u => u.id === id);
+
+
+        if (userIndex !== -1) {
+            // Replace the user at the found index with the new user data
+            users.value.data[userIndex] = response.data.user;
+
+        }
+
     }
-})
+
+        return {
+            users,
+            user,
+            getUser,
+            getUsers,
+            login,
+            logout,
+            register,
+            loginForm,
+            registerForm,
+            errors,
+            enable
+        }
+    })

@@ -6,7 +6,7 @@
     <q-btn label="Left" icon="keyboard_arrow_left" color="primary" @click="open('left')" /> -->
 
     <q-dialog v-model="dialog" :position="position">
-      <q-card style="width: 350px">
+      <q-card :style="{'width':width ?? '350px'}">
  
 
         <q-card-section class="row items-center no-wrap">
@@ -21,13 +21,14 @@
       </q-card>
     </q-dialog>
   </div>
+  {{width ?? '350px'  }}
 </template>
 
 <script>
 import {ref} from 'vue'
 export default {
 
-    props:['pos'],
+    props:['pos','width'],
     setup (props) {
     const dialog = ref(false)
     const position = ref('top')
