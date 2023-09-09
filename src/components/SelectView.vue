@@ -1,10 +1,11 @@
 <template>
     <q-select
-        filled
+        outlined
         v-model="model"
         use-input
+        dense
         input-debounce="0"
-        label="Simple filter"
+        :label="label ?? 'Label'"
         :options="options"
         :option-label="'name'"
         @filter="filterFn"
@@ -31,7 +32,7 @@ import { ref, watch } from 'vue'
 
 
 export default {
-    props:['data'],
+    props:['data','label'],
     emits: ["onChange"],
   setup (props,{emit}) {
     const options = ref(props.data)
