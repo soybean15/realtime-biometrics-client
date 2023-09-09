@@ -121,10 +121,11 @@
         <div class="row w-[600px] items-center">
           <div class="q-table__title">Employees</div>
 
-          <SearchBar class="px-2 " />
         </div>
 
-        <div class="row">
+        <div class="row items-center">
+
+          <SearchBar class="px-2 " />
           <CreateEditEmployeeModal :title="'Add New Employees'">
           </CreateEditEmployeeModal>
           <ArchiveModal />
@@ -132,10 +133,11 @@
       </div>
 
 
-      <div class="row">
-        <SelectView :data="departments" @onChange="filter($event,'departments')"/>
+      <div class="row items-center ">
+        <span class="pr-3">Filter :</span>
+        <SelectView class="m-2 ml-0" :data="departments" :label="'Department'" @onChange="filter($event,'departments')"/>
 
-        <SelectView :data="positions" @onChange="filter($event,'positions')"/>
+        <SelectView class="m-2 ml-0" :data="positions" :label="'Position'" @onChange="filter($event,'positions')"/>
       </div>
     </template>
   </DataTable>
