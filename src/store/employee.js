@@ -85,6 +85,16 @@ export const useEmployeeStore = defineStore('employee', () => {
         selectedEmployee.value = (await axios.get(`api/admin/employee/${id}`)).data.employee
     }
 
+    const filter = async (attribute,id)=>{
+
+        const response = await axios.post('api/admin/employee/filter',{
+            attribute:attribute,
+            id: id
+        })
+        data.value['employees'] = response.data.employees
+
+    }
+
     const destroy = async () => {
 
 
@@ -190,6 +200,7 @@ export const useEmployeeStore = defineStore('employee', () => {
         selectEmployee,
         update,
         get,
-        upload
+        upload,
+        filter
     }
 })

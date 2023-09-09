@@ -2,9 +2,17 @@
   <DataTable
     :rows="data['employees'].data"
     :columns="columns"
-    :cells="['employee_id','fullname','contacts', 'actions', 'image','position','department']"
+    :cells="[
+      'employee_id',
+      'fullname',
+      'contacts',
+      'actions',
+      'image',
+      'position',
+      'department',
+    ]"
     @onChangePage="onChangePage"
-    :pagination="{max:data['employees'].last_page, max_pages:6 }"
+    :pagination="{ max: data['employees'].last_page, max_pages: 6 }"
     v-if="data['employees']"
   >
     <!-- <template v-slot:image="{ props }">
@@ -13,10 +21,8 @@
       </q-td>
     </template> -->
 
-
-    <template v-slot:employee_id="{props}">
+    <template v-slot:employee_id="{ props }">
       <q-td :props="props">
-
         <div class="column">
           <span>
             <span class="font-bold mr-1"> ID:</span>
@@ -27,22 +33,17 @@
             <span class="font-secondary">{{ props.row.biometrics_id }}</span>
           </span>
         </div>
-
-    
-
       </q-td>
     </template>
-    <template v-slot:fullname="{props}">
+    <template v-slot:fullname="{ props }">
       <q-td :props="props">
-
         <div class="row items-center w-fit">
           <q-avatar>
-          <img :src="props.row.image" />
-        </q-avatar>
+            <img :src="props.row.image" />
+          </q-avatar>
 
-        <div class="text-md px-2">{{ props.row.full_name }}</div>
+          <div class="text-md px-2">{{ props.row.full_name }}</div>
         </div>
-
       </q-td>
     </template>
     <template v-slot:contacts="{ props }">
@@ -72,72 +73,72 @@
       </q-td>
     </template>
 
-    <template v-slot:position="{props}">
+    <template v-slot:position="{ props }">
       <q-td :props="props">
-
-        <q-chip size="md"  v-for="position in props.row.positions" :key="position.id">
-        {{ position.name }}
-      </q-chip>
-
-      
+        <q-chip
+          size="md"
+          v-for="position in props.row.positions"
+          :key="position.id"
+        >
+          {{ position.name }}
+        </q-chip>
       </q-td>
-  
     </template>
 
-
-
-    <template v-slot:department="{props}">
+    <template v-slot:department="{ props }">
       <q-td :props="props">
-
-        <div >
-              <q-chip size="md"  v-for="department in props.row.departments" :key="department.id">
-        {{ department.name }}
-      </q-chip>
-
+        <div>
+          <q-chip
+            size="md"
+            v-for="department in props.row.departments"
+            :key="department.id"
+          >
+            {{ department.name }}
+          </q-chip>
         </div>
-
-    
-      
       </q-td>
-  
     </template>
 
     <template v-slot:actions="{ props }">
-      <q-td   :props="props">
-        
-          <q-btn
-            dense
-            :to="{ name: 'employeeDetails', params: { id: props.row.id } }"
-            class="w-28 text-xs"
-            color="primary"
-            glossy
-            @click="store.selectEmployee(props.row)"
-            text-color="white"
-            push
-            label="View Details"
-            icon="preview"
-          />
-  
-        
+      <q-td :props="props">
+        <q-btn
+          dense
+          :to="{ name: 'employeeDetails', params: { id: props.row.id } }"
+          class="w-28 text-xs"
+          color="primary"
+          glossy
+          @click="store.selectEmployee(props.row)"
+          text-color="white"
+          push
+          label="View Details"
+          icon="preview"
+        />
       </q-td>
     </template>
 
     <template v-slot:top>
-      <div class="col-1 q-table__title">Employees</div>
+      <div class="row justify-between w-full items-center">
+        <div class="row w-[600px] items-center">
+          <div class="q-table__title">Employees</div>
 
-      <SearchBar class="col-9 px-2" />
+          <SearchBar class="px-2 " />
+        </div>
+
+        <div class="row">
+          <CreateEditEmployeeModal :title="'Add New Employees'">
+          </CreateEditEmployeeModal>
+          <ArchiveModal />
+        </div>
+      </div>
+
 
       <div class="row">
-        <CreateEditEmployeeModal :title="'Add New Employees'">
-          
-        </CreateEditEmployeeModal>
-        <ArchiveModal />
+        <SelectView :data="departments" @onChange="filter($event,'departments')"/>
+
+        <SelectView :data="positions" @onChange="filter($event,'positions')"/>
       </div>
     </template>
-
   </DataTable>
-
-
 </template>
   
   <script>
@@ -148,10 +149,11 @@ import { useEmployeeStore } from "@/store/employee";
 import SearchBar from "@/components/SearchBar.vue";
 import { onMounted, ref } from "vue";
 import { storeToRefs } from "pinia";
-
+import SelectView from "@/components/SelectView.vue";
+import { useDepartmentStore } from "@/store/department";
+import { usePositionStore } from "@/store/position";
 const columns = [
-
-{
+  {
     name: "employee_id",
     required: true,
     label: " ID",
@@ -165,12 +167,12 @@ const columns = [
     required: true,
     label: "Employee Name",
     align: "left",
-     field: (row) => row.full_name,
+    field: (row) => row.full_name,
     // format: (row) =>
     //   `${row.lastname}, ${row.firstname} ${
     //     row.middlename ? row.middlename[0] : ""
     //   }.`,
-     sortable: true,
+    sortable: true,
   },
   {
     name: "contacts",
@@ -211,14 +213,19 @@ export default {
     DataTable,
     SearchBar,
     CreateEditEmployeeModal,
-    ArchiveModal
+    ArchiveModal,
+    SelectView
   },
   setup() {
     const store = useEmployeeStore();
 
-    const { data } = storeToRefs(store);
+    const departmentStore = useDepartmentStore()
+    const positionStore = usePositionStore()
+    const {departments} = storeToRefs(departmentStore)
+    const {positions} = storeToRefs(positionStore)
+     const { data } = storeToRefs(store);
 
-    const loading = ref([])
+    const loading = ref([]);
 
     onMounted(() => {
       store.getEmployees();
@@ -226,24 +233,33 @@ export default {
 
     return {
       columns,
+      departments,
+      positions,
       data,
       store,
       loading,
-      onDelete:async(employee_id)=>{
-
-        loading.value[employee_id] = true
+      onDelete: async (employee_id) => {
+        loading.value[employee_id] = true;
         await new Promise((resolve) => setTimeout(resolve, 1000));
-        await store.destroy(employee_id)   
-        loading.value[employee_id]= false
+        await store.destroy(employee_id);
+        loading.value[employee_id] = false;
       },
 
-      onChangePage:(page)=>{
-        console.log(data.value['employees'].links[page].url)
-        console.log(page)
+      onChangePage: (page) => {
+        console.log(data.value["employees"].links[page].url);
+        console.log(page);
 
-        let name = 'employees'
+        let name = "employees";
 
-        store.paginate(name,data.value[name].links[page].url)
+        store.paginate(name, data.value[name].links[page].url);
+      },
+      filter:async(val, attribute)=>{
+
+        if(val){
+
+          store.filter(attribute,val.id)
+        }
+
       }
     };
   },
