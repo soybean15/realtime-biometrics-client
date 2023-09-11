@@ -23,7 +23,7 @@
 
 
     <template v-slot:top>
-      <SearchBar />
+      <SearchBar @search="search" />
     </template>
 
 
@@ -146,6 +146,10 @@ export default {
         loading.value = false;
         close()
       },
+      search:(val)=>{
+
+        store.search(val)
+      }
     };
   },
 };

@@ -46,13 +46,12 @@ export default {
       fileInputRef,
       image,
       imageFile,
+
       upload: () => {
         fileInputRef.value.pickFiles();
       },
-
       print: () => {
         image.value = URL.createObjectURL(imageFile.value);
-
       
       },
       onFail(error){
