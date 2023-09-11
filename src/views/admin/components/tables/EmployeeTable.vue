@@ -125,7 +125,7 @@
 
         <div class="row items-center">
 
-          <SearchBar class="px-2 " />
+          <SearchBar class="px-2 " @search="search" />
           <CreateEditEmployeeModal :title="'Add New Employees'">
           </CreateEditEmployeeModal>
           <ArchiveModal />
@@ -262,6 +262,9 @@ export default {
           store.filter(attribute,val.id)
         }
 
+      },
+      search:(val)=>{
+        store.search(val)
       }
     };
   },

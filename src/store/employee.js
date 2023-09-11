@@ -186,6 +186,15 @@ export const useEmployeeStore = defineStore('employee', () => {
 
     }
 
+    const search = async(val)=>{
+        const response = await axios.post('api/admin/employee/search', {value:val})
+
+        data.value['employees'] = response.data.employees
+
+
+
+    }
+
 
     return {
         getEmployees,
@@ -201,6 +210,7 @@ export const useEmployeeStore = defineStore('employee', () => {
         update,
         get,
         upload,
-        filter
+        filter,
+        search
     }
 })
