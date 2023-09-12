@@ -5,11 +5,17 @@
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
+          
           <q-avatar>
             <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
           </q-avatar>
           Admin
+
+          
         </q-toolbar-title>
+
+        <UserMenu/>
+        
       </q-toolbar>
     </q-header>
 
@@ -69,8 +75,10 @@ import { ref } from "vue";
 import { useNavStore } from "@/store/nav";
 import { useAuthStore } from "@/store/auth";
 import { storeToRefs } from "pinia";
+import UserMenu from "./components/UserMenu.vue";
 
 export default {
+  components:{UserMenu},
   setup() {
     const leftDrawerOpen = ref(false);
 

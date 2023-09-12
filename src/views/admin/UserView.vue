@@ -1,23 +1,19 @@
 <template>
-
-<UserTable/>
+  <div class="p-3">
+    <UserTable />
+    </div>
 </template>
 
 <script>
-import UserTable from './components/tables/UserTable.vue'
-
+import UserTable from "./components/tables/UserTable.vue";
 
 export default {
-    components:{
-      UserTable
-    },
-    setup(){
-
-    }
-
-}
+  components: {
+    UserTable,
+  },
+  setup() {},
+};
 </script>
 
 <style>
-
 </style>

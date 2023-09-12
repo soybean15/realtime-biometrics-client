@@ -16,7 +16,12 @@ const routes = [
         path: '/home',
         name: 'home',
         component:Home,
-      }
+      },
+      {
+        path: '/error', 
+        name: 'error',
+        component: () => import('@/views/components/ErrorView.vue'), 
+      },
 
     ],
     
@@ -88,7 +93,9 @@ const routes = [
         name: 'employeeDetails',
         meta: { owner: 'employee' } ,
         component:() => import( '@/views/admin/components/EmployeeDetails'),
-      }
+      },
+     
+      
 
     ],
   
@@ -100,7 +107,13 @@ const routes = [
 //     // this generates a separate chunk (about.[hash].js) for this route
 //     // which is lazy-loaded when the route is visited.
 //     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-//   }
+//   }  router.push()
+
+
+{
+  path: '/:catchAll(.*)', // Catch-all route
+  redirect: '/error', // Redirect to the error page
+},
 ]
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

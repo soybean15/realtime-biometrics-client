@@ -35,6 +35,9 @@ export const useAuthStore = defineStore('auth', () => {
 
     const getUser = async () => {
         await axios.get('sanctum/csrf-cookie')
+
+
+        
         errors.value = []
         try {
             user.value = (await axios.get('api/user')).data
@@ -142,6 +145,16 @@ export const useAuthStore = defineStore('auth', () => {
 
     }
 
+
+
+    const search = async(val)=>{
+        const response = await axios.post('api/admin/user/search', {value:val})
+
+        users.value = response.data.users
+
+    }
+
+
         return {
             users,
             user,
@@ -153,6 +166,7 @@ export const useAuthStore = defineStore('auth', () => {
             loginForm,
             registerForm,
             errors,
-            enable
+            enable,
+            search
         }
     })
