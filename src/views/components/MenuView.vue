@@ -55,7 +55,7 @@
                   <q-item-section>Administrator</q-item-section>
                 </q-item>
               
-                <q-item clickable >
+                <q-item :to="{name:'settings'}" clickable >
                   <q-item-section>Settings</q-item-section>
                 </q-item>
 

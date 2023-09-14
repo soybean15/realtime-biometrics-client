@@ -3,7 +3,7 @@
   
       <HeaderView :toggleLeftDrawer="toggleLeftDrawer"/>
   
-      <q-drawer show-if-above v-model="leftDrawerOpen" side="left" overlay bordered>
+      <q-drawer show-if-above v-model="leftDrawerOpen" side="left"  bordered>
         <!-- drawer content -->
       </q-drawer>
   
@@ -30,7 +30,9 @@
   import { onMounted, ref,provide } from 'vue'
   import HeaderView from '@/views/components/HeaderView.vue'
   import {useAuthStore} from '@/store/auth'
+  import { useSettingStore } from '@/store/settings'
 import { storeToRefs } from 'pinia'
+
 
   
   export default {
@@ -40,13 +42,17 @@ import { storeToRefs } from 'pinia'
     setup () {
       const leftDrawerOpen = ref(false)
       const store= useAuthStore()
+      const settingStore = useSettingStore()
 
-      const {user}=storeToRefs(store)
+      const {user } = storeToRefs(store)
+      
   
-      console.log('main')
+   
       onMounted(()=>{
         store.getUser()
         provide('user',user)
+        settingStore.get()
+
       })
       
   

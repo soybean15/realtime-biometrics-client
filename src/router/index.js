@@ -18,6 +18,12 @@ const routes = [
         component:Home,
       },
       {
+        path: '/settings',
+        name : 'settings',
+        component : () => import('@/views/components/SettingsView.vue'), 
+      
+      },
+      {
         path: '/error', 
         name: 'error',
         component: () => import('@/views/components/ErrorView.vue'), 
