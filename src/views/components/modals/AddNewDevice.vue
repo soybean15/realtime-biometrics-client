@@ -19,7 +19,8 @@
 
     <template v-slot:content>
       <div>
-        <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+        <q-form @submit="onSubmit"  class="q-gutter-md">
+            <div class="text-red-400 row " v-if="errors['name']">{{ errors['name'][0] }}</div>
           <q-input
             filled
             v-model="zkDevice.name"
@@ -32,29 +33,56 @@
             ]"
           />
 
+          <div class="text-red-400 row " v-if="errors['ip_address']">{{ errors['ip_address'][0] }}</div>
           <q-input
             filled
             dense
             v-model="zkDevice.ip_address"
             label="IP Address"
+
+            mask="###.###.#.###"
+            fill-mask
             hint="ex: 192.168.1.201(default)"
             lazy-rules
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
-           
-          />
+          >
+          
+          </q-input>
+          <div class="text-red-400 row " v-if="errors['port']">{{ errors['port'][0] }}</div>
+          <div class="row  justify-between">
+
+
+
+            
+            
+          <q-input
+            filled
+            dense
+     
+            mask="####"
+            fill-mask="#"
+            v-model="zkDevice.port"
+            label="Port"
+            hint="ex: 4370(default)"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || 'Please type something',
+            ]"
+          >
+         
+          </q-input>
+          <q-btn :loading="loading['ping']" class="h-10" dense color="secondary" @click="zk.ping" label="ping" />
+          </div>
+
+          
+      <div class=" row justify-center" :class="status['status']===false?'text-red-400':'text-green-400'" v-if="status['message']">{{ status['message'] }}</div>
 
 
           <div>
-            <q-btn label="Submit" type="submit" color="primary" />
-            <q-btn
-              label="Reset"
-              type="reset"
-              color="primary"
-              flat
-              class="q-ml-sm"
-            />
+            <q-btn :loading="loading['submit']"  label="Submit" type="submit" color="primary" />
+        
           </div>
         </q-form>
       </div>
@@ -65,21 +93,24 @@
 <script>
 import PersistentDialog from "@/components/PersistentDialog.vue";
 import { useZkStore } from "@/store/ZkTeco";
-import { storeToRefs } from 'pinia';
+import { storeToRefs } from "pinia";
 export default {
   components: { PersistentDialog },
   setup() {
+    const zk = useZkStore();
 
-    const zk = useZkStore()
-
-    const {zkDevice} = storeToRefs(zk)
+    const { zkDevice ,loading,status,errors} = storeToRefs(zk);
 
     return {
-        zkDevice
-    }
-
-
-
+      zkDevice,
+      loading,
+      status,
+      errors,
+      zk,
+      onSubmit:()=>{
+        zk.add()
+      }
+    };
   },
 };
 </script>
