@@ -7,7 +7,7 @@
             <q-menu>
               <q-list dense style="min-width: 100px">
                 <q-item clickable >
-                  <q-item-section>Add New Device</q-item-section>
+                  <q-item-section><AddNewDevice/></q-item-section>
                 </q-item>
                 <q-item clickable v-close-popup>
                   <q-item-section>Devices</q-item-section>
@@ -76,8 +76,10 @@
 <script>
 import { useAuthStore } from '@/store/auth';
 import { storeToRefs } from 'pinia';
+import AddNewDevice from './modals/AddNewDevice.vue';
 
 export default ({
+  components:{AddNewDevice},
     setup() {
         const auth = useAuthStore()
 
