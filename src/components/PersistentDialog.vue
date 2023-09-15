@@ -4,9 +4,10 @@
   #slots : 
     -title
     -content
+    -open-button
   #props :
-    -width
-    -maxWidth
+    -width  // default 300px
+    -maxWidth // default 80vh
     -backgroundColor
  -->
   <div class="">
