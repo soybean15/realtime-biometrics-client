@@ -4,10 +4,20 @@
  
 <div v-for="item in attendance" :key="item.serial_number">
 
-      <div class="font-bold text-lg"><span class="font-thin">UID: </span>{{ item.serial_number }}</div>
+   <div class="row">
+
+      <img :src="item.employee.image" class="h-20 w-20"/>
+      <div>
+
+         <div class="font-bold text-lg"><span class="font-thin">UID: </span>{{ item.serial_number }}</div>
       <div class="font-bold text-lg"><span class="font-thin">User Id: </span>{{ item.biometrics_id }}</div>
       <div class="font-bold text-lg"><span class="font-thin">TimeStamp: </span>{{ item.timestamp }}</div>
       <div class="font-bold text-lg"><span class="font-thin">UID: </span> {{ item.type }}</div>
+      </div>
+
+
+   </div>
+
 </div>
 
  </template>
@@ -25,9 +35,17 @@ export default {
      const attendance = ref([])
      const message = ref('')
 
+     const getAttendance = async ()=>{
+      await axios.get('api/attendance')
+     }
+
+     getAttendance()
 
      window.echo.channel("zkTeco").listen(".get.attendance", (response) => {
       console.log(response)
+
+
+      response.attendance.employee.image = response.attendance.employee.image.replace("http://localhost", "http://localhost:8000");
       attendance.value.push(response.attendance)
     
     });
