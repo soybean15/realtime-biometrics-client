@@ -77,8 +77,13 @@
           </div>
 
           
-      <div class=" row justify-center" :class="status['status']===false?'text-red-400':'text-green-400'" v-if="status['message']">{{ status['message'] }}</div>
+          <div class="column items-center">
+            
+            <div class=" row justify-center" :class="status['status']===false?'text-red-400':'text-green-400'" v-if="status['message']">{{ status['message'] }}</div>
+            <div class=" row justify-center text-green-400" v-if="status['device_name']">{{ status['device_name'] }}</div>
 
+          </div>
+      
 
           <div>
             <q-btn :loading="loading['submit']"  label="Submit" type="submit" color="primary" />

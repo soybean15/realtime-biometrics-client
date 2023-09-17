@@ -19,6 +19,10 @@
    
                
                 <q-separator />
+
+                <q-item :to="{name:'settings'}" clickable >
+                  <q-item-section>Settings</q-item-section>
+                </q-item>
                 <q-item clickable v-close-popup>
                   <q-item-section>Help</q-item-section>
                 </q-item>
@@ -48,26 +52,6 @@
             </q-menu>
           </div>
 
-          <div class="cursor-pointer non-selectable">User
-            <q-menu>
-              <q-list dense style="min-width: 100px">
-                <q-item  clickable v-if="user && user.enable">
-                  <q-item-section>Administrator</q-item-section>
-                </q-item>
-              
-                <q-item :to="{name:'settings'}" clickable >
-                  <q-item-section>Settings</q-item-section>
-                </q-item>
-
-                <q-separator />
-                <q-item clickable v-if="user">
-                  <q-item-section>Log out</q-item-section>
-                </q-item>
-                <q-separator />
-              
-              </q-list>
-            </q-menu>
-          </div>
          
         </q-bar>
     

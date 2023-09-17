@@ -21,7 +21,18 @@ export const useSettingStore = defineStore('settings', () => {
 
         console.log(settings.value)
 
-        primaryColor.value= settings.value.theme.primary
+      
+
+        //save to local storage if settings is changed
+        if(localStorage.getItem('primary')  === 'null' || localStorage.getItem('primary') !=  settings.value.theme.primary ){
+            localStorage.setItem('primary', settings.value.theme.primary)
+            primaryColor.value= settings.value.theme.primary
+
+        }else{
+            primaryColor.value= localStorage.getItem('primary') 
+        }
+   
+
         isDark.value = localStorage.getItem('dark') === 'true'
 
         console.log(isDark.value)
