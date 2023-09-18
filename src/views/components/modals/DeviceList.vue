@@ -14,7 +14,8 @@
     
         <template v-slot:actions="{props}">
             <q-td :props="props">
-                <q-btn :loading="loading['ping']"  @click="zk.ping(props.row.ip_address)" color="secondary" label="Connect"></q-btn>                  
+                <q-btn :loading="loading['ping']"  @click="zk.ping(props.row.ip_address)" color="secondary" label="Connect"></q-btn>    
+                <q-btn   @click="zk.ping(props.row.id)" color="red" label="Delete"></q-btn>                  
             </q-td>
         </template>
 

@@ -3,7 +3,6 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 
-
 export const useZkStore = defineStore('zk', () => {
 
     const zkDevice = ref({
@@ -61,6 +60,11 @@ export const useZkStore = defineStore('zk', () => {
     const index = async()=>{
         zkDevices.value = (await axios.get('api/zk')).data.devices
 
+    }
+
+    const destroy = async(id)=>{
+
+        await axios.post('api/zk/delete',{id:id})
 
     }
 
@@ -73,7 +77,8 @@ export const useZkStore = defineStore('zk', () => {
         zkDevices,
         ping,
         add,
-        index
+        index,
+        destroy
 
     }
 
