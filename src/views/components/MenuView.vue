@@ -7,7 +7,7 @@
             <q-menu>
               <q-list dense style="min-width: 100px">
                 <q-item clickable >
-                  <q-item-section><AddNewDevice/></q-item-section>
+                  <q-item-section><AddNewDevice>Add New Device</AddNewDevice></q-item-section>
                 </q-item>
                 <q-item clickable >
                   <q-item-section><DeviceList/></q-item-section>
