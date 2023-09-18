@@ -59,7 +59,7 @@ export const useZkStore = defineStore('zk', () => {
     }
 
     const index = async()=>{
-        zkDevices.value = await axios.get('api/zk')
+        zkDevices.value = (await axios.get('api/zk')).data.devices
 
 
     }
@@ -70,6 +70,7 @@ export const useZkStore = defineStore('zk', () => {
         loading,
         status,
         errors,
+        zkDevices,
         ping,
         add,
         index
