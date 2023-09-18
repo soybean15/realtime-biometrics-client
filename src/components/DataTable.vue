@@ -1,4 +1,17 @@
 <template>
+<!-- 
+  props : 
+    -title
+    -rows
+    -columns
+    -cells
+    -pagination
+
+  slots :
+    -cells (array)
+    -top-right
+    -top
+    -bottom -->
   <div>
     <q-table
       class="my-sticky-header-table"
@@ -12,8 +25,11 @@
     >
       <!-- <slot v-for="cell in cells" :key="cell" name="cell"></slot> -->
 
-      <template v-for="cell in cells" :key="cell" v-slot:[`body-cell-${cell}`]="props">
-        
+      <template
+        v-for="cell in cells"
+        :key="cell"
+        v-slot:[`body-cell-${cell}`]="props"
+      >
         <slot :name="cell" :props="props"></slot>
       </template>
 
@@ -25,38 +41,35 @@
         <slot name="top"></slot>
       </template>
       <template v-slot:bottom>
-        <div class="row  w-full justify-end" >
+        <div class="row w-full justify-end">
           <q-pagination
-      v-model="current"
-      color="purple"
-      :max="pagination.max"
-      :max-pages="pagination.max_pages"
-      boundary-numbers
-    />
-
+            v-model="current"
+            color="purple"
+            :max="pagination.max"
+            :max-pages="pagination.max_pages"
+            boundary-numbers
+            v-if="pagination"
+          />
         </div>
-       
       </template>
     </q-table>
   </div>
 </template>
   
   <script>
-import { ref, watch } from 'vue';
+import { ref, watch } from "vue";
 export default {
-  props: ["rows", "columns", "title", "cells","pagination"],
-  emits:['onChangePage'],
-  setup(props,{emit}) {
-    const current = ref(1)
+  props: ["rows", "columns", "title", "cells", "pagination"],
+  emits: ["onChangePage"],
+  setup(props, { emit }) {
+    const current = ref(1);
 
-    watch(current,()=>{
-    
-      emit('onChangePage',current.value)
+    watch(current, () => {
+      emit("onChangePage", current.value);
+    });
 
-    })
-    
     return {
-      current
+      current,
     };
   },
 };

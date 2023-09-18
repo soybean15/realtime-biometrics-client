@@ -10,7 +10,10 @@
  -->
   <PersistentDialog :width="'400px'">
     <template v-slot:open-button="{ open }">
-      <span @click="open">Add New Device</span>
+      
+      <div @click="open">  <slot></slot></div>
+
+      
     </template>
 
     <template v-slot:title>
