@@ -11,6 +11,7 @@ export const useZkStore = defineStore('zk', () => {
         port:'',
         ip_address:''
     })
+    const zkDevices = ref([])
 
     const loading = ref({
         ping:false,
@@ -57,6 +58,13 @@ export const useZkStore = defineStore('zk', () => {
      
     }
 
+    const index = async()=>{
+        zkDevices.value = await axios.get('api/zk')
+
+
+    }
+
+
     return {
         zkDevice,
         loading,
@@ -64,6 +72,7 @@ export const useZkStore = defineStore('zk', () => {
         errors,
         ping,
         add,
+        index
 
     }
 

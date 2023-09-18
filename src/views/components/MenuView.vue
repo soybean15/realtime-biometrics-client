@@ -9,8 +9,8 @@
                 <q-item clickable >
                   <q-item-section><AddNewDevice/></q-item-section>
                 </q-item>
-                <q-item clickable v-close-popup>
-                  <q-item-section>Devices</q-item-section>
+                <q-item clickable >
+                  <q-item-section><DeviceList/></q-item-section>
                 </q-item>
 
                 <q-item clickable v-close-popup>
@@ -61,9 +61,9 @@
 import { useAuthStore } from '@/store/auth';
 import { storeToRefs } from 'pinia';
 import AddNewDevice from './modals/AddNewDevice.vue';
-
+import DeviceList from './modals/DeviceList.vue';
 export default ({
-  components:{AddNewDevice},
+  components:{AddNewDevice,DeviceList},
     setup() {
         const auth = useAuthStore()
 
