@@ -6,10 +6,10 @@
             File
             <q-menu>
               <q-list dense style="min-width: 100px">
-                <q-item clickable >
+                <q-item clickable v-if="user">
                   <q-item-section><AddNewDevice>Add New Device</AddNewDevice></q-item-section>
                 </q-item>
-                <q-item clickable >
+                <q-item clickable  v-if="user" >
                   <q-item-section><DeviceList/></q-item-section>
                 </q-item>
 
