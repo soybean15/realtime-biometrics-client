@@ -27,6 +27,7 @@ import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 import axios from 'axios';
 
+
 export default {
    setup(){
      const store = useAuthStore()
@@ -40,6 +41,7 @@ export default {
      }
 
      getAttendance()
+
 
      window.echo.channel("zkTeco").listen(".get.attendance", (response) => {
       console.log(response)

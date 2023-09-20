@@ -1,77 +1,92 @@
 <template>
- 
-  
-        <q-bar class="bg-primary text-white rounded-borders">
-          <div class="cursor-pointer non-selectable">
-            File
-            <q-menu>
-              <q-list dense style="min-width: 100px">
-                <q-item clickable v-if="user">
-                  <q-item-section><AddNewDevice>Add New Device</AddNewDevice></q-item-section>
-                </q-item>
-                <q-item clickable  v-if="user" >
-                  <q-item-section><DeviceList/></q-item-section>
-                </q-item>
+  <q-bar class="bg-primary text-white rounded-borders">
+    <div class="cursor-pointer non-selectable">
+      File
+      <q-menu>
+        <q-list dense style="min-width: 100px">
+          <q-item clickable v-if="user">
+            <q-item-section
+              ><AddNewDevice>Add New Device</AddNewDevice></q-item-section
+            >
+          </q-item>
+          <q-item clickable v-if="user">
+            <q-item-section><DeviceList /></q-item-section>
+          </q-item>
 
-                <q-item clickable v-close-popup>
-                  <q-item-section>Ping</q-item-section>
-                </q-item>
-   
-               
-                <q-separator />
+          <q-item clickable v-close-popup>
+            <q-item-section>Ping</q-item-section>
+          </q-item>
 
-                <q-item :to="{name:'settings'}" clickable >
-                  <q-item-section>Settings</q-item-section>
-                </q-item>
-                <q-item clickable v-close-popup>
-                  <q-item-section>Help</q-item-section>
-                </q-item>
-              </q-list>
-            </q-menu>
-          </div>
-          <div class="cursor-pointer non-selectable">View
-            <q-menu>
-              <q-list dense style="min-width: 200px">
-                <q-item clickable v-close-popup>
-                  <q-item-section>Side Panel</q-item-section>
-                </q-item>
-                <q-item clickable v-close-popup>
-                  <q-item-section>Show Lates</q-item-section>
-                </q-item>
-                <q-item clickable >
-                  <q-item-section>Live Data</q-item-section>
-                </q-item>
-                <q-item clickable>
-                  <q-item-section>Time Format</q-item-section>
-                </q-item>
-                <q-separator />
-                <q-item clickable >
-                  <q-item-section>Reload</q-item-section>
-                </q-item>
-              </q-list>
-            </q-menu>
-          </div>
+          <q-separator />
 
-         
-        </q-bar>
-    
-  </template>
+          <q-item :to="{ name: 'settings' }" clickable>
+            <q-item-section>Settings</q-item-section>
+          </q-item>
+          <q-item clickable v-close-popup>
+            <q-item-section>Help</q-item-section>
+          </q-item>
+        </q-list>
+      </q-menu>
+    </div>
+    <div class="cursor-pointer non-selectable">
+      View
+      <q-menu>
+        <q-list dense style="min-width: 200px">
+          <q-item clickable v-close-popup>
+            <q-item-section>Side Panel</q-item-section>
+          </q-item>
+          <q-item clickable v-close-popup>
+            <q-item-section>Show Lates</q-item-section>
+          </q-item>
+          <q-item clickable>
+            <q-item-section>
+              <div class="row items-center justify-between">
+                <span  class="px-1">Live Data </span>
+                <q-chip color="red" class="px-2" dense text-color="white" label="Live" v-if="!zk.isLive"/>
+
+              </div>
+            </q-item-section>
+          </q-item>
+          <q-item clickable>
+            <q-item-section>Time Format</q-item-section>
+          </q-item>
+          <q-separator />
+          <q-item clickable>
+            <q-item-section>Reload</q-item-section>
+          </q-item>
+        </q-list>
+      </q-menu>
+    </div>
+  </q-bar>
+</template>
 
 <script>
-import { useAuthStore } from '@/store/auth';
-import { storeToRefs } from 'pinia';
-import AddNewDevice from './modals/AddNewDevice.vue';
-import DeviceList from './modals/DeviceList.vue';
-export default ({
-  components:{AddNewDevice,DeviceList},
-    setup() {
-        const auth = useAuthStore()
+import { useAuthStore } from "@/store/auth";
+import { storeToRefs } from "pinia";
+import AddNewDevice from "./modals/AddNewDevice.vue";
+import DeviceList from "./modals/DeviceList.vue";
+import WebSocketService from "@/composables/WebSocket";
+import { useZkStore } from "@/store/ZkTeco";
+export default {
+  components: { AddNewDevice, DeviceList },
+  setup() {
+    const auth = useAuthStore();
+    const _zk = useZkStore();
 
-        const {user } = storeToRefs(auth)
-        return {
-            user
-        }
-        
-    },
-})
+
+    const { zk } = storeToRefs(_zk);
+    const { user } = storeToRefs(auth);
+
+    const ws = new WebSocketService("live_update");
+
+    ws.listen(".get.live_update", (response) => {
+      zk.value = response
+      console.log(response);
+    });
+    return {
+      user,
+      zk
+    };
+  },
+};
 </script>
