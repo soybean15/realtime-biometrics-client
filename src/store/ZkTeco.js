@@ -8,14 +8,16 @@ export const useZkStore = defineStore('zk', () => {
     const zkDevice = ref({
         name:'',
         port:'',
-        ip_address:''
+        ip_address:'',
+
     })
     const zkDevices = ref([])
-
     const loading = ref({
         ping:false,
         submit:false
     })
+
+    const zk= ref(null)
 
     const errors = ref([])
 
@@ -75,6 +77,7 @@ export const useZkStore = defineStore('zk', () => {
         status,
         errors,
         zkDevices,
+        zk,
         ping,
         add,
         index,

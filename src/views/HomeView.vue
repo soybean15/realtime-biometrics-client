@@ -26,7 +26,7 @@ import { useAuthStore } from '@/store/auth';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 import axios from 'axios';
-import WebSocketService from '@/composables/WebSocket';
+
 
 export default {
    setup(){
@@ -42,12 +42,6 @@ export default {
 
      getAttendance()
 
-     const ws1 = new WebSocketService('live_update')
-
-     ws1.listen('.get.live_update',(response)=>{
-      console.log(response)
-
-     })
 
      window.echo.channel("zkTeco").listen(".get.attendance", (response) => {
       console.log(response)
