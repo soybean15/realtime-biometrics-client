@@ -38,17 +38,24 @@
           <q-item clickable v-close-popup>
             <q-item-section>Show Lates</q-item-section>
           </q-item>
-          <q-item clickable>
-            <q-item-section>
+          <q-item   @click="zkStore.enableRealtimeUpdate(zk.config.isLive)" clickable>
+            <q-item-section >
               <div class="row items-center justify-between">
                 <span  class="px-1">Live Data </span>
-                <q-chip color="red" class="px-2" dense text-color="white" label="Live" v-if="!zk.isLive"/>
+                <q-chip color="red" class="px-2" dense text-color="white" label="Live" v-if=" zk&& zk.config.isLive"/>
 
               </div>
             </q-item-section>
           </q-item>
           <q-item clickable>
-            <q-item-section>Time Format</q-item-section>
+            <q-item-section>
+              <div class="row items-center justify-between">
+                <span  class="px-1">Time Format </span>
+                <q-chip color="primary" class="px-2" dense text-color="white" label="24hrs" v-if=" zk&& zk.config.is24hrs"/>
+                <q-chip color="primary" class="px-2" dense text-color="white" label="12Hrs" v-else/>
+
+              </div>
+            </q-item-section>
           </q-item>
           <q-separator />
           <q-item clickable>
@@ -71,21 +78,27 @@ export default {
   components: { AddNewDevice, DeviceList },
   setup() {
     const auth = useAuthStore();
-    const _zk = useZkStore();
+    const zkStore = useZkStore();
 
 
-    const { zk } = storeToRefs(_zk);
+    const { zk } = storeToRefs(zkStore);
     const { user } = storeToRefs(auth);
 
-    const ws = new WebSocketService("live_update");
+    const ws = new WebSocketService("config");
 
-    ws.listen(".get.live_update", (response) => {
-      zk.value = response
+    ws.listen(".get.config", (response) => {
+      try{
+        zk.value = response
+      }catch(e){
+        zk.value = false
+      }
+      
       console.log(response);
     });
     return {
       user,
-      zk
+      zk,
+      zkStore
     };
   },
 };
