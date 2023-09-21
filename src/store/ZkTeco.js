@@ -70,6 +70,10 @@ export const useZkStore = defineStore('zk', () => {
 
     }
 
+    const enableRealtimeUpdate = async(isLive)=>{
+        await axios.post('api/zk/on-off',{isLive:isLive})
+    }
+
 
     return {
         zkDevice,
@@ -78,6 +82,7 @@ export const useZkStore = defineStore('zk', () => {
         errors,
         zkDevices,
         zk,
+        enableRealtimeUpdate,
         ping,
         add,
         index,

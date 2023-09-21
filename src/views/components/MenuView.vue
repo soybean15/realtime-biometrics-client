@@ -38,11 +38,11 @@
           <q-item clickable v-close-popup>
             <q-item-section>Show Lates</q-item-section>
           </q-item>
-          <q-item clickable>
-            <q-item-section>
+          <q-item   @click="zkStore.enableRealtimeUpdate(zk.device.isLive)" clickable>
+            <q-item-section >
               <div class="row items-center justify-between">
                 <span  class="px-1">Live Data </span>
-                <q-chip color="red" class="px-2" dense text-color="white" label="Live" v-if="!zk.isLive"/>
+                <q-chip color="red" class="px-2" dense text-color="white" label="Live" v-if=" zk&& zk.device.isLive"/>
 
               </div>
             </q-item-section>
@@ -71,21 +71,27 @@ export default {
   components: { AddNewDevice, DeviceList },
   setup() {
     const auth = useAuthStore();
-    const _zk = useZkStore();
+    const zkStore = useZkStore();
 
 
-    const { zk } = storeToRefs(_zk);
+    const { zk } = storeToRefs(zkStore);
     const { user } = storeToRefs(auth);
 
     const ws = new WebSocketService("live_update");
 
     ws.listen(".get.live_update", (response) => {
-      zk.value = response
+      try{
+        zk.value = response
+      }catch(e){
+        zk.value = false
+      }
+      
       console.log(response);
     });
     return {
       user,
-      zk
+      zk,
+      zkStore
     };
   },
 };
