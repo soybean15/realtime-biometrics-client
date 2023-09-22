@@ -10,7 +10,10 @@ export const useSettingStore = defineStore('settings', () => {
     const settings = ref(null)
     const $q = useQuasar()
     const isDark= ref($q.dark.isActive)
-
+    const dateTime = ref({
+        time:null,
+        date:null
+    })
     const primaryColor = ref(null)
 
 
@@ -18,7 +21,7 @@ export const useSettingStore = defineStore('settings', () => {
 
     const get = async ()=>{
         settings.value = (await axios.get('api/settings')).data
-
+        dateTime.value = (await axios.get('api/settings/date-time')).data
         console.log(settings.value)
 
       
@@ -57,12 +60,23 @@ export const useSettingStore = defineStore('settings', () => {
         $q.dark.set(val)
     }
 
+    const changeSetting =async (key,val)=>{
+
+        await axios.post('api/settings/change-setting',{
+            key:key,
+            val:val
+        })
+
+    }
+
 
     
     return {
         settings , 
         isDark,
         primaryColor,
+        dateTime,
+        changeSetting,
         get,
         setDarkMode,
         changeColor
