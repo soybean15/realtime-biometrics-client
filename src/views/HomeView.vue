@@ -1,6 +1,8 @@
 <template>
- 
 
+   <div><DigitalClock :dateTime="dateTime"/></div>
+ 
+<!-- 
  
 <div v-for="item in attendance" :key="item.serial_number">
 
@@ -18,58 +20,53 @@
 
    </div>
 
-</div>
+</div> -->
 
  </template>
 <script >
-import { useAuthStore } from '@/store/auth';
+
 import { storeToRefs } from 'pinia';
-import { ref } from 'vue';
-import axios from 'axios';
+
+import { useSettingStore } from '@/store/settings';
+import DigitalClock from '../components/DigitalClock.vue';
 
 
 export default {
+   components:{DigitalClock},
    setup(){
-     const store = useAuthStore()
-     const {user}= storeToRefs(store)
-
-     const attendance = ref([])
-     const message = ref('')
-
-     const getAttendance = async ()=>{
-      await axios.get('api/attendance')
-     }
-
-     getAttendance()
 
 
-     window.echo.channel("zkTeco").listen(".get.attendance", (response) => {
-      console.log(response)
+      const settingStore = useSettingStore()
+
+      const {dateTime}=storeToRefs(settingStore)
+ 
 
 
-      response.attendance.employee.image = response.attendance.employee.image.replace("http://localhost", "http://localhost:8000");
-      attendance.value.push(response.attendance)
+
+   //   window.echo.channel("zkTeco").listen(".get.attendance", (response) => {
+   //    console.log(response)
+
+
+   //    response.attendance.employee.image = response.attendance.employee.image.replace("http://localhost", "http://localhost:8000");
+   //    attendance.value.push(response.attendance)
     
-    });
+   //  });
 
 
-    const sendMessage=()=>{
+   //  const sendMessage=()=>{
       
-      axios.post('http://localhost:8000/api/test', { message: message.value })
-        .then(response => {
-          console.log('Message sent successfully:', response.data);
+   //    axios.post('http://localhost:8000/api/test', { message: message.value })
+   //      .then(response => {
+   //        console.log('Message sent successfully:', response.data);
           
-        })
-        .catch(error => {
-          console.error('Error sending message:', error);
-        });
-    }
+   //      })
+   //      .catch(error => {
+   //        console.error('Error sending message:', error);
+   //      });
+   //  }
 
      return{
-        user,
-        attendance,
-        message,
-        sendMessage
+      dateTime
         
      }
    }
