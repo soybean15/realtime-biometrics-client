@@ -1,7 +1,8 @@
 <template>
 
-   <div><DigitalClock :dateTime="dateTime"/></div>
+   <div><DigitalClock :dateTime="dateTime" :timeFormat="dateTime.time_format"/></div>
  
+   {{ dateTime.time_format }}
 <!-- 
  
 <div v-for="item in attendance" :key="item.serial_number">

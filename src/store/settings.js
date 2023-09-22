@@ -12,7 +12,9 @@ export const useSettingStore = defineStore('settings', () => {
     const isDark= ref($q.dark.isActive)
     const dateTime = ref({
         time:null,
-        date:null
+        date:null,
+        time_format:null,
+        amPm:null
     })
     const primaryColor = ref(null)
 
@@ -60,12 +62,14 @@ export const useSettingStore = defineStore('settings', () => {
         $q.dark.set(val)
     }
 
-    const changeSetting =async (key,val)=>{
+    const updateTimeFormat =async (val)=>{
 
-        await axios.post('api/settings/change-setting',{
-            key:key,
-            val:val
+      const response= await axios.post('api/settings/change-setting',{
+            key:'time_format',
+            value: val === '12hrs' ? '24hrs' : val === '24hrs' ? '12hrs' : '12hrs',
         })
+
+        dateTime.value.time_format= response.data.time_format
 
     }
 
@@ -76,7 +80,7 @@ export const useSettingStore = defineStore('settings', () => {
         isDark,
         primaryColor,
         dateTime,
-        changeSetting,
+        updateTimeFormat,
         get,
         setDarkMode,
         changeColor
