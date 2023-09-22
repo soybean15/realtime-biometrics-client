@@ -65,14 +65,14 @@ export default {
 
     const updatedTime = computed(() => {
       if (currentTime.value) {
-        // return updateTime(
-        //   currentTime.value,
-        //   props.timeFormat,
-        //   props.dateTime.amPm
-        // );
+        return updateTime(
+          currentTime.value,
+          props.timeFormat,
+          props.dateTime.amPm
+        );
         
 
-        return updateTime("12:00:00", "24hrs", "AM");
+       // return updateTime("12:00:00", "24hrs", "AM");
       } else return updateTime(props.dateTime.time, "24hrs");
     });
 
