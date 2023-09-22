@@ -47,11 +47,11 @@
               </div>
             </q-item-section>
           </q-item>
-          <q-item clickable>
+          <q-item @click="settingStore.updateTimeFormat(zk.config.time_format)" clickable>
             <q-item-section>
               <div class="row items-center justify-between">
                 <span  class="px-1">Time Format </span>
-                <q-chip color="primary" class="px-2" dense text-color="white" label="24hrs" v-if=" zk&& zk.config.is24hrs"/>
+                <q-chip color="primary" class="px-2" dense text-color="white" label="24hrs" v-if=" zk&& zk.config.time_format=='24hrs'"/>
                 <q-chip color="primary" class="px-2" dense text-color="white" label="12Hrs" v-else/>
 
               </div>
@@ -74,12 +74,13 @@ import AddNewDevice from "./modals/AddNewDevice.vue";
 import DeviceList from "./modals/DeviceList.vue";
 import WebSocketService from "@/composables/WebSocket";
 import { useZkStore } from "@/store/ZkTeco";
+import { useSettingStore } from "@/store/settings";
 export default {
   components: { AddNewDevice, DeviceList },
   setup() {
     const auth = useAuthStore();
     const zkStore = useZkStore();
-
+    const settingStore = useSettingStore()
 
     const { zk } = storeToRefs(zkStore);
     const { user } = storeToRefs(auth);
@@ -98,7 +99,8 @@ export default {
     return {
       user,
       zk,
-      zkStore
+      zkStore,
+      settingStore
     };
   },
 };
