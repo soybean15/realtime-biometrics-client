@@ -1,8 +1,23 @@
 <template>
 
-   <div><DigitalClock :dateTime="dateTime" :timeFormat="dateTime.time_format"/></div>
+   <div>
+      <DigitalClock :dateTime="dateTime" :timeFormat="dateTime.time_format">
+         <template v-slot:body="{time,date}">
+
+              <div
+    class=" font-obitron bg-surface rounded-s-md shadow-lg tracking-wide flex flex-col p-5 justify-center items-end m-5 mr-0"
+  >
+    <div class="text-7xl  ">{{ time }}</div>
+    <div class="text-xl">{{ date }}</div>
+  </div>
+         
+            </template>
+      </DigitalClock>
+   
+    
+   </div>
  
-   {{ dateTime.time_format }}
+
 <!-- 
  
 <div v-for="item in attendance" :key="item.serial_number">

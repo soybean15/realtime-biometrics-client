@@ -1,9 +1,8 @@
 <template>
-  <div
-    class=" font-obitron rounded-s-md shadow-lg tracking-wide flex flex-col p-5 justify-center items-center m-5 mr-0"
-  >
-    <div class="text-7xl ">{{ currentTime }}</div>
-    <div class="text-xl">{{ dateTime.date }}</div>
+
+  <div>
+    <slot name="body" :time = "currentTime" :date = "dateTime.date" ></slot>
+
   </div>
 </template>
   
@@ -89,6 +88,7 @@ export default {
     });
 
     return {
+      
       currentTime,
     };
   },
