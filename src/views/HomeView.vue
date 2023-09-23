@@ -1,24 +1,28 @@
 <template>
+  <div class="">
+    <DigitalClock :dateTime="dateTime" :timeFormat="dateTime.time_format">
+      <template v-slot:body="{ time, date, timeFormat }">
+         <div class="row justify-end">
+            <div
+               class="font-obitron bg-surface w-96 rounded-s-md shadow-lg tracking-wide flex flex-col p-5 justify-center items-end m-5 mr-0"
+            >
+               <div class="text-7xl">{{ time }}</div>
+               <div class="text-xl row w-full justify-between">
+                  <div class="font-secondary">{{ timeFormat }}</div>
+                  <div>{{ date }}</div>
+                
+               
+               </div>
+            </div>
 
-   <div>
-      <DigitalClock :dateTime="dateTime" :timeFormat="dateTime.time_format">
-         <template v-slot:body="{time,date}">
+         </div>
 
-              <div
-    class=" font-obitron bg-surface rounded-s-md shadow-lg tracking-wide flex flex-col p-5 justify-center items-end m-5 mr-0"
-  >
-    <div class="text-7xl  ">{{ time }}</div>
-    <div class="text-xl">{{ date }}</div>
+      </template>
+    </DigitalClock>
+  
   </div>
-         
-            </template>
-      </DigitalClock>
-   
-    
-   </div>
- 
 
-<!-- 
+  <!-- 
  
 <div v-for="item in attendance" :key="item.serial_number">
 
@@ -37,59 +41,46 @@
    </div>
 
 </div> -->
-
- </template>
+</template>
 <script >
+import { storeToRefs } from "pinia";
 
-import { storeToRefs } from 'pinia';
-
-import { useSettingStore } from '@/store/settings';
-import DigitalClock from '../components/DigitalClock.vue';
-
+import { useSettingStore } from "@/store/settings";
+import DigitalClock from "../components/DigitalClock.vue";
 
 export default {
-   components:{DigitalClock},
-   setup(){
+  components: { DigitalClock },
+  setup() {
+    const settingStore = useSettingStore();
 
+    const { dateTime } = storeToRefs(settingStore);
 
-      const settingStore = useSettingStore()
+    //   window.echo.channel("zkTeco").listen(".get.attendance", (response) => {
+    //    console.log(response)
 
-      const {dateTime}=storeToRefs(settingStore)
- 
+    //    response.attendance.employee.image = response.attendance.employee.image.replace("http://localhost", "http://localhost:8000");
+    //    attendance.value.push(response.attendance)
 
+    //  });
 
+    //  const sendMessage=()=>{
 
-   //   window.echo.channel("zkTeco").listen(".get.attendance", (response) => {
-   //    console.log(response)
+    //    axios.post('http://localhost:8000/api/test', { message: message.value })
+    //      .then(response => {
+    //        console.log('Message sent successfully:', response.data);
 
+    //      })
+    //      .catch(error => {
+    //        console.error('Error sending message:', error);
+    //      });
+    //  }
 
-   //    response.attendance.employee.image = response.attendance.employee.image.replace("http://localhost", "http://localhost:8000");
-   //    attendance.value.push(response.attendance)
-    
-   //  });
-
-
-   //  const sendMessage=()=>{
-      
-   //    axios.post('http://localhost:8000/api/test', { message: message.value })
-   //      .then(response => {
-   //        console.log('Message sent successfully:', response.data);
-          
-   //      })
-   //      .catch(error => {
-   //        console.error('Error sending message:', error);
-   //      });
-   //  }
-
-     return{
-      dateTime
-        
-     }
-   }
-
-}
+    return {
+      dateTime,
+    };
+  },
+};
 </script>
 
 <style>
-
 </style>

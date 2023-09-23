@@ -1,7 +1,7 @@
 <template>
 
   <div>
-    <slot name="body" :time = "currentTime" :date = "dateTime.date" ></slot>
+    <slot name="body" :time = "currentTime" :date = "dateTime.date" :timeFormat="dateTime.time_format" ></slot>
 
   </div>
 </template>
@@ -10,13 +10,15 @@
 import { ref, computed, watchEffect } from "vue";
 
 const updateTime = (inputTime, time_format, amPm) => {
-  console.log(inputTime);
+
   const [hours, minutes, seconds] = inputTime.split(/:| /).map(Number);
 
   // return [hours, minutes, seconds, amPm]
   let newSeconds = seconds + 1;
   let newMinutes = minutes;
   let newHours = hours;
+
+  
 
   if (newSeconds === 60) {
     newSeconds = 0;
@@ -39,7 +41,7 @@ const updateTime = (inputTime, time_format, amPm) => {
     formattedHours = newHours % 12 || 12; // Handle midnight (0) as 12
 
     formattedHours = String(formattedHours).padStart(2, "0");
-    return `${formattedHours}:${formattedMinutes}:${formattedSeconds} ${amPm}`;
+    //return `${formattedHours}:${formattedMinutes}:${formattedSeconds} ${amPm}`;
   } else if (time_format === "24hrs") {
     // Keep in 24-hour format
     if (formattedHours <= 12 && amPm === "PM") {
@@ -49,7 +51,14 @@ const updateTime = (inputTime, time_format, amPm) => {
       formattedHours = "00"; // Midnight in 24-hour format
     }
 
-    return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+  //  return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+  }
+
+  return {
+    hour:formattedHours,
+    minutes:formattedMinutes,
+    seconds:formattedSeconds,
+    amPm:amPm
   }
   //else{ return  [hours, minutes, seconds, amPm]}
 };
