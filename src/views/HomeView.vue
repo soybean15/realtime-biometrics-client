@@ -1,9 +1,11 @@
 <template>
+  <div class="row">
+   <div class="col-7 bg-red-400"></div>
+   <DigitalClockView class="col-5"/>
 
-   <div><DigitalClock :dateTime="dateTime" :timeFormat="dateTime.time_format"/></div>
- 
-   {{ dateTime.time_format }}
-<!-- 
+  </div>
+
+  <!-- 
  
 <div v-for="item in attendance" :key="item.serial_number">
 
@@ -22,59 +24,39 @@
    </div>
 
 </div> -->
-
- </template>
+</template>
 <script >
-
-import { storeToRefs } from 'pinia';
-
-import { useSettingStore } from '@/store/settings';
-import DigitalClock from '../components/DigitalClock.vue';
-
+import DigitalClockView from '@/views/components/DigitalClockView.vue';
 
 export default {
-   components:{DigitalClock},
-   setup(){
+  components: { DigitalClockView },
+  setup() {
+  
 
+    //   window.echo.channel("zkTeco").listen(".get.attendance", (response) => {
+    //    console.log(response)
 
-      const settingStore = useSettingStore()
+    //    response.attendance.employee.image = response.attendance.employee.image.replace("http://localhost", "http://localhost:8000");
+    //    attendance.value.push(response.attendance)
 
-      const {dateTime}=storeToRefs(settingStore)
+    //  });
+
+    //  const sendMessage=()=>{
+
+    //    axios.post('http://localhost:8000/api/test', { message: message.value })
+    //      .then(response => {
+    //        console.log('Message sent successfully:', response.data);
+
+    //      })
+    //      .catch(error => {
+    //        console.error('Error sending message:', error);
+    //      });
+    //  }
+
  
-
-
-
-   //   window.echo.channel("zkTeco").listen(".get.attendance", (response) => {
-   //    console.log(response)
-
-
-   //    response.attendance.employee.image = response.attendance.employee.image.replace("http://localhost", "http://localhost:8000");
-   //    attendance.value.push(response.attendance)
-    
-   //  });
-
-
-   //  const sendMessage=()=>{
-      
-   //    axios.post('http://localhost:8000/api/test', { message: message.value })
-   //      .then(response => {
-   //        console.log('Message sent successfully:', response.data);
-          
-   //      })
-   //      .catch(error => {
-   //        console.error('Error sending message:', error);
-   //      });
-   //  }
-
-     return{
-      dateTime
-        
-     }
-   }
-
-}
+  },
+};
 </script>
 
 <style>
-
 </style>

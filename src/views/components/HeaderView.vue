@@ -3,17 +3,21 @@
     <q-toolbar>
       <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
-      <q-toolbar-title class="pt-2"> 
+      <q-toolbar-title class="pt-2">
+        <div class="row items-center">
+          <router-link to="/">
+            <q-avatar to="/" size="20px" class="mx-3 cursor-pointer">
+              <img
+                src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg"
+              />
+            </q-avatar>
+            <span to="/" class="text-md cursor-pointer">PNHS Attendance</span>
+          </router-link>
+        </div>
 
-       
-        
-        <q-avatar size="20px">
-          <img  src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
-        </q-avatar>
-        <span class="text-md">PNHS Attendance</span>
         <MenuView />
       </q-toolbar-title>
-    
+
       <q-space />
 
       <!--

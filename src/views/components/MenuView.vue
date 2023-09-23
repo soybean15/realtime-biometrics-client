@@ -51,8 +51,11 @@
             <q-item-section>
               <div class="row items-center justify-between">
                 <span  class="px-1">Time Format </span>
-                <q-chip color="primary" class="px-2" dense text-color="white" label="24hrs" v-if=" zk&& zk.config.time_format=='24hrs'"/>
-                <q-chip color="primary" class="px-2" dense text-color="white" label="12Hrs" v-else/>
+
+                <span class="font-secondary"  v-if=" zk&& zk.config.time_format=='24hrs'">24hrs</span>
+                <span class="font-secondary"  v-else>12hrs</span>
+                <!-- <q-chip color="primary" class="px-2" dense text-color="white" label="24hrs" v-if=" zk&& zk.config.time_format=='24hrs'"/>
+                <q-chip color="primary" class="px-2" dense text-color="white" label="12Hrs" v-else/> -->
 
               </div>
             </q-item-section>

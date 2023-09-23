@@ -1,8 +1,7 @@
 <template>
   <div class="q-pa-md">
-    
     <q-list bordered>
-        <q-item-label header>Settings</q-item-label>
+      <q-item-label header>Settings</q-item-label>
 
       <q-item clickable v-ripple>
         <q-item-section avatar>
@@ -32,9 +31,13 @@
           <div class="row justify-between items-center">
             <span>Theme</span>
 
-            <q-input outlined  v-model="primaryColor" class="my-input" >
+            <q-input outlined v-model="primaryColor" class="my-input">
               <template v-slot:append>
-                <q-icon name="colorize" class="cursor-pointer" :style="{color :primaryColor}">
+                <q-icon
+                  name="colorize"
+                  class="cursor-pointer"
+                  :style="{ color: primaryColor }"
+                >
                   <q-popup-proxy
                     cover
                     transition-show="scale"
@@ -51,15 +54,81 @@
 
       <q-item clickable v-ripple>
         <q-item-section avatar>
-          <q-avatar
-            rounded
-            color="purple"
-            text-color="white"
-            icon="bluetooth"
-          />
+          <q-avatar color="primary" text-color="white" icon="schedule" />
         </q-item-section>
+        <q-item-section>
+        <div class="row justify-between items-center">
+         Working Schedule
 
-        <q-item-section>Rounded avatar-type icon</q-item-section>
+          <div class="row justify-end items-center" v-if="settings">
+            <q-input
+              outlined
+              dense
+              class="mx-1"
+              v-model="settings.start_time"
+              mask="time"
+              label="Start"
+              :rules="['time']"
+
+              style="max-width: 120px;"
+            >
+              <template v-slot:append>
+                <q-icon name="access_time" class="cursor-pointer">
+                  <q-popup-proxy
+                    cover
+                    transition-show="scale"
+                    transition-hide="scale"
+                  >
+                    <q-time v-model="settings.start_time">
+                      <div class="row items-center justify-end">
+                        <q-btn
+                          v-close-popup
+                          label="Close"
+                          color="primary"
+                          flat
+                        />
+                      </div>
+                    </q-time>
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
+            </q-input>
+
+            <q-input
+              outlined
+              dense
+              class="px-1"
+              v-model="settings.end_time"
+              mask="time"
+              label="End"
+              :rules="['time']"
+
+              style="max-width: 120px;"
+            >
+              <template v-slot:append>
+                <q-icon name="access_time" class="cursor-pointer">
+                  <q-popup-proxy
+                    cover
+                    transition-show="scale"
+                    transition-hide="scale"
+                  >
+                    <q-time v-model="settings.end_time">
+                      <div class="row items-center justify-end">
+                        <q-btn
+                          v-close-popup
+                          label="Close"
+                          color="primary"
+                          flat
+                        />
+                      </div>
+                    </q-time>
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
+            </q-input>
+          </div>
+        </div>
+      </q-item-section>
       </q-item>
 
       <q-item clickable v-ripple>
@@ -128,7 +197,7 @@ export default {
   setup() {
     const store = useSettingStore();
 
-    const { isDark,primaryColor } = storeToRefs(store);
+    const { isDark, primaryColor, settings } = storeToRefs(store);
 
     watch(isDark, () => {
       console.log(isDark.value ? "On dark mode" : "On light mode");
@@ -138,9 +207,10 @@ export default {
     return {
       isDark,
       primaryColor,
-      changeColor:()=>{
-        store.changeColor()
-      }
+      settings,
+      changeColor: () => {
+        store.changeColor();
+      },
     };
   },
 };
