@@ -1,9 +1,9 @@
 <template>
   <div
-    class="rounded-md shadow-lg flex flex-col p-5 justify-center items-center m-5"
+    class=" font-obitron rounded-s-md shadow-lg tracking-wide flex flex-col p-5 justify-center items-center m-5 mr-0"
   >
-    <div class="text-7xl font-extrabold">{{ currentTime }}</div>
-    <div class="text-xl font-extrabold">{{ dateTime.date }}</div>
+    <div class="text-7xl ">{{ currentTime }}</div>
+    <div class="text-xl">{{ dateTime.date }}</div>
   </div>
 </template>
   

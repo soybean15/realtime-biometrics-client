@@ -20,3 +20,35 @@
 .font-secondary{
     color:#605e5e ;
 }
+
+
+@font-face {
+    font-family: "Obitron";
+    src: url('../assets/fonts/Orbitron-VariableFont_wght.ttf');
+}
+
+.font-obitron{
+    font-family: "Obitron";
+}
+
+.body--light {
+    --surface: #f8f8f8;
+    --onSurface: #b8b2b2;
+
+}
+
+.body--dark {
+    --surface: #202020;
+    --onSurface: #2e2d2d;
+
+}
+
+.bg-surface {
+    background-color: var(--surface);
+    color: var(--text);
+}
+
+.bg-onSurface {
+    background-color: var(--onSurface);
+}
+
