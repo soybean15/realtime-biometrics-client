@@ -1,6 +1,7 @@
 <template>
-  <div class="">
-   <DigitalClockView/>
+  <div class="row">
+   <div class="col-7 bg-red-400"></div>
+   <DigitalClockView class="col-5"/>
 
   </div>
 

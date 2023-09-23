@@ -3,7 +3,7 @@
       <template v-slot:body="{ hour,minute,second, date, timeFormat, amPm }">
          <div class="row justify-end">
             <div
-               class="font-obitron bg-surface   rounded-s-md shadow-lg tracking-wide flex flex-col p-5 justify-center items-end m-5 mr-0"
+               class="font-obitron bg-surface   rounded-s-md shadow-lg tracking-wide flex flex-col p-5 justify-center items-end mt-3 mr-0"
             >
                <div class=" text-7xl row justify-start items-start">
 
