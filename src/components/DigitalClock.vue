@@ -1,7 +1,14 @@
 <template>
 
-  <div>
-    <slot name="body" :time = "currentTime" :date = "dateTime.date" :timeFormat="dateTime.time_format" ></slot>
+  <div v-if="currentTime">
+    <slot name="body" 
+    :time = "currentTime.time"
+    :hour="currentTime.hours"
+    :minute = "currentTime.minutes" 
+    :second="currentTime.seconds"
+    :date = "dateTime.date"
+     :timeFormat="dateTime.time_format"
+      :amPm="dateTime.time_format ==='12hrs' ? dateTime.amPm:''" ></slot>
 
   </div>
 </template>
@@ -11,14 +18,22 @@ import { ref, computed, watchEffect } from "vue";
 
 const updateTime = (inputTime, time_format, amPm) => {
 
-  const [hours, minutes, seconds] = inputTime.split(/:| /).map(Number);
+  
+  let hours, minutes, seconds
+  if(inputTime.time){
+     [hours, minutes, seconds] = inputTime.time.split(/\s*:\s*/).map(Number);
+   
+  }else{
+     [hours, minutes, seconds] = inputTime.split(/\s*:\s*/).map(Number);
+    
+  }
 
-  // return [hours, minutes, seconds, amPm]
+
+
+
   let newSeconds = seconds + 1;
   let newMinutes = minutes;
   let newHours = hours;
-
-  
 
   if (newSeconds === 60) {
     newSeconds = 0;
@@ -33,33 +48,36 @@ const updateTime = (inputTime, time_format, amPm) => {
   let formattedHours = String(newHours).padStart(2, "0");
   let formattedMinutes = String(newMinutes).padStart(2, "0");
   let formattedSeconds = String(newSeconds).padStart(2, "0");
-  console.log(formattedSeconds);
+
+  let formattedTime = ''
+
 
   if (time_format === "12hrs") {
-    // Convert to 12-hour format
-    // const ampm = newHours >= 12 ? "PM" : "AM";
-    formattedHours = newHours % 12 || 12; // Handle midnight (0) as 12
+
+    formattedHours = newHours % 12 || 12; 
 
     formattedHours = String(formattedHours).padStart(2, "0");
-    //return `${formattedHours}:${formattedMinutes}:${formattedSeconds} ${amPm}`;
+    formattedTime= `${formattedHours} : ${formattedMinutes} : ${formattedSeconds}`;
   } else if (time_format === "24hrs") {
-    // Keep in 24-hour format
+
     if (formattedHours <= 12 && amPm === "PM") {
       formattedHours =
         formattedHours == 12 ? "12" : String(Number(formattedHours) + 12);
     } else if (formattedHours === "12" && amPm === "AM") {
-      formattedHours = "00"; // Midnight in 24-hour format
+      formattedHours = "00"; 
     }
 
-  //  return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+    formattedTime= `${formattedHours} : ${formattedMinutes} : ${formattedSeconds}`;
   }
 
+
   return {
-    hour:formattedHours,
+    time : formattedTime  ,
+    hours:formattedHours,
     minutes:formattedMinutes,
-    seconds:formattedSeconds,
-    amPm:amPm
+    seconds:formattedSeconds
   }
+
   //else{ return  [hours, minutes, seconds, amPm]}
 };
 
