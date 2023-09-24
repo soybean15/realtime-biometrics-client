@@ -1,8 +1,13 @@
 <template>
-  <div class="row">
-   <div class="col-7 bg-red-400"></div>
-   <DigitalClockView class="col-5"/>
-
+  <div class="row my-20  ">
+    <div class="p-3 col-7 column ">
+        <EmployeeInfoFlash class=""/>
+    </div>
+  
+    <div class="column col-5">
+      <DigitalClockView />
+      <AttendanceList/>
+    </div>
   </div>
 
   <!-- 
@@ -26,34 +31,31 @@
 </div> -->
 </template>
 <script >
-import DigitalClockView from '@/views/components/DigitalClockView.vue';
+import DigitalClockView from "@/views/components/DigitalClockView.vue";
+import AttendanceList from "./components/AttendanceList.vue";
 
+import EmployeeInfoFlash from './components/EmployeeInfoFlash.vue';
 export default {
-  components: { DigitalClockView },
+  components: { 
+    DigitalClockView,
+    AttendanceList,
+    EmployeeInfoFlash
+   },
   setup() {
-  
-
     //   window.echo.channel("zkTeco").listen(".get.attendance", (response) => {
     //    console.log(response)
-
     //    response.attendance.employee.image = response.attendance.employee.image.replace("http://localhost", "http://localhost:8000");
     //    attendance.value.push(response.attendance)
-
     //  });
-
     //  const sendMessage=()=>{
-
     //    axios.post('http://localhost:8000/api/test', { message: message.value })
     //      .then(response => {
     //        console.log('Message sent successfully:', response.data);
-
     //      })
     //      .catch(error => {
     //        console.error('Error sending message:', error);
     //      });
     //  }
-
- 
   },
 };
 </script>

@@ -23,7 +23,7 @@
 
             <div class="row justify-end w-full">
 
-                <AddNewDevice><q-btn color="primary" label="Add New"/></AddNewDevice>
+                <AddNewDevice><q-btn color="secondary" label="Add New"/></AddNewDevice>
 
 
             </div>

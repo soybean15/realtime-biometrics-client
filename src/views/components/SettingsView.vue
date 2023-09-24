@@ -14,7 +14,7 @@
         </q-item-section>
         <q-item-section>
         <div class="row justify-between items-center">
-         Working Schedule
+           Time Schedule
 
           <div class="row items-center" v-if="settings">
           
@@ -37,7 +37,7 @@
                     transition-show="scale"
                     transition-hide="scale"
                   >
-                    <q-time @update:model-value="updateTime" v-model="settings.start_time">
+                    <q-time  @update:model-value="updateTime" v-model="settings.start_time">
                       <div class="row items-center justify-end">
                         <q-btn
                           v-close-popup
@@ -90,7 +90,7 @@
 
          
             </q-input>
-            <q-btn  @click="updateTime" label="change" color="primary" dense/>
+            <q-btn  @click="updateTime" label="change" color="secondary" dense/>
          
           </div>
         </div>
