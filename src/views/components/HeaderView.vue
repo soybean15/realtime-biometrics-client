@@ -1,7 +1,7 @@
 <template>
   <q-header elevated class="bg-primary text-white" height-hint="98">
     <q-toolbar>
-      <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
+    
 
       <q-toolbar-title class="pt-2">
         <div class="row items-center">
@@ -49,7 +49,7 @@ export default {
     RegisterView,
     MenuView,
   },
-  props: ["toggleLeftDrawer"],
+
   setup() {
     const store = useAuthStore();
 

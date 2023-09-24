@@ -63,13 +63,19 @@ export const useSettingStore = defineStore('settings', () => {
     }
 
     const updateTimeFormat =async (val)=>{
-
       const response= await axios.post('api/settings/change-setting',{
             key:'time_format',
             value: val === '12hrs' ? '24hrs' : val === '24hrs' ? '12hrs' : '12hrs',
         })
-
         dateTime.value.time_format= response.data.time_format
+    }
+
+    const updateSettings= async(key)=>{
+
+        await axios.post('api/settings/change-setting',{
+            key:key,
+            value: settings.value[key]
+        })
 
     }
 
@@ -83,7 +89,8 @@ export const useSettingStore = defineStore('settings', () => {
         updateTimeFormat,
         get,
         setDarkMode,
-        changeColor
+        changeColor,
+        updateSettings
     }
 
 })

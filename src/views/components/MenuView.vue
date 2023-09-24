@@ -38,7 +38,7 @@
           <q-item clickable v-close-popup>
             <q-item-section>Show Lates</q-item-section>
           </q-item>
-          <q-item   @click="zkStore.enableRealtimeUpdate(zk.config.isLive)" clickable>
+          <q-item   @click="zkStore.enableRealtimeUpdate(zk.config.isLive)" clickable v-if="zk">
             <q-item-section >
               <div class="row items-center justify-between">
                 <span  class="px-1">Live Data </span>
@@ -47,7 +47,7 @@
               </div>
             </q-item-section>
           </q-item>
-          <q-item @click="settingStore.updateTimeFormat(zk.config.time_format)" clickable>
+          <q-item @click="settingStore.updateTimeFormat(zk.config.time_format)" clickable  v-if="zk">
             <q-item-section>
               <div class="row items-center justify-between">
                 <span  class="px-1">Time Format </span>
