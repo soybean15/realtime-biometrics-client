@@ -89,7 +89,7 @@
       
 
           <div>
-            <q-btn :loading="loading['submit']"  label="Submit" type="submit" color="primary" />
+            <q-btn :loading="loading['submit']"  label="Submit" type="submit" color="secondary" />
         
           </div>
         </q-form>
