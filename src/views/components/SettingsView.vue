@@ -132,19 +132,53 @@
           <div class="row justify-between items-center">
             <span>Primary</span>
 
-            <q-input outlined v-model="primaryColor" class="my-input">
+            <q-input outlined v-model="theme['primary']" class="my-input">
               <template v-slot:append>
                 <q-icon
                   name="colorize"
                   class="cursor-pointer"
-                  :style="{ color: primaryColor }"
+                  :style="{ color: theme['primary'] }"
                 >
                   <q-popup-proxy
                     cover
                     transition-show="scale"
                     transition-hide="scale"
                   >
-                    <q-color v-model="primaryColor" @change="changeColor" />
+                    <q-color v-model="theme['primary']" @change="changeColor('primary')" />
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
+            </q-input>
+          </div>
+        </q-item-section>
+      </q-item>
+
+
+
+
+
+      <q-item clickable v-ripple>
+        <q-item-section avatar>
+          <q-avatar color="secondary" text-color="white" icon="palette" />
+        </q-item-section>
+
+        <q-item-section>
+          <div class="row justify-between items-center">
+            <span>Secondary</span>
+
+            <q-input outlined v-model="theme['secondary']" class="my-input">
+              <template v-slot:append>
+                <q-icon
+                  name="colorize"
+                  class="cursor-pointer"
+                  :style="{ color: theme['secondary'] }"
+                >
+                  <q-popup-proxy
+                    cover
+                    transition-show="scale"
+                    transition-hide="scale"
+                  >
+                    <q-color v-model="theme['secondary']" @change="changeColor('secondary')" />
                   </q-popup-proxy>
                 </q-icon>
               </template>
@@ -165,7 +199,7 @@ export default {
   setup() {
     const store = useSettingStore();
 
-    const { isDark, primaryColor, settings } = storeToRefs(store);
+    const { isDark, theme, settings } = storeToRefs(store);
 
     watch(isDark, () => {
     
@@ -174,10 +208,10 @@ export default {
 
     return {
       isDark,
-      primaryColor,
+      theme,
       settings,
-      changeColor: () => {
-        store.changeColor();
+      changeColor: (key) => {
+        store.changeColor(key);
       },
       updateTime:async()=>{
         await store.updateSettings('start_time')
