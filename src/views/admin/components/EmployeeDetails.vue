@@ -98,7 +98,7 @@
                         :titleClass="'font-secondary font-bold'"
                         :value="selectedEmployee.firstname"
                         :attribute="'firstname'"
-                        :valueClass="'text-md font-bold font-primary'"
+                        :valueClass="'text-md '"
                         @update="onUpdate"
                         :errors="errors"
                       />
@@ -110,7 +110,7 @@
                         :titleClass="'font-secondary font-bold'"
                         :value="selectedEmployee.lastname"
                         :attribute="'lastname'"
-                        :valueClass="'text-md font-bold font-primary'"
+                        :valueClass="'text-md  '"
                         @update="onUpdate"
                         :errors="errors"
                       />
@@ -126,7 +126,7 @@
                         :titleClass="'font-secondary font-bold'"
                         :value="selectedEmployee.middlename"
                         :attribute="'middlename'"
-                        :valueClass="'text-md font-bold font-primary'"
+                        :valueClass="'text-md  '"
                         @update="onUpdate"
                         
                       />
@@ -141,7 +141,7 @@
                     :titleClass="'font-secondary font-bold'"
                     :value="selectedEmployee.email"
                     :attribute="'email'"
-                    :valueClass="'text-md font-bold font-primary'"
+                    :valueClass="'text-md '"
                     @update="onUpdate"
                     :errors="errors"
                   />
@@ -150,7 +150,7 @@
                     :title="'Contact Number'"
                     :titleClass="'font-secondary font-bold'"
                     :value="selectedEmployee.contact_number"
-                    :valueClass="'text-md font-bold font-primary'"
+                    :valueClass="'text-md  '"
                     :attribute="'contact_number'"
                     @update="onUpdate"
                     :errors="errors"
@@ -161,7 +161,7 @@
                     :titleClass="'font-secondary font-bold'"
                     :value="selectedEmployee.birthdate"
                     :type="'date'"
-                    :valueClass="'text-md font-bold font-primary'"
+                    :valueClass="'text-md  '"
                     :attribute="'birthdate'"
                     @update="onUpdate"
                   />
@@ -172,7 +172,7 @@
                     :value="selectedEmployee.gender"
                     :type="'select'"
                     :data="['Male', 'Female']"
-                    :valueClass="'text-md font-bold font-primary'"
+                    :valueClass="'text-md '"
                     :attribute="'gender'"
                     @update="onUpdate"
                   />
@@ -182,7 +182,7 @@
               <div class="col-6 column">
                 <div class="mb-5">
                   <div class="font-secondary text-sm">Position</div>
-                  <div class="column font-bold font-primary">
+                  <div class="column  ">
                     <div
                       v-for="position in selectedEmployee.positions"
                       :key="position.id"
@@ -194,7 +194,7 @@
 
                 <div class="mb-5">
                   <div class="font-secondary text-sm">Deparment/s</div>
-                  <div class="column font-bold font-primary">
+                  <div class="column  ">
                     <div
                       v-for="department in selectedEmployee.departments"
                       :key="department.id"
@@ -208,27 +208,27 @@
                   :title="'Address'"
                   :titleClass="'font-secondary font-bold'"
                   :value="selectedEmployee.address"
-                  :valueClass="'text-md font-bold font-primary'"
+                  :valueClass="'text-md  '"
                   :attribute="'address'"
                   @update="onUpdate"
                 />
 
                 <div class="mb-5">
                   <div class="font-secondary text-sm">Date Created:</div>
-                  <div class="font-bold font-primary">
+                  <div class="f ">
                     {{ formatTime(selectedEmployee.created_at) }}
                   </div>
                 </div>
                 <div class="mb-5">
                   <div class="font-secondary text-sm">Last Updated:</div>
-                  <div class="font-bold font-primary">
+                  <div class=" ">
                     {{ formatTime(selectedEmployee.updated_at) }}
                   </div>
                 </div>
 
                 <div class="mb-5">
                   <div class="font-secondary text-sm">Added By:</div>
-                  <div class="font-bold font-primary">
+                  <div class="font-bold ">
                     {{ selectedEmployee.user.name }}
                   </div>
                 </div>

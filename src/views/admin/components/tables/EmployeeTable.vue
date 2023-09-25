@@ -51,7 +51,7 @@
         <div class="row bg-transparent justify-center">
           <q-icon
             name="mail"
-            color="primary"
+            color="secondary"
             class="mx-1 cursor-pointer"
             size="1.5rem"
           >
@@ -61,7 +61,7 @@
           </q-icon>
           <q-icon
             name="call"
-            color="primary"
+            color="secondary"
             class="mx-1 cursor-pointer"
             size="1.5rem"
           >
@@ -105,7 +105,7 @@
           dense
           :to="{ name: 'employeeDetails', params: { id: props.row.id } }"
           class="w-28 text-xs"
-          color="primary"
+          color="secondary"
           glossy
           @click="store.selectEmployee(props.row)"
           text-color="white"

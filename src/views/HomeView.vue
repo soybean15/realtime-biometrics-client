@@ -6,7 +6,7 @@
 
     <div class="column col-5">
       <DigitalClockView />
-      <AttendanceList :attendanceList="attendanceList"/>
+      <AttendanceList :attendanceList="attendanceList" />
     </div>
   </div>
 
@@ -67,34 +67,19 @@ export default {
     ws.listen(".get.attendance", (response) => {
       console.log(response);
 
-      attendance.value = response.attendance
+      attendance.value = response.attendance;
       response.attendance.employee.image =
         response.attendance.employee.image.replace(
           "http://localhost",
           "http://localhost:8000"
         );
-        attendanceList.value.unshift(response.attendance);
+      attendanceList.value.unshift(response.attendance);
     });
-
-    //   window.echo.channel("zkTeco").listen(".get.attendance", (response) => {
-    //    console.log(response)
-    //    response.attendance.employee.image = response.attendance.employee.image.replace("http://localhost", "http://localhost:8000");
-    //    attendance.value.push(response.attendance)
-    //  });
-    //  const sendMessage=()=>{
-    //    axios.post('http://localhost:8000/api/test', { message: message.value })
-    //      .then(response => {
-    //        console.log('Message sent successfully:', response.data);
-    //      })
-    //      .catch(error => {
-    //        console.error('Error sending message:', error);
-    //      });
-    //  }
 
     return {
       attendance,
-      attendanceList
-    }
+      attendanceList,
+    };
   },
 };
 </script>

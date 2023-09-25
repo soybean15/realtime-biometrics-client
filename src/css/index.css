@@ -17,9 +17,6 @@
 }
 
 
-.font-secondary{
-    color:#605e5e ;
-}
 
 
 @font-face {
@@ -34,12 +31,14 @@
 .body--light {
     --surface: #f1eaea;
     --onSurface: #b8b2b2;
+    --textSecondary:#605e5e;
 
 }
 
 .body--dark {
     --surface: #202020;
     --onSurface: #2e2d2d;
+    --textSecondary:#a7a4a4;
 
 }
 
@@ -50,5 +49,10 @@
 
 .bg-onSurface {
     background-color: var(--onSurface);
+}
+
+
+.font-secondary{
+    color:var(--textSecondary) ;
 }
 

@@ -46,6 +46,8 @@ export const useZkStore = defineStore('zk', () => {
         try{
             loading.value['submit'] =true
             await axios.post('api/zk/store',zkDevice.value)
+            
+            localStorage.setItem('selected_device', zkDevice.value )
             loading.value['submit'] =false
         }catch(error){
             loading.value['submit'] =false
