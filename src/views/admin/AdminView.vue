@@ -71,16 +71,21 @@
 </template>
   
   <script>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useNavStore } from "@/store/nav";
 import { useAuthStore } from "@/store/auth";
 import { storeToRefs } from "pinia";
 import UserMenu from "./components/UserMenu.vue";
-
+import {useSettingStore} from '@/store/settings'
 export default {
   components:{UserMenu},
   setup() {
     const leftDrawerOpen = ref(false);
+    const settingStore = useSettingStore()
+
+    onMounted(()=>{
+      settingStore.get()
+    })
 
     const nav = useNavStore();
 

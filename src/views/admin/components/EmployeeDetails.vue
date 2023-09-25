@@ -66,14 +66,17 @@
 
     <div class="row h-40 m-2 shadow-sm rounded-lg">
       <div class="col-6 p-2 pr-1">
-
-
-       <ProfileView :selectedEmployee="selectedEmployee" :upload="upload" :onUpdate="onUpdate" :errors="errors"/>
-      
-      
+        <ProfileView
+          :selectedEmployee="selectedEmployee"
+          :upload="upload"
+          :onUpdate="onUpdate"
+          :errors="errors"
+        />
       </div>
       <div class="col-6 p-2 pl-1">
-        <div class="col-6 bg-surface rounded-lg h-40"></div>
+       
+          <TodayAttendance :todayAttendance="selectedEmployee.attendance_today"/>
+   
       </div>
     </div>
   </div>
@@ -88,12 +91,12 @@ import { onMounted, ref } from "vue";
 
 import { usePositionStore } from "@/store/position";
 
-import ProfileView from './children/ProfileView.vue';
-import formatTime from '@/composables/DateTimeFormat';
+import ProfileView from "./children/ProfileView.vue";
+import formatTime from "@/composables/DateTimeFormat";
 //import moment from 'moment';
-
+import TodayAttendance from "./children/TodayAttendance.vue";
 export default {
-  components: { ConfirmDialog,ProfileView },
+  components: { ConfirmDialog, ProfileView ,TodayAttendance},
   setup() {
     const _employee = useEmployeeStore();
     const { selectedEmployee, errors } = storeToRefs(_employee);
@@ -130,16 +133,15 @@ export default {
         loading.value = false;
         router.go(-1);
       },
-    
+
       onUpdate: (attribute, val) => {
         _employee.update(attribute, val);
       },
       formatTime,
 
-      upload:(val)=>{
-
-        _employee.upload(val)
-      }
+      upload: (val) => {
+        _employee.upload(val);
+      },
     };
   },
 };
