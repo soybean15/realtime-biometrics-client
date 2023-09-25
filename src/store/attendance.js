@@ -4,9 +4,9 @@ import { ref } from 'vue'
 
 export const useAttendanceStore = defineStore('attendance', () => {
 
-    const employee = ref(null)
+    const attendance = ref(null)
 
-    const employeeList = ref([])
+    const attendanceList = ref([])
 
 
     // window.echo.channel("zkTeco").listen(".get.attendance", (response) => {
@@ -18,8 +18,8 @@ export const useAttendanceStore = defineStore('attendance', () => {
 
 
     return {
-        employee,
-        employeeList
+        attendance,
+        attendanceList
     }
 
 })

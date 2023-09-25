@@ -1,12 +1,12 @@
 <template>
   <div class="row my-20">
     <div class="p-3 col-7 column">
-      <EmployeeInfoFlash class="" :employee="employee" />
+      <EmployeeInfoFlash class="" :attendance="attendance" />
     </div>
 
     <div class="column col-5">
       <DigitalClockView />
-      <AttendanceList :employeeList="employeeList"/>
+      <AttendanceList :attendanceList="attendanceList"/>
     </div>
   </div>
 
@@ -15,6 +15,20 @@
 <div v-for="item in attendance" :key="item.serial_number">
 
    <div class="row">
+12hrs
+24hrs
+07
+:
+19
+:
+49
+AM
+PM
+Sep, 25 2023, Mon
+Today
+Jane Doe (Time in)
+Time: 8:01
+1 min ago
 
       <img :src="item.employee.image" class="h-20 w-20"/>
       <div>
@@ -46,20 +60,20 @@ export default {
   setup() {
     const attendanceStore = useAttendanceStore();
 
-    const { employee, employeeList } = storeToRefs(attendanceStore);
+    const { attendance, attendanceList } = storeToRefs(attendanceStore);
 
     const ws = new WebSocketService("zkTeco");
 
     ws.listen(".get.attendance", (response) => {
       console.log(response);
 
-      employee.value = response
+      attendance.value = response.attendance
       response.attendance.employee.image =
         response.attendance.employee.image.replace(
           "http://localhost",
           "http://localhost:8000"
         );
-      employeeList.value.push(response.attendance);
+        attendanceList.value.unshift(response.attendance);
     });
 
     //   window.echo.channel("zkTeco").listen(".get.attendance", (response) => {
@@ -78,8 +92,8 @@ export default {
     //  }
 
     return {
-      employee,
-      employeeList
+      attendance,
+      attendanceList
     }
   },
 };
