@@ -16,4 +16,8 @@ class DateTimeFormatter {
   }
 }
 
-export default DateTimeFormatter
+const formatTime = (timestamp)=>{
+  return new DateTimeFormatter(timestamp).format("MMM D, YYYY");
+}
+
+export default formatTime

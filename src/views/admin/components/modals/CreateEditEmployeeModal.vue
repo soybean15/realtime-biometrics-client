@@ -2,7 +2,7 @@
   <PersistentDialog :width="'800px'">
     <template v-slot:open-button="{ open }">
       <q-btn
-        color="primary"
+        color="secondary"
         label="Create"
         @click="open"
         glossy
@@ -58,13 +58,13 @@
               :loading="loading"
               :disable="step === 2 ? !position || !department : false"
               @click="step === 3 ? onSubmit(close) : $refs.stepper.next()"
-              color="deep-orange"
+              color="secondary"
               :label="step === 3 ? 'Finish' : 'Continue'"
             />
             <q-btn
               v-if="step > 1"
               flat
-              color="deep-orange"
+              color="secondary"
               @click="$refs.stepper.previous()"
               label="Back"
               class="q-ml-sm"

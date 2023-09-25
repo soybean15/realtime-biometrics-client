@@ -17,7 +17,7 @@
     <q-icon
       class="absolute bottom-2 right-0 cursor-pointer"
       @click="upload"
-      color="blue-grey-1"
+      color="secondary"
       label="Click"
       name="photo_camera"
       size="2.2em"

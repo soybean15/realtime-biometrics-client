@@ -6,7 +6,7 @@
   >
     <template v-slot:open-button="{ open }">
       <q-btn
-        color="primary"
+        color="secondary"
         label="Archive"
         glossy
         @click="open"
@@ -44,7 +44,7 @@
               <q-btn
                 dense
                 class="text-xs w-28"
-                color="primary"
+                color="secondary"
                 glossy
                 @click="onRestore(props.row.id)"
                 text-color="white"

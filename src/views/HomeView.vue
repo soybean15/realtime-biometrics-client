@@ -1,12 +1,12 @@
 <template>
-  <div class="row my-20  ">
-    <div class="p-3 col-7 column ">
-        <EmployeeInfoFlash class=""/>
+  <div class="row my-20">
+    <div class="p-3 col-7 column">
+      <EmployeeInfoFlash class="" :attendance="attendance" />
     </div>
-  
+
     <div class="column col-5">
       <DigitalClockView />
-      <AttendanceList/>
+      <AttendanceList :attendanceList="attendanceList" />
     </div>
   </div>
 
@@ -15,6 +15,20 @@
 <div v-for="item in attendance" :key="item.serial_number">
 
    <div class="row">
+12hrs
+24hrs
+07
+:
+19
+:
+49
+AM
+PM
+Sep, 25 2023, Mon
+Today
+Jane Doe (Time in)
+Time: 8:01
+1 min ago
 
       <img :src="item.employee.image" class="h-20 w-20"/>
       <div>
@@ -33,29 +47,39 @@
 <script >
 import DigitalClockView from "@/views/components/DigitalClockView.vue";
 import AttendanceList from "./components/AttendanceList.vue";
-
-import EmployeeInfoFlash from './components/EmployeeInfoFlash.vue';
+import WebSocketService from "@/composables/WebSocket";
+import EmployeeInfoFlash from "./components/EmployeeInfoFlash.vue";
+import { useAttendanceStore } from "@/store/attendance";
+import { storeToRefs } from "pinia";
 export default {
-  components: { 
+  components: {
     DigitalClockView,
     AttendanceList,
-    EmployeeInfoFlash
-   },
+    EmployeeInfoFlash,
+  },
   setup() {
-    //   window.echo.channel("zkTeco").listen(".get.attendance", (response) => {
-    //    console.log(response)
-    //    response.attendance.employee.image = response.attendance.employee.image.replace("http://localhost", "http://localhost:8000");
-    //    attendance.value.push(response.attendance)
-    //  });
-    //  const sendMessage=()=>{
-    //    axios.post('http://localhost:8000/api/test', { message: message.value })
-    //      .then(response => {
-    //        console.log('Message sent successfully:', response.data);
-    //      })
-    //      .catch(error => {
-    //        console.error('Error sending message:', error);
-    //      });
-    //  }
+    const attendanceStore = useAttendanceStore();
+
+    const { attendance, attendanceList } = storeToRefs(attendanceStore);
+
+    const ws = new WebSocketService("zkTeco");
+
+    ws.listen(".get.attendance", (response) => {
+      console.log(response);
+
+      attendance.value = response.attendance;
+      response.attendance.employee.image =
+        response.attendance.employee.image.replace(
+          "http://localhost",
+          "http://localhost:8000"
+        );
+      attendanceList.value.unshift(response.attendance);
+    });
+
+    return {
+      attendance,
+      attendanceList,
+    };
   },
 };
 </script>

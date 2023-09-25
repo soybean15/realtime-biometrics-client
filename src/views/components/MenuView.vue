@@ -3,7 +3,7 @@
     <div class="cursor-pointer non-selectable">
       File
       <q-menu>
-        <q-list dense style="min-width: 100px">
+        <q-list dense style="min-width: 200px">
           <q-item clickable v-if="user">
             <q-item-section
               ><AddNewDevice>Add New Device</AddNewDevice></q-item-section
@@ -13,8 +13,15 @@
             <q-item-section><DeviceList /></q-item-section>
           </q-item>
 
-          <q-item clickable v-close-popup>
-            <q-item-section>Ping</q-item-section>
+          <q-item clickable v-close-popup v-if="zk">
+            <q-item-section>
+              <div class="row justify-between items-center">
+                <span class="font-secondary">{{ zk.config.device.ip_address }}</span>
+                <q-chip color="green" class="px-2" dense text-color="white" label="active"/>
+
+              </div>
+            
+            </q-item-section>
           </q-item>
 
           <q-separator />

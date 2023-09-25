@@ -1,6 +1,6 @@
 <template>
   <div class="column">
-    <div :class="titleClass ?? 'text-black'" class="text-sm">{{ title }}</div>
+    <div :class="titleClass" class="text-sm">{{ title }}</div>
 
     <div class="row items-center w-full">
       <div class="col-10 py-1" :class="valueClass" v-if="!onEdit">
@@ -34,12 +34,12 @@
       </div>
 
       <q-btn
-        class="col-1"
+        class="col-1 font-secondary"
         round
         flat
         size=".7em"
         @click="change"
-        color="primary"
+     
         :icon="!onEdit ? 'edit' : 'edit_off'"
       />
 
