@@ -64,6 +64,8 @@
 <script>
 export default {
 
+  props:['employeeList']
+
 }
 </script>
 

@@ -47,6 +47,8 @@
 <script>
 export default {
 
+    props:['employee']
+
 }
 </script>
 
