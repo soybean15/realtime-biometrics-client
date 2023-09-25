@@ -34,12 +34,12 @@
       </div>
 
       <q-btn
-        class="col-1"
+        class="col-1 font-secondary"
         round
         flat
         size=".7em"
         @click="change"
-        color="primary"
+     
         :icon="!onEdit ? 'edit' : 'edit_off'"
       />
 
