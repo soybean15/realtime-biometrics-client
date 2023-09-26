@@ -34,7 +34,7 @@
               <div class="col-6">
                 <LabelInput
                   :title="'Firstname'"
-                  :titleClass="'font-secondary font-bold'"
+                  :titleClass="' font-bold'"
                   :value="selectedEmployee.firstname"
                   :attribute="'firstname'"
                   :valueClass="'text-md '"
@@ -45,7 +45,7 @@
               <div class="col-5">
                 <LabelInput
                   :title="'Lastname'"
-                  :titleClass="'font-secondary font-bold'"
+                  :titleClass="' font-bold'"
                   :value="selectedEmployee.lastname"
                   :attribute="'lastname'"
                   :valueClass="'text-md  '"
@@ -59,7 +59,7 @@
               <div class="col-6">
                 <LabelInput
                   :title="'Middlename'"
-                  :titleClass="'font-secondary font-bold'"
+                  :titleClass="' font-bold'"
                   :value="selectedEmployee.middlename"
                   :attribute="'middlename'"
                   :valueClass="'text-md  '"
@@ -69,7 +69,7 @@
             </div>
             <LabelInput
               :title="'Email'"
-              :titleClass="'font-secondary font-bold'"
+              :titleClass="' font-bold'"
               :value="selectedEmployee.email"
               :attribute="'email'"
               :valueClass="'text-md '"
@@ -79,7 +79,7 @@
 
             <LabelInput
               :title="'Contact Number'"
-              :titleClass="'font-secondary font-bold'"
+              :titleClass="' font-bold'"
               :value="selectedEmployee.contact_number"
               :valueClass="'text-md  '"
               :attribute="'contact_number'"
@@ -89,7 +89,7 @@
 
             <LabelInput
               :title="'Birth Date'"
-              :titleClass="'font-secondary font-bold'"
+              :titleClass="'font-bold'"
               :value="selectedEmployee.birthdate"
               :type="'date'"
               :valueClass="'text-md  '"
@@ -99,7 +99,7 @@
 
             <LabelInput
               :title="'Gender'"
-              :titleClass="'font-secondary font-bold'"
+              :titleClass="' font-bold'"
               :value="selectedEmployee.gender"
               :type="'select'"
               :data="['Male', 'Female']"
@@ -112,7 +112,7 @@
 
         <div class="col-6 column">
           <div class="mb-5">
-            <div class="font-secondary text-sm">Position</div>
+            <div class=" font-bold text-sm">Position</div>
             <div class="column">
               <div
                 v-for="position in selectedEmployee.positions"
@@ -124,7 +124,7 @@
           </div>
 
           <div class="mb-5">
-            <div class="font-secondary text-sm">Deparment/s</div>
+            <div class=" text-sm font-bold">Deparment/s</div>
             <div class="column">
               <div
                 v-for="department in selectedEmployee.departments"
@@ -137,7 +137,7 @@
 
           <LabelInput
             :title="'Address'"
-            :titleClass="'font-secondary font-bold'"
+            :titleClass="' font-bold'"
             :value="selectedEmployee.address"
             :valueClass="'text-md  '"
             :attribute="'address'"
@@ -145,20 +145,20 @@
           />
 
           <div class="mb-5">
-            <div class="font-secondary text-sm">Date Created:</div>
-            <div class="f">
+            <div class="font-bold text-sm">Date Created:</div>
+            <div class="">
               {{ formatTime(selectedEmployee.created_at) }}
             </div>
           </div>
           <div class="mb-5">
-            <div class="font-secondary text-sm">Last Updated:</div>
+            <div class="font-bold text-sm">Last Updated:</div>
             <div class=" ">
               {{ formatTime(selectedEmployee.updated_at) }}
             </div>
           </div>
 
           <div class="mb-5">
-            <div class="font-secondary text-sm">Added By:</div>
+            <div class="font-bold text-sm">Added By:</div>
             <div class="font-bold">
               {{ selectedEmployee.user.name }}
             </div>
