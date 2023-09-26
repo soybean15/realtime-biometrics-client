@@ -9,7 +9,7 @@
          </div>
         </q-timeline-entry>
 
-      <q-timeline-entry title="Time in" :subtitle="item.timestamp" v-for="item in todayAttendance" :key="item.id">
+      <q-timeline-entry :title="item.type" :subtitle="item.timestamp" v-for="item in todayAttendance" :key="item.id">
        
       </q-timeline-entry>
 

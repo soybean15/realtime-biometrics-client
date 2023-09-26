@@ -74,8 +74,20 @@
         />
       </div>
       <div class="col-6 p-2 pl-1">
-       
-          <TodayAttendance :todayAttendance="selectedEmployee.attendance_today"/>
+
+        <q-tab-panels v-model="tab" animated>
+          <q-tab-panel name="profile">
+            <TodayAttendance :todayAttendance="selectedEmployee.attendance_today"/>
+          
+          </q-tab-panel>
+
+          <q-tab-panel name="attendance">
+           <WeeklyView/>
+          </q-tab-panel>
+        </q-tab-panels>
+
+     
+     
    
       </div>
     </div>
@@ -92,11 +104,14 @@ import { onMounted, ref } from "vue";
 import { usePositionStore } from "@/store/position";
 
 import ProfileView from "./children/ProfileView.vue";
+
+
 import formatTime from "@/composables/DateTimeFormat";
 //import moment from 'moment';
 import TodayAttendance from "./children/TodayAttendance.vue";
+import WeeklyView from "./children/WeeklyView.vue";
 export default {
-  components: { ConfirmDialog, ProfileView ,TodayAttendance},
+  components: { ConfirmDialog, ProfileView ,TodayAttendance,WeeklyView},
   setup() {
     const _employee = useEmployeeStore();
     const { selectedEmployee, errors } = storeToRefs(_employee);

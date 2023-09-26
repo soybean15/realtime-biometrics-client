@@ -7,7 +7,7 @@ import router from './router'
 import './config/axios'
 import './config/echo'
 import '@/css/index.css'
-
+import Plugin from '@quasar/quasar-ui-qcalendar/src/QCalendarDay.js'
 
 const pinia = createPinia()
 pinia.use(({ store }) => {
@@ -15,7 +15,7 @@ pinia.use(({ store }) => {
 })
 const app = createApp(App)
 app.use(Quasar, quasarUserOptions)
-
+app.use(Plugin)
 app.use(router)
 app.use(pinia)
 
