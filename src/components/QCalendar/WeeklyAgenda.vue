@@ -13,6 +13,7 @@
           v-model="selectedDate"
           view="week"
           dark
+          :interval-start="6"
           animated
           bordered
           @change="onChange"
