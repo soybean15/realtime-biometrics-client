@@ -1,16 +1,20 @@
 <template>
   <div class="subcontent">
-    <navigation-bar @today="onToday" @prev="onPrev" @next="onNext" />
+    <navigation-bar
+      @today="onToday"
+      @prev="onPrev"
+      @next="onNext"
+    />
 
     <div class="row justify-center">
-      <div style="display: flex; max-width: 800px; width: 100%; height: 400px">
+      <div style="display: flex; max-width: 800px; width: 100%; height: 400px;">
         <q-calendar-agenda
           ref="calendar"
           v-model="selectedDate"
           view="week"
           :left-column-options="leftColumnOptions"
           :right-column-options="rightColumnOptions"
-          :weekdays="[1, 2, 3, 4, 5]"
+          :weekdays="[1,2,3,4,5]"
           :day-min-height="200"
           bordered
           animated
@@ -31,21 +35,18 @@
               <div
                 :label="a.time"
                 class="justify-start q-ma-sm shadow-5 bg-grey-6"
-                style="margin-top: 25px"
+                style="margin-top: 25px;"
               >
                 <div
                   v-if="a.avatar"
                   class="row justify-center"
-                  style="margin-top: 30px; width: 100%"
+                  style="margin-top: 30px; width: 100%;"
                 >
-                  <q-avatar
-                    style="
-                      margin-top: -50px;
-                      margin-bottom: 10px;
-                      font-size: 60px;
-                    "
-                  >
-                    <img :src="a.avatar" style="border: #9e9e9e solid 5px" />
+                  <q-avatar style="margin-top: -50px; margin-bottom: 10px; font-size: 60px;">
+                    <img
+                      :src="a.avatar"
+                      style="border: #9e9e9e solid 5px;"
+                    >
                   </q-avatar>
                 </div>
                 <div class="col-12 q-px-sm">
@@ -54,7 +55,7 @@
                 <div
                   v-if="a.desc"
                   class="col-12 q-px-sm"
-                  style="font-size: 10px"
+                  style="font-size: 10px;"
                 >
                   {{ a.desc }}
                 </div>
@@ -65,213 +66,201 @@
       </div>
     </div>
   </div>
-</template>
-  
-  <script>
-import {
-  QCalendarAgenda,
-  today,
-} from "@quasar/quasar-ui-qcalendar/src/index.js";
-import "@quasar/quasar-ui-qcalendar/src/QCalendarVariables.sass";
-import "@quasar/quasar-ui-qcalendar/src/QCalendarTransitions.sass";
-import "@quasar/quasar-ui-qcalendar/src/QCalendarAgenda.sass";
 
-import { defineComponent, ref } from "vue";
-import NavigationBar from "@/components/QCalendar/NavigationBar.vue";
+</template>
+
+<script>
+import { QCalendarAgenda, today } from '@quasar/quasar-ui-qcalendar/src/index.js'
+import '@quasar/quasar-ui-qcalendar/src/QCalendarVariables.sass'
+import '@quasar/quasar-ui-qcalendar/src/QCalendarTransitions.sass'
+import '@quasar/quasar-ui-qcalendar/src/QCalendarAgenda.sass'
+
+import { defineComponent } from 'vue'
+import NavigationBar from './NavigationBar.vue'
+
+import { useEmployeeStore } from '@/store/employee'
 
 
 
 export default defineComponent({
-  name: "AgendaColumnOptions",
+  name: 'AgendaColumnOptions',
   components: {
     NavigationBar,
-    QCalendarAgenda,
+    QCalendarAgenda
   },
-
-  setup() {
-
-
-    const calendar = ref(null)
-
-
-    const  agenda = {
+  data () {
+    return {
+      selectedDate: today(),
+      employeeStore : useEmployeeStore(),
+      agenda: {
         // value represents day of the week
         1: [
           {
-            time: "08:00",
-            avatar: "https://cdn.quasar.dev/img/boy-avatar.png",
-            desc: "Meeting with CEO",
+            time: '08:00',
+            avatar: 'https://cdn.quasar.dev/img/boy-avatar.png',
+            desc: 'Meeting with CEO'
           },
           {
-            time: "08:30",
-            avatar: "https://cdn.quasar.dev/img/avatar.png",
-            desc: "Meeting with HR",
+            time: '08:30',
+            avatar: 'https://cdn.quasar.dev/img/avatar.png',
+            desc: 'Meeting with HR'
           },
           {
-            time: "10:00",
-            avatar: "https://cdn.quasar.dev/img/avatar1.jpg",
-            desc: "Meeting with Karen",
-          },
+            time: '10:00',
+            avatar: 'https://cdn.quasar.dev/img/avatar1.jpg',
+            desc: 'Meeting with Karen'
+          }
         ],
         2: [
           {
-            time: "11:30",
-            avatar: "https://cdn.quasar.dev/img/avatar2.jpg",
-            desc: "Meeting with Alisha",
+            time: '11:30',
+            avatar: 'https://cdn.quasar.dev/img/avatar2.jpg',
+            desc: 'Meeting with Alisha'
           },
           {
-            time: "17:00",
-            avatar: "https://cdn.quasar.dev/img/avatar3.jpg",
-            desc: "Meeting with Sarah",
-          },
+            time: '17:00',
+            avatar: 'https://cdn.quasar.dev/img/avatar3.jpg',
+            desc: 'Meeting with Sarah'
+          }
         ],
         3: [
           {
-            time: "08:00",
-            desc: "Stand-up SCRUM",
-            avatar: "https://cdn.quasar.dev/img/material.png",
+            time: '08:00',
+            desc: 'Stand-up SCRUM',
+            avatar: 'https://cdn.quasar.dev/img/material.png'
           },
           {
-            time: "09:00",
-            avatar: "https://cdn.quasar.dev/img/boy-avatar.png",
+            time: '09:00',
+            avatar: 'https://cdn.quasar.dev/img/boy-avatar.png'
           },
           {
-            time: "10:00",
-            desc: "Sprint planning",
-            avatar: "https://cdn.quasar.dev/img/material.png",
+            time: '10:00',
+            desc: 'Sprint planning',
+            avatar: 'https://cdn.quasar.dev/img/material.png'
           },
           {
-            time: "13:00",
-            avatar: "https://cdn.quasar.dev/img/avatar1.jpg",
-          },
+            time: '13:00',
+            avatar: 'https://cdn.quasar.dev/img/avatar1.jpg'
+          }
         ],
         4: [
           {
-            time: "09:00",
-            avatar: "https://cdn.quasar.dev/img/avatar3.jpg",
+            time: '09:00',
+            avatar: 'https://cdn.quasar.dev/img/avatar3.jpg'
           },
           {
-            time: "10:00",
-            avatar: "https://cdn.quasar.dev/img/avatar2.jpg",
+            time: '10:00',
+            avatar: 'https://cdn.quasar.dev/img/avatar2.jpg'
           },
           {
-            time: "13:00",
-            avatar: "https://cdn.quasar.dev/img/material.png",
-          },
+            time: '13:00',
+            avatar: 'https://cdn.quasar.dev/img/material.png'
+          }
         ],
         5: [
           {
-            time: "08:00",
-            avatar: "https://cdn.quasar.dev/img/boy-avatar.png",
+            time: '08:00',
+            avatar: 'https://cdn.quasar.dev/img/boy-avatar.png'
           },
           {
-            time: "09:00",
-            avatar: "https://cdn.quasar.dev/img/avatar2.jpg",
+            time: '09:00',
+            avatar: 'https://cdn.quasar.dev/img/avatar2.jpg'
           },
           {
-            time: "09:30",
-            avatar: "https://cdn.quasar.dev/img/avatar4.jpg",
+            time: '09:30',
+            avatar: 'https://cdn.quasar.dev/img/avatar4.jpg'
           },
           {
-            time: "10:00",
-            avatar: "https://cdn.quasar.dev/img/avatar5.jpg",
+            time: '10:00',
+            avatar: 'https://cdn.quasar.dev/img/avatar5.jpg'
           },
           {
-            time: "11:30",
-            avatar: "https://cdn.quasar.dev/img/material.png",
+            time: '11:30',
+            avatar: 'https://cdn.quasar.dev/img/material.png'
           },
           {
-            time: "13:00",
-            avatar: "https://cdn.quasar.dev/img/avatar6.jpg",
+            time: '13:00',
+            avatar: 'https://cdn.quasar.dev/img/avatar6.jpg'
           },
           {
-            time: "13:30",
-            avatar: "https://cdn.quasar.dev/img/avatar3.jpg",
+            time: '13:30',
+            avatar: 'https://cdn.quasar.dev/img/avatar3.jpg'
           },
           {
-            time: "14:00",
-            avatar: "https://cdn.quasar.dev/img/linux-avatar.png",
+            time: '14:00',
+            avatar: 'https://cdn.quasar.dev/img/linux-avatar.png'
           },
           {
-            time: "14:30",
-            avatar: "https://cdn.quasar.dev/img/avatar.png",
+            time: '14:30',
+            avatar: 'https://cdn.quasar.dev/img/avatar.png'
           },
           {
-            time: "15:00",
-            avatar: "https://cdn.quasar.dev/img/boy-avatar.png",
+            time: '15:00',
+            avatar: 'https://cdn.quasar.dev/img/boy-avatar.png'
           },
           {
-            time: "15:30",
-            avatar: "https://cdn.quasar.dev/img/avatar2.jpg",
+            time: '15:30',
+            avatar: 'https://cdn.quasar.dev/img/avatar2.jpg'
           },
           {
-            time: "16:00",
-            avatar: "https://cdn.quasar.dev/img/avatar6.jpg",
-          },
-        ],
-      }
-
-
-
-
-
-
-
-
-
-
-
-
-    return {
-      calendar,
-      selectedDate: today(),
-  
+            time: '16:00',
+            avatar: 'https://cdn.quasar.dev/img/avatar6.jpg'
+          }
+        ]
+      },
       leftColumnOptions: [
         {
-          id: "over-due",
-          label: "Over Due",
-        },
+          id: 'over-due',
+          label: 'Over Due'
+        }
       ],
       rightColumnOptions: [
         {
-          id: "summary",
-          label: "Summary",
-        },
-      ],
-      getAgenda(day) {
-        return agenda[parseInt(day.weekday, 10)];
-      },
-      onToday() {
-        calendar.value.moveToToday();
-      },
-      onPrev() {
-        calendar.value.prev();
-      },
-      onNext() {
-        calendar.value.next();
-      },
-      onMoved(data) {
-        console.log("onMoved", data);
-      },
-      onChange(data) {
-        console.log("onChange", data);
-      },
-      onClickDate(data) {
-        console.log("onClickDate", data);
-      },
-      onClickTime(data) {
-        console.log("onClickTime", data);
-      },
-      onClickInterval(data) {
-        console.log("onClickInterval", data);
-      },
-      onClickHeadIntervals(data) {
-        console.log("onClickHeadIntervals", data);
-      },
-      onClickHeadDay(data) {
-        console.log("onClickHeadDay", data);
-      },
-    };
+          id: 'summary',
+          label: 'Summary'
+        }
+      ]
+    }
   },
-});
+
+  methods: {
+    getAgenda (day) {
+      return this.agenda[ parseInt(day.weekday, 10) ]
+    },
+    onToday () {
+      this.$refs.calendar.moveToToday()
+    },
+    onPrev () {
+      this.$refs.calendar.prev()
+    },
+    onNext () {
+      this.$refs.calendar.next()
+    },
+    onMoved (data) {
+      console.log('onMoved', data)
+    },
+    onChange (data) {
+      console.log('onChange', data)
+    },
+    onClickDate (data) {
+      console.log('onClickDate', data)
+    },
+    onClickTime (data) {
+      console.log('onClickTime', data)
+    },
+    onClickInterval (data) {
+      console.log('onClickInterval', data)
+    },
+    onClickHeadIntervals (data) {
+      console.log('onClickHeadIntervals', data)
+    },
+    onClickHeadDay (data) {
+      console.log('onClickHeadDay', data)
+    }
+  },
+  onMounted:{
+     
+
+  }
+})
 </script>
