@@ -1,5 +1,7 @@
 <template>
   <div class="subcontent">
+    <div>From:{{ startDate }}</div>
+    <div>To:{{ endDate }}</div>
     <navigation-bar
       @today="onToday"
       @prev="onPrev"
@@ -74,6 +76,8 @@
           </template>
       
       </q-calendar-day>
+
+      
       </div>
     </div>
   </div>
@@ -94,6 +98,7 @@ import '@quasar/quasar-ui-qcalendar/src/QCalendarDay.sass'
 import { useEmployeeStore } from '@/store/employee'
 import { defineComponent } from 'vue'
 import NavigationBar from './NavigationBar.vue'
+import formatTime from '@/composables/DateTimeFormat'
 
 export default defineComponent({
   name: 'WeekDark',
@@ -104,7 +109,9 @@ export default defineComponent({
   data () {
     return {
       employeeStore:useEmployeeStore(),
-      selectedDate: today()
+      selectedDate: today(),
+      startDate:null,
+      endDate:null,
     }
   },
 
@@ -169,6 +176,9 @@ export default defineComponent({
       console.log('onMoved', data)
     },
     onChange (data) {
+
+      this.startDate = formatTime(data.start)
+      this.endDate = formatTime(data.end)
       console.log('onChange', data)
     },
     onClickDate (data) {
