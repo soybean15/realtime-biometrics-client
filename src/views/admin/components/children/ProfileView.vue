@@ -1,5 +1,5 @@
 <template>
-  <div class="p-2 py-5 bg-primary rounded-lg shadow-lg">
+  <div class="p-2 py-5 bg-surface rounded-lg shadow-lg">
     <div class="column">
       <div class="row">
         <div class="col-6 column items-center justify-center">

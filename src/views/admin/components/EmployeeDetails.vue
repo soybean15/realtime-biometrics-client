@@ -65,7 +65,7 @@
     </div>
 
     <div class="row h-40 m-2 shadow-sm rounded-lg">
-      <div class="col-6 p-2 pr-1">
+      <div class="col-5 p-2 pr-1">
         <ProfileView
           :selectedEmployee="selectedEmployee"
           :upload="upload"
@@ -73,7 +73,7 @@
           :errors="errors"
         />
       </div>
-      <div class="col-6 p-2 pl-1">
+      <div class="col-7 p-2 pl-1">
 
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="profile">
@@ -82,7 +82,7 @@
           </q-tab-panel>
 
           <q-tab-panel name="attendance">
-           <WeeklyView/>
+           <CalendarContainer/>
           </q-tab-panel>
         </q-tab-panels>
 
@@ -110,9 +110,9 @@ import ProfileView from "./children/ProfileView.vue";
 import formatTime from "@/composables/DateTimeFormat";
 //import moment from 'moment';
 import TodayAttendance from "./children/TodayAttendance.vue";
-import WeeklyView from "./children/WeeklyView.vue";
+import CalendarContainer from "./children/CalendarContainer.vue";
 export default {
-  components: { ConfirmDialog, ProfileView ,TodayAttendance,WeeklyView},
+  components: { ConfirmDialog, ProfileView ,TodayAttendance,CalendarContainer},
   setup() {
     const _employee = useEmployeeStore();
     const { selectedEmployee, errors } = storeToRefs(_employee);
