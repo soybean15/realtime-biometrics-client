@@ -9,12 +9,20 @@
          </div>
         </q-timeline-entry>
 
-      <q-timeline-entry :title="item.type" :subtitle="item.timestamp" v-for="item in todayAttendance" :key="item.id">
-       
-      </q-timeline-entry>
+        <div v-if="todayAttendance && todayAttendance.length==0">No Data Available</div>
 
+        <div v-else>
+
+            <q-timeline-entry :title="item.type" :subtitle="item.timestamp" v-for="item in todayAttendance" :key="item.id"/>
+        
+
+        </div>
+      
+
+ 
     </q-timeline>
   </div>
+
 </template>
 
   <script>

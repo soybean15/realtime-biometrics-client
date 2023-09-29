@@ -1,14 +1,21 @@
 import moment from 'moment';
 
 class DateTimeFormatter {
-  constructor(date) {
+  constructor(date, format) {
+    console.log(format)
     this.date = moment(date);
+
     this.formatStr = "MMM D, YYYY";
+
+
   }
 
   format(fmt) {
-    this.formatStr = fmt;
-    return this; // Return the object itself for chaining
+    if (fmt) {
+      this.formatStr = fmt;
+    }
+
+    return this;
   }
 
   toString() {
@@ -16,8 +23,8 @@ class DateTimeFormatter {
   }
 }
 
-const formatTime = (timestamp)=>{
-  return new DateTimeFormatter(timestamp).format("MMM D, YYYY");
+const formatTime = (timestamp, format) => {
+  return new DateTimeFormatter(timestamp, format).format(format);
 }
 
 export default formatTime

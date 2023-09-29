@@ -1,5 +1,7 @@
 <template>
   <div class="subcontent">
+    <div>From:{{ startDate }}</div>
+    <div>To:{{ endDate }}</div>
     <navigation-bar
       @today="onToday"
       @prev="onPrev"
@@ -7,7 +9,7 @@
     />
 
     <div class="row justify-center">
-      <div style="display: flex; max-width: 800px; width: 100%; height: 400px;">
+      <div style="display: flex; max-width: 800px; width: 100%; height: 500px;">
         <q-calendar-day
           ref="calendar"
           v-model="selectedDate"
@@ -37,7 +39,7 @@
                   style="width: 100%; cursor: pointer; height: 12px; font-size: 10px; margin: 1px;"
                 >
                   <div class="title q-calendar__ellipsis">
-                    {{ event.title }}
+                   
                     <q-tooltip>{{ event.details }}</q-tooltip>
                   </div>
                 </q-badge>
@@ -66,7 +68,7 @@
                 :style="badgeStyles(event, 'body', timeStartPos, timeDurationHeight)"
               >
                 <div class="title q-calendar__ellipsis">
-                  {{ event.title }}
+                
                   <q-tooltip>{{ event.time + ' - ' + event.details }}</q-tooltip>
                 </div>
               </div>
@@ -74,6 +76,8 @@
           </template>
       
       </q-calendar-day>
+
+      
       </div>
     </div>
   </div>
@@ -94,6 +98,7 @@ import '@quasar/quasar-ui-qcalendar/src/QCalendarDay.sass'
 import { useEmployeeStore } from '@/store/employee'
 import { defineComponent } from 'vue'
 import NavigationBar from './NavigationBar.vue'
+import formatTime from '@/composables/DateTimeFormat'
 
 export default defineComponent({
   name: 'WeekDark',
@@ -104,7 +109,9 @@ export default defineComponent({
   data () {
     return {
       employeeStore:useEmployeeStore(),
-      selectedDate: today()
+      selectedDate: today(),
+      startDate:null,
+      endDate:null,
     }
   },
 
@@ -169,6 +176,9 @@ export default defineComponent({
       console.log('onMoved', data)
     },
     onChange (data) {
+
+      this.startDate = formatTime(data.start)
+      this.endDate = formatTime(data.end)
       console.log('onChange', data)
     },
     onClickDate (data) {
@@ -217,6 +227,11 @@ export default defineComponent({
   },
   mounted(){
     this.employeeStore.getAttendance()
+  },
+  unmounted(){
+    console.log('Unmounted')
+    this.employeeStore.employeeAttendance = []
+    console.log(this.employeeStore.employeeAttendance)
   }
 })
 </script>

@@ -202,9 +202,16 @@ export const useEmployeeStore = defineStore('employee', () => {
         employeeAttendance.value = response.data.attendance
     }
 
+    const getAttendanceByCuOff= async()=>{
+        employeeAttendance.value=[]
+        const response = await axios.get(`api/admin/employee/attendance/cutoff/${selectedEmployee.value.id}`)
+        employeeAttendance.value = response.data.attendance
+    }
+
 
     return {
         getEmployees,
+
         data,
         employeeForm,
         selectedEmployee,
@@ -220,6 +227,7 @@ export const useEmployeeStore = defineStore('employee', () => {
         upload,
         filter,
         search,
-        getAttendance
+        getAttendance,
+        getAttendanceByCuOff
     }
 })
