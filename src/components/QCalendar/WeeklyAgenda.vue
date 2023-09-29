@@ -39,7 +39,7 @@
                   style="width: 100%; cursor: pointer; height: 12px; font-size: 10px; margin: 1px;"
                 >
                   <div class="title q-calendar__ellipsis">
-                    {{ event.title }}
+                   
                     <q-tooltip>{{ event.details }}</q-tooltip>
                   </div>
                 </q-badge>
@@ -68,7 +68,7 @@
                 :style="badgeStyles(event, 'body', timeStartPos, timeDurationHeight)"
               >
                 <div class="title q-calendar__ellipsis">
-                  {{ event.title }}
+                
                   <q-tooltip>{{ event.time + ' - ' + event.details }}</q-tooltip>
                 </div>
               </div>
@@ -227,6 +227,11 @@ export default defineComponent({
   },
   mounted(){
     this.employeeStore.getAttendance()
+  },
+  unmounted(){
+    console.log('Unmounted')
+    this.employeeStore.employeeAttendance = []
+    console.log(this.employeeStore.employeeAttendance)
   }
 })
 </script>
