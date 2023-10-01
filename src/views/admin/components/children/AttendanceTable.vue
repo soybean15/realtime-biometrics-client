@@ -16,8 +16,18 @@
 
         <DataTable
             :columns="columns"
-            :rows="employeeAttendance"
-        />
+            :rows="employeeAttendance.attendance"
+        >
+      
+        <template v-slot:top>
+          <div class="row items-center">
+
+            <div>{{ `${formatTime(employeeAttendance.date, 'MMMM')} ${employeeAttendance.cut_off}` }}</div>
+
+
+          </div>
+        </template>
+      </DataTable>
         
 
     </div>
@@ -30,6 +40,13 @@ import { useEmployeeStore } from '@/store/employee';
 import { storeToRefs } from 'pinia';
 import { onMounted } from 'vue';
 import formatTime from '@/composables/DateTimeFormat'
+
+
+const format=(val)=>{
+
+  return formatTime(val,"LTS") == 'Invalid date' ? 'No data' :formatTime(val,'LT')
+
+}
 
 const columns = [
   {
@@ -47,7 +64,7 @@ const columns = [
     label: "Time in",
     align: "left",
     field: (row) => row.time_in,
-     format: (val) =>`${formatTime(val,"LT")}`,
+     format: (val) =>`${format(val)}`,
     //  sortable: true,
   },
   {
@@ -56,7 +73,7 @@ const columns = [
     label: "Break Out",
     align: "left",
     field: (row) => row.break_out,
-    format: (val) =>`${formatTime(val,"LT")}`,
+    format: (val) =>`${format(val)}`,
     //  sortable: true,
   },
   {
@@ -65,7 +82,7 @@ const columns = [
     label: "Break in",
     align: "left",
     field: (row) => row.break_in,
-    format: (val) =>`${formatTime(val,"LT")}`,
+    format: (val) =>`${format(val)}`,
     //  sortable: true,
   },
   {
@@ -74,7 +91,7 @@ const columns = [
     label: "Time out",
     align: "left",
     field: (row) => row.time_out,
-    format: (val) =>`${formatTime(val,"LT")}`,
+    format: (val) =>`${format(val)}`,
     //  sortable: true,
   },
 
@@ -91,7 +108,7 @@ export default {
         })
 
         return {
-            employeeAttendance,columns
+            employeeAttendance,columns ,formatTime
         }
     }
 
