@@ -121,8 +121,9 @@ export default defineComponent({
       const map = {}
       // this.events.forEach(event => (map[ event.date ] = map[ event.date ] || []).push(event))
 
-      console.log(this.employeeStore.employeeAttendance)
-      this.employeeStore.employeeAttendance.forEach(event => {
+      console.log()
+      if(this.employeeStore.employeeAttendance.attendance){
+        this.employeeStore.employeeAttendance.attendance.forEach(event => {
         if (!map[ event.date ]) {
           map[ event.date ] = []
         }
@@ -139,6 +140,8 @@ export default defineComponent({
           } while (--days > 0)
         }
       })
+      }
+     
       return map
     }
   },
@@ -231,7 +234,7 @@ export default defineComponent({
   unmounted(){
     console.log('Unmounted')
     this.employeeStore.employeeAttendance = []
-    console.log(this.employeeStore.employeeAttendance)
+
   }
 })
 </script>
