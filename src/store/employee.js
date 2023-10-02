@@ -199,7 +199,7 @@ export const useEmployeeStore = defineStore('employee', () => {
     const getAttendance=async()=>{
 
         const response = await axios.get(`api/admin/employee/attendance/${selectedEmployee.value.id}`)
-        employeeAttendance.value = response.data.attendance
+        employeeAttendance.value = response.data
     }
 
     const getAttendanceByCuOff= async()=>{
