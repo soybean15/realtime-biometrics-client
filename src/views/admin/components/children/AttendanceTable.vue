@@ -1,5 +1,5 @@
 <template>
-    <!-- 
+  <!-- 
   props : 
     -title
     -rows
@@ -12,41 +12,148 @@
     -top-right
     -top
     -bottom -->
-    <div>
-
-        <DataTable
-            :columns="columns"
-            :rows="employeeAttendance.attendance"
-        >
-      
-        <template v-slot:top>
-          <div class="row items-center">
-
-            <div>{{ `${formatTime(employeeAttendance.date, 'MMMM')} ${employeeAttendance.cut_off}` }}</div>
-
-
+  <div>
+    <DataTable
+      :columns="columns"
+      :rows="employeeAttendance.attendance"
+      :cells="[
+        'remarks',
+        'date',
+        'time_in',
+        'break_out',
+        'break_in',
+        'time_out',
+      ]"
+    >
+      <template v-slot:top>
+        <div class="row items-center">
+          <div>
+            {{
+              `${formatTime(employeeAttendance.date, "MMMM")} ${
+                employeeAttendance.cut_off
+              }`
+            }}
           </div>
-        </template>
-      </DataTable>
-        
+        </div>
+      </template>
+      <template v-slot:remarks="{ props }">
+        <q-td :props="props" v-if="props.row.daily && props.row.daily[0]">
+          <div v-if="!props.row.daily[0].is_resolve">
+            <div v-for="item in props.row.daily[0].remarks" :key="item.key">
+              <div 
+              v-if="item.key === 'no_time_in'
+              || item.key === 'no_time_out'
+              || item.key === 'undertime'
+              || item.key === 'late'
+              ">
+                <q-chip
+                  :color="getChipColor(item.key)"
+                  dense
+                  :label="item.title"
+                />
+              </div>
+            </div>
+          </div>
+          <q-chip
+                  :color="getChipColor('normal')"
+                  dense
+                  label="Normal"
 
-    </div>
-  
+                  v-else
+                />
+        </q-td>
+      </template>
+
+      <template v-slot:date="{ props }">
+        <q-td :props="props">
+          <div
+            :class="{
+              'text-orange-700':
+                props.row.daily &&
+                props.row.daily[0] &&
+                !props.row.daily[0].is_resolve,
+            }"
+          >
+            {{ props.row.date }}
+          </div>
+        </q-td>
+      </template>
+
+      <template v-slot:time_in="{ props }">
+        <q-td :props="props">
+          <div
+            :class="{
+              'text-orange-700':
+                props.row.daily &&
+                props.row.daily[0] &&
+                !props.row.daily[0].is_resolve,
+            }"
+          >
+            {{ format(props.row.time_in) }}
+          </div>
+        </q-td>
+      </template>
+
+      <template v-slot:break_out="{ props }">
+        <q-td :props="props">
+          <div
+            :class="{
+              'text-orange-700':
+                props.row.daily &&
+                props.row.daily[0] &&
+                !props.row.daily[0].is_resolve,
+            }"
+          >
+            {{ format(props.row.break_out) }}
+          </div>
+        </q-td>
+      </template>
+
+      <template v-slot:break_in="{ props }">
+        <q-td :props="props">
+          <div
+            :class="{
+              'text-orange-700':
+                props.row.daily &&
+                props.row.daily[0] &&
+                !props.row.daily[0].is_resolve,
+            }"
+          >
+            {{ format(props.row.break_in) }}
+          </div>
+        </q-td>
+      </template>
+
+      <template v-slot:time_out="{ props }">
+        <q-td :props="props">
+          <div
+            :class="{
+              'text-orange-700':
+                props.row.daily &&
+                props.row.daily[0] &&
+                !props.row.daily[0].is_resolve,
+            }"
+          >
+            {{ format(props.row.time_out) }}
+          </div>
+        </q-td>
+      </template>
+    </DataTable>
+  </div>
 </template>
 
 <script>
-import DataTable from '@/components/DataTable.vue';
-import { useEmployeeStore } from '@/store/employee';
-import { storeToRefs } from 'pinia';
-import { onMounted } from 'vue';
-import formatTime from '@/composables/DateTimeFormat'
+import DataTable from "@/components/DataTable.vue";
+import { useEmployeeStore } from "@/store/employee";
+import { storeToRefs } from "pinia";
+import { onMounted } from "vue";
+import formatTime from "@/composables/DateTimeFormat";
 
-
-const format=(val)=>{
-
-  return formatTime(val,"LTS") == 'Invalid date' ? 'No data' :formatTime(val,'LT')
-
-}
+const format = (val) => {
+  return formatTime(val, "LTS") == "Invalid date"
+    ? "No data"
+    : formatTime(val, "LT");
+};
 
 const columns = [
   {
@@ -54,8 +161,9 @@ const columns = [
     required: true,
     label: "Date",
     align: "left",
-    field: (row) => row.date,
-    format: (val) => `${val}`,
+    // field: (row) => row.date,
+    // format: (val) => `${val}`,
+
     //  sortable: true,
   },
   {
@@ -63,8 +171,8 @@ const columns = [
     required: true,
     label: "Time in",
     align: "left",
-    field: (row) => row.time_in,
-     format: (val) =>`${format(val)}`,
+    // field: (row) => row.time_in,
+    //  format: (val) =>`${format(val)}`,
     //  sortable: true,
   },
   {
@@ -72,8 +180,8 @@ const columns = [
     required: true,
     label: "Break Out",
     align: "left",
-    field: (row) => row.break_out,
-    format: (val) =>`${format(val)}`,
+    // field: (row) => row.break_out,
+    // format: (val) =>`${format(val)}`,
     //  sortable: true,
   },
   {
@@ -81,8 +189,8 @@ const columns = [
     required: true,
     label: "Break in",
     align: "left",
-    field: (row) => row.break_in,
-    format: (val) =>`${format(val)}`,
+    // field: (row) => row.break_in,
+    // format: (val) =>`${format(val)}`,
     //  sortable: true,
   },
   {
@@ -90,31 +198,52 @@ const columns = [
     required: true,
     label: "Time out",
     align: "left",
-    field: (row) => row.time_out,
-    format: (val) =>`${format(val)}`,
+    // field: (row) => row.time_out,
+    // format: (val) =>`${format(val)}`,
     //  sortable: true,
   },
 
-]
+  {
+    name: "remarks",
+    required: true,
+    label: "Remarks",
+    align: "center",
+    style: "width: 50px",
+    //  sortable: true,
+  },
+];
 export default {
-    components:{DataTable},
-    setup(){
-        const employeeStore = useEmployeeStore()
+  components: { DataTable },
+  setup() {
+    const employeeStore = useEmployeeStore();
 
-        const {employeeAttendance} = storeToRefs(employeeStore)
+    const { employeeAttendance } = storeToRefs(employeeStore);
 
-        onMounted(()=>{
-            employeeStore.getAttendanceByCuOff()
-        })
+    onMounted(() => {
+      employeeStore.getAttendanceByCuOff();
+    });
 
-        return {
-            employeeAttendance,columns ,formatTime
-        }
-    }
+    return {
+      employeeAttendance,
+      columns,
+      formatTime,
+      format,
+      getChipColor: (key) => {
+        const colors = {
+          late: "orange",
+          no_time_in: "red",
+          no_time_out: "red",
+          normal: "green",
 
-}
+          // Add more key-value pairs as needed
+        };
+
+        return colors[key];
+      },
+    };
+  },
+};
 </script>
 
 <style>
-
 </style>
