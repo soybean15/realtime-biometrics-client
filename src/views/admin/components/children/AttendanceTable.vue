@@ -23,6 +23,7 @@
         'break_out',
         'break_in',
         'time_out',
+        'action'
       ]"
     >
       <template v-slot:top>
@@ -40,27 +41,46 @@
         <q-td :props="props" v-if="props.row.daily && props.row.daily[0]">
           <div v-if="!props.row.daily[0].is_resolve">
             <div v-for="item in props.row.daily[0].remarks" :key="item.key">
-              <div 
-              v-if="item.key === 'no_time_in'
-              || item.key === 'no_time_out'
-              || item.key === 'undertime'
-              || item.key === 'late'
-              ">
+              <div
+                class="flex flex-wrap"
+                v-if="
+                  item.key === 'no_time_in' ||
+                  item.key === 'no_time_out' ||
+                  item.key === 'undertime' ||
+                  item.key === 'late'
+                "
+              >
                 <q-chip
                   :color="getChipColor(item.key)"
                   dense
                   :label="item.title"
-                />
+                  :class="{
+                    'cursor-pointer':
+                      item.key === 'no_time_in' || item.key === 'no_time_out',
+                  }"
+                >
+                  <q-tooltip class="bg-indigo" :offset="[10, 10]">
+                   {{item.details}}
+                  </q-tooltip>
+                </q-chip>
               </div>
             </div>
           </div>
-          <q-chip
-                  :color="getChipColor('normal')"
-                  dense
-                  label="Normal"
+          <q-chip :color="getChipColor('normal')" dense label="Normal" v-else />
+        </q-td>
+      </template>
 
-                  v-else
-                />
+      <template v-slot:action="{props}">
+        <q-td :props="props" v-if="props.row.daily && props.row.daily[0]">
+          <div class="row items-center" v-if="!props.row.daily[0].is_resolve"> 
+
+             <ResolveAttendanceModal :issue="props.row.daily[0].remarks"/>
+          
+          
+          
+          </div>
+          <span class="italic text-sm" v-else>No Action Needed</span>
+          
         </q-td>
       </template>
 
@@ -148,6 +168,8 @@ import { useEmployeeStore } from "@/store/employee";
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
 import formatTime from "@/composables/DateTimeFormat";
+import ResolveAttendanceModal from "../modals/ResolveAttendanceModal.vue";
+import getChipColor from "@/composables/chipColor";
 
 const format = (val) => {
   return formatTime(val, "LTS") == "Invalid date"
@@ -211,9 +233,18 @@ const columns = [
     style: "width: 50px",
     //  sortable: true,
   },
+
+  {
+    name: "action",
+    required: true,
+    label: "Action",
+    align: "center",
+    style: "width: 50px",
+    //  sortable: true,
+  },
 ];
 export default {
-  components: { DataTable },
+  components: { DataTable,ResolveAttendanceModal },
   setup() {
     const employeeStore = useEmployeeStore();
 
@@ -228,18 +259,7 @@ export default {
       columns,
       formatTime,
       format,
-      getChipColor: (key) => {
-        const colors = {
-          late: "orange",
-          no_time_in: "red",
-          no_time_out: "red",
-          normal: "green",
-
-          // Add more key-value pairs as needed
-        };
-
-        return colors[key];
-      },
+      getChipColor
     };
   },
 };
