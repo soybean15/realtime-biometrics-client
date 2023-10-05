@@ -95,7 +95,7 @@ import {
 import '@quasar/quasar-ui-qcalendar/src/QCalendarVariables.sass'
 import '@quasar/quasar-ui-qcalendar/src/QCalendarTransitions.sass'
 import '@quasar/quasar-ui-qcalendar/src/QCalendarDay.sass'
-import { useEmployeeStore } from '@/store/employee'
+import {useAttendanceStore} from '@/store/attendance'
 import { defineComponent } from 'vue'
 import NavigationBar from './NavigationBar.vue'
 import formatTime from '@/composables/DateTimeFormat'
@@ -108,7 +108,7 @@ export default defineComponent({
   },
   data () {
     return {
-      employeeStore:useEmployeeStore(),
+      attendanceStore:useAttendanceStore(),
       selectedDate: today(),
       startDate:null,
       endDate:null,
@@ -122,8 +122,8 @@ export default defineComponent({
       // this.events.forEach(event => (map[ event.date ] = map[ event.date ] || []).push(event))
 
       console.log()
-      if(this.employeeStore.employeeAttendance.attendance){
-        this.employeeStore.employeeAttendance.attendance.forEach(event => {
+      if(this.attendanceStore.employeeAttendance.attendance){
+        this.attendanceStore.employeeAttendance.attendance.forEach(event => {
         if (!map[ event.date ]) {
           map[ event.date ] = []
         }
@@ -229,11 +229,11 @@ export default defineComponent({
 
   },
   mounted(){
-    this.employeeStore.getAttendance()
+    this.attendanceStore.getAttendance()
   },
   unmounted(){
     console.log('Unmounted')
-    this.employeeStore.employeeAttendance = []
+    this.attendanceStore.employeeAttendance = []
 
   }
 })

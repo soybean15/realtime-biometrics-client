@@ -194,20 +194,6 @@ export const useEmployeeStore = defineStore('employee', () => {
     }
 
 
-    const employeeAttendance=ref([])
-
-    const getAttendance=async()=>{
-
-        const response = await axios.get(`api/admin/employee/attendance/${selectedEmployee.value.id}`)
-        employeeAttendance.value = response.data
-    }
-
-    const getAttendanceByCuOff= async()=>{
-        employeeAttendance.value=[]
-        const response = await axios.get(`api/admin/employee/attendance/cutoff/${selectedEmployee.value.id}`)
-        employeeAttendance.value = response.data
-    }
-
 
     return {
         getEmployees,
@@ -215,7 +201,7 @@ export const useEmployeeStore = defineStore('employee', () => {
         data,
         employeeForm,
         selectedEmployee,
-        employeeAttendance,
+   
         add,
         errors,
         restore,
@@ -227,7 +213,6 @@ export const useEmployeeStore = defineStore('employee', () => {
         upload,
         filter,
         search,
-        getAttendance,
-        getAttendanceByCuOff
+
     }
 })

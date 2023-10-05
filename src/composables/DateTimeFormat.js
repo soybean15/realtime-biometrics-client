@@ -3,7 +3,7 @@ import moment from 'moment';
 class DateTimeFormatter {
   constructor(date, format) {
     console.log(format)
-    console.log(date)
+   
     this.date = moment(date);
 
     this.formatStr = "MMM D, YYYY";
