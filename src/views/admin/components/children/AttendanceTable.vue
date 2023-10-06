@@ -23,7 +23,7 @@
         'break_out',
         'break_in',
         'time_out',
-        'action'
+        'action',
       ]"
     >
       <template v-slot:top>
@@ -46,8 +46,7 @@
                 v-if="
                   item.key === 'no_time_in' ||
                   item.key === 'no_time_out' ||
-                  item.key === 'undertime' ||
-                  item.key === 'late'
+                  item.key === 'undertime'
                 "
               >
                 <q-chip
@@ -60,27 +59,23 @@
                   }"
                 >
                   <q-tooltip class="bg-indigo" :offset="[10, 10]">
-                   {{item.details}}
+                    {{ item.details }}
                   </q-tooltip>
                 </q-chip>
               </div>
+           
             </div>
           </div>
           <q-chip :color="getChipColor('normal')" dense label="Normal" v-else />
         </q-td>
       </template>
 
-      <template v-slot:action="{props}">
+      <template v-slot:action="{ props }">
         <q-td :props="props" v-if="props.row.daily && props.row.daily[0]">
-          <div class="row items-center" v-if="!props.row.daily[0].is_resolve"> 
-
-             <ResolveAttendanceModal :issue="props.row.daily[0]"/>
-          
-          
-          
+          <div class="row items-center" v-if="!props.row.daily[0].is_resolve">
+            <ResolveAttendanceModal :issue="props.row.daily[0]" />
           </div>
           <span class="italic text-sm" v-else>No Action Needed</span>
-          
         </q-td>
       </template>
 
@@ -170,9 +165,7 @@ import { onMounted } from "vue";
 import formatTime from "@/composables/DateTimeFormat";
 import ResolveAttendanceModal from "../modals/ResolveAttendanceModal.vue";
 import getChipColor from "@/composables/chipColor";
-import { useAttendanceStore } from '@/store/attendance';
-
-
+import { useAttendanceStore } from "@/store/attendance";
 
 const format = (val) => {
   return formatTime(val, "LTS") == "Invalid date"
@@ -247,7 +240,7 @@ const columns = [
   },
 ];
 export default {
-  components: { DataTable,ResolveAttendanceModal },
+  components: { DataTable, ResolveAttendanceModal },
   setup() {
     const attendanceStore = useAttendanceStore();
 
@@ -263,7 +256,6 @@ export default {
       formatTime,
       format,
       getChipColor,
-     
     };
   },
 };
