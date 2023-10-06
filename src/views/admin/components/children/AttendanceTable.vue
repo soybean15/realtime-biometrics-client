@@ -74,7 +74,7 @@
         <q-td :props="props" v-if="props.row.daily && props.row.daily[0]">
           <div class="row items-center" v-if="!props.row.daily[0].is_resolve"> 
 
-             <ResolveAttendanceModal :issue="props.row.daily[0].remarks"/>
+             <ResolveAttendanceModal :issue="props.row.daily[0]"/>
           
           
           
@@ -164,12 +164,15 @@
 
 <script>
 import DataTable from "@/components/DataTable.vue";
-import { useEmployeeStore } from "@/store/employee";
+
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
 import formatTime from "@/composables/DateTimeFormat";
 import ResolveAttendanceModal from "../modals/ResolveAttendanceModal.vue";
 import getChipColor from "@/composables/chipColor";
+import { useAttendanceStore } from '@/store/attendance';
+
+
 
 const format = (val) => {
   return formatTime(val, "LTS") == "Invalid date"
@@ -246,12 +249,12 @@ const columns = [
 export default {
   components: { DataTable,ResolveAttendanceModal },
   setup() {
-    const employeeStore = useEmployeeStore();
+    const attendanceStore = useAttendanceStore();
 
-    const { employeeAttendance } = storeToRefs(employeeStore);
+    const { employeeAttendance } = storeToRefs(attendanceStore);
 
     onMounted(() => {
-      employeeStore.getAttendanceByCuOff();
+      attendanceStore.getAttendanceByCuOff();
     });
 
     return {
@@ -259,7 +262,8 @@ export default {
       columns,
       formatTime,
       format,
-      getChipColor
+      getChipColor,
+     
     };
   },
 };

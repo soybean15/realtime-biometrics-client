@@ -8,7 +8,7 @@ export const useDepartmentStore = defineStore('department', () => {
     const selectedDepartments = ref([])
 
     const department = ref(null)
-    
+    console.log(department.value)
 
     const getDepartments = async()=>{
         departments.value = await (await (axios.get('api/admin/department'))).data.departments
