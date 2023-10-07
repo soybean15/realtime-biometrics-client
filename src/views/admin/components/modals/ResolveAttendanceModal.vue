@@ -52,7 +52,7 @@
                     :label="item.title"
                     :color="getChipColor(item.key)"
                   />
-                  {{ setDefaultTime(item.key) }}
+                
 
                   <div class="row items-center">
                     <q-input outlined dense v-model="time" mask="time">
@@ -80,7 +80,7 @@
 
                     <q-btn
                       @click="
-                        attendanceStore.resolve('Time in', `${issue.date}`)
+                       resolve(item.key,issue.date)
                       "
                       class="mx-3"
                       dense
@@ -118,37 +118,48 @@
 <script>
 import PersistentDialog from "@/components/PersistentDialog.vue";
 import getChipColor from "@/composables/chipColor";
-import { useSettingStore } from "@/store/settings";
-import { storeToRefs } from "pinia";
+// import { useSettingStore } from "@/store/settings";
+// import { storeToRefs } from "pinia";
 import { ref } from "vue";
 import { useAttendanceStore } from "@/store/attendance";
 import formatTime from "@/composables/DateTimeFormat";
+
+
+
 
 export default {
   components: { PersistentDialog },
   props: ["issue"],
   setup() {
-    const settingStore = useSettingStore();
+    // const settingStore = useSettingStore();
     const attendanceStore = useAttendanceStore();
-    const time = ref(null);
-    const { settings } = storeToRefs(settingStore);
+    const time = ref('08:00');
+    // const { settings } = storeToRefs(settingStore);
 
     return {
       formatTime,
       getChipColor,
       time,
       attendanceStore,
-      setDefaultTime: (key) => {
-        const val = {
-          no_time_in: settings.value["end_time"],
-          no_time_out: settings.value["start_time"],
-        };
-        time.value = val[key] === null ? "8:00" : val[key];
-      },
+      // setDefaultTime: (key) => {
+      //   const val = {
+      //     no_time_in: settings.value["end_time"],
+      //     no_time_out: settings.value["start_time"],
+      //   };
+      //   time.value = val[key] === null ? "8:00" : val[key];
+      // },
+
+      resolve:(type,date)=>{
+
+        const datePart = date.split(" ")[0];
+
+        attendanceStore.resolve(type,`${datePart} ${time.value}`)
+      }
     };
   },
 };
 </script>
+
 
 <style>
 </style>

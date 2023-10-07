@@ -39,7 +39,7 @@ export const useAttendanceStore = defineStore('attendance', () => {
 
         await axios.post('api/admin/employee/attendance/resolve',
             {
-                employee_id:selectedEmployee.id,
+                employee_id:1,
                 type:type,
                 timestamp:timestamp
             }
