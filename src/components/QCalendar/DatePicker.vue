@@ -1,35 +1,45 @@
 <template>
     <div class="q-pa-md">
       <div class="q-gutter-md">
-        <q-date
+        <!-- <q-date
           v-model="date"
           :events="events"
           :event-color="(date) => date[9] % 2 === 0 ? 'teal' : 'orange'"
-        />
+        /> -->
   
         <q-date
-          v-model="date"
-          :events="eventsFn"
+          v-model="dateModel"
+          :events="events"
           :event-color="(date) => date[9] % 2 === 0 ? 'teal' : 'orange'"
         />
       </div>
     </div>
+
   </template>
   
   <script>
-  import { ref } from 'vue'
+  import { ref, watch } from 'vue'
+import {date} from 'quasar'
 
   
   export default {
-    setup () {
+    props:['events'],
+    emits:['onSelectDate'],
+    setup (props,{emit}) {
+    
+      const current = Date.now()
+      const formattedString = date.formatDate(current, 'YYYY/MM/DD')
+
+      const dateModel = ref(formattedString)
+
+      watch(dateModel,()=>{
+       
+        emit('onSelectDate', dateModel.value)
+      })
+     
       return {
-        date: ref('2019/02/01'),
-        events: [ '2019/02/01', '2019/02/05', '2019/02/06', '2019/02/09', '2019/02/23' ],
-        eventsFn (date) { 
+        dateModel
 
-          console.log(date)
-
-        }
       }
     }
   }
