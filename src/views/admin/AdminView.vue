@@ -119,9 +119,10 @@ export default {
       },
 
       {
-        icon: "error",
-        label: "Spam",
+        icon: "calendar_month",
+        label: "Calendar",
         separator: true,
+        to: "calendar",
         hidden: false,
       },
       {
