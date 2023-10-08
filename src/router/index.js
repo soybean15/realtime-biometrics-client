@@ -101,6 +101,13 @@ const routes = [
         meta: { owner: 'employee' } ,
         component:() => import( '@/views/admin/components/EmployeeDetails'),
       },
+      {
+        path: 'calendar',
+        name: 'calendar',
+        meta: { owner: 'calendar' } ,
+        component:() => import( '@/views/admin/CalendarView'),
+        beforeEnter: setActiveOwner
+      },
      
       
 
