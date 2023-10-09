@@ -1,19 +1,16 @@
 <template>
-    <div class="q-pa-md">
-      <div class="q-gutter-md">
-        <!-- <q-date
-          v-model="date"
-          :events="events"
-          :event-color="(date) => date[9] % 2 === 0 ? 'teal' : 'orange'"
-        /> -->
+
+      <div class="w-full row">
+
   
         <q-date
+        class="w-full"
           v-model="dateModel"
           :events="events"
           :event-color="(date) => date[9] % 2 === 0 ? 'teal' : 'orange'"
         />
       </div>
-    </div>
+
 
   </template>
   

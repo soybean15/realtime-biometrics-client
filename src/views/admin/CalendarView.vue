@@ -1,8 +1,16 @@
 <template>
-  <div>
+  <div class="m-10 p-5 shadow-md bg-surface">
+    <div class="text-2xl row justify-between"> 
+      
+      <span>Calendar</span>
+
+      <div>
+        <AddNewEvent/>
+      </div>
+    </div>
     <q-splitter v-model="splitterModel">
       <template v-slot:before>
-        <div class="q-pa-md">
+        <div class=" ">
           <DatePicker :events="keys" @onSelectDate="selectDate"/>
         </div>
       </template>
@@ -15,9 +23,9 @@
           transition-next="jump-up"
         >
           <q-tab-panel class="p-5" :name="key"  v-for="(item,key) in holidays" :key="key">
-           <div class="text-xl py-5">{{formatTime(key)}}</div>
+           <div class="text-4xl py-5">{{formatTime(key)}}</div>
                 <div v-for="i in item" :key="i.name">
-                    <div class="text-lg ">{{i.name}}</div>
+                    <div class="text-2xl ">{{i.name}}</div>
                     <div class="font-secondary  text-lg">{{i.category}}</div>
                 </div>
           </q-tab-panel>
@@ -36,11 +44,12 @@ import { useCalendarStore } from "@/store/calendar";
 import { onMounted, ref } from "vue";
 import { storeToRefs } from "pinia";
 import {date} from 'quasar'
-
 import formatTime from '@/composables/DateTimeFormat';
+import AddNewEvent from './components/modals/AddNewEvent.vue';
 export default {
   components: {
     DatePicker,
+    AddNewEvent
   },
   setup() {
 
@@ -63,7 +72,7 @@ export default {
       keys,
       dateModel,
       formatTime,
-      splitterModel: ref(50),
+      splitterModel: ref(30),
       selectDate:(val)=>{
      
         dateModel.value= val
