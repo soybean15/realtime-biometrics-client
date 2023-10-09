@@ -6,12 +6,24 @@ export const useCalendarStore = defineStore('calendar', () => {
 
 
     const holidays = ref(null)
+    const eventForm = ref({
+        name:null,
+        month:null,
+        day:null,
+        category:null
+
+    })
 
     const index = async ()=>{
 
         const response = await axios.get('api/admin/holiday')
-
         holidays.value = response.data.holidays
+    }
+
+    const addEvent=async()=>{
+
+     
+      await axios.post('api/admin/holiday/store' ,eventForm.value)
 
     }
 
@@ -19,6 +31,8 @@ export const useCalendarStore = defineStore('calendar', () => {
     return {
 
         holidays,
-        index
+        index,
+        eventForm,
+        addEvent
     }
 })
