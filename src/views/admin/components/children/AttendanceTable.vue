@@ -38,63 +38,62 @@
         </div>
       </template>
       <template v-slot:remarks="{ props }">
-        <q-td :props="props" v-if="props.row.daily && props.row.daily[0]">
-          <div v-if="!props.row.daily[0].is_resolve">
-            <div v-for="item in props.row.daily[0].remarks" :key="item.key">
-              <div
-                class="flex flex-wrap"
-                v-if="
-                  item.key === 'no_time_in' ||
-                 
-                  item.key === 'no_time_out' 
-                  
-                "
-              >
+        <q-td :props="props"  >
+          <div  v-if="props.row.daily && props.row.daily[0]">
+            <div v-if="!props.row.daily[0].is_resolve">
+              <div v-for="item in props.row.daily[0].remarks" :key="item.key">
+                <div
+                  class="flex flex-wrap"
+                  v-if="item.key === 'no_time_in' || item.key === 'no_time_out'"
+                >
+                  <q-chip
+                    :color="getChipColor(item.key)"
+                    dense
+                    :label="item.title"
+                    :class="{
+                      'cursor-pointer':
+                        item.key === 'no_time_in' || item.key === 'no_time_out',
+                    }"
+                  >
+                    <q-tooltip class="bg-indigo" :offset="[10, 10]">
+                      {{ item.details }}
+                    </q-tooltip>
+                  </q-chip>
+                </div>
+              </div>
+            </div>
+
+            <div v-else>
+              <div v-for="item in props.row.daily[0].remarks" :key="item.key">
                 <q-chip
                   :color="getChipColor(item.key)"
                   dense
                   :label="item.title"
-                  :class="{
-                    'cursor-pointer':
-                      item.key === 'no_time_in' || item.key === 'no_time_out',
-                  }"
+                  v-if="item.key == 'late' || item.key == 'undertime'"
                 >
                   <q-tooltip class="bg-indigo" :offset="[10, 10]">
                     {{ item.details }}
+
                   </q-tooltip>
                 </q-chip>
               </div>
-           
             </div>
           </div>
-
           <div v-else>
-
-            <div v-for="item in props.row.daily[0].remarks" :key="item.key">
-              
-              <q-chip :color="getChipColor(item.key)" dense :label="item.title"  v-if="
-              item.key == 'late' ||
-              item.key == 'undertime'
-              ">
-               <q-tooltip class="bg-indigo" :offset="[10, 10]">
-                    {{ item.details }}
-                  </q-tooltip>
-              
-            </q-chip>
-           
-            </div>
-          
+            {{ props.row.status}}
           </div>
-        
         </q-td>
       </template>
 
       <template v-slot:action="{ props }">
-        <q-td :props="props" v-if="props.row.daily && props.row.daily[0]">
+        <q-td :props="props">
+
+          <div  v-if="props.row.daily && props.row.daily[0]">
           <div class="row items-center" v-if="!props.row.daily[0].is_resolve">
             <ResolveAttendanceModal :issue="props.row.daily[0]" />
           </div>
           <span class="italic text-sm" v-else>No Action Needed</span>
+          </div>
         </q-td>
       </template>
 
