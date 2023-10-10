@@ -73,20 +73,27 @@
                 >
                   <q-tooltip class="bg-indigo" :offset="[10, 10]">
                     {{ item.details }}
+
                   </q-tooltip>
                 </q-chip>
               </div>
             </div>
           </div>
+          <div v-else>
+            {{ props.row.status}}
+          </div>
         </q-td>
       </template>
 
       <template v-slot:action="{ props }">
-        <q-td :props="props" v-if="props.row.daily && props.row.daily[0]">
+        <q-td :props="props">
+
+          <div  v-if="props.row.daily && props.row.daily[0]">
           <div class="row items-center" v-if="!props.row.daily[0].is_resolve">
             <ResolveAttendanceModal :issue="props.row.daily[0]" />
           </div>
           <span class="italic text-sm" v-else>No Action Needed</span>
+          </div>
         </q-td>
       </template>
 
