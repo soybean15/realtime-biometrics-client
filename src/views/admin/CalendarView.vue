@@ -24,9 +24,15 @@
         >
           <q-tab-panel class="p-5" :name="key"  v-for="(item,key) in holidays" :key="key">
            <div class="text-4xl py-5">{{formatTime(key)}}</div>
-                <div v-for="i in item" :key="i.name">
+                <div class="row justify-between items-center" v-for="i in item" :key="i.name">
+
+                  <div>
+                  
                     <div class="text-2xl ">{{i.name}}</div>
                     <div class="font-secondary  text-lg">{{i.category}}</div>
+
+                  </div>
+                 <MoveEvent :event="i"/>
                 </div>
           </q-tab-panel>
         </q-tab-panels>
@@ -46,10 +52,13 @@ import { storeToRefs } from "pinia";
 import {date} from 'quasar'
 import formatTime from '@/composables/DateTimeFormat';
 import AddNewEvent from './components/modals/AddNewEvent.vue';
+
+import MoveEvent from './components/modals/MoveEvent.vue';
 export default {
   components: {
     DatePicker,
-    AddNewEvent
+    AddNewEvent,
+    MoveEvent
   },
   setup() {
 
@@ -78,7 +87,8 @@ export default {
         dateModel.value= val
         console.log(dateModel.value)
 
-      }
+      },
+      
     };
   },
 };
