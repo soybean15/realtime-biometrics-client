@@ -27,11 +27,13 @@ export const useCalendarStore = defineStore('calendar', () => {
 
     }
 
-    const moveEvent = async(id,date)=>{
+    const moveEvent = async(event,date)=>{
+
+  
 
         await axios.post('api/admin/holiday/move' ,{
-            id:id,
-            date:date
+            id:event.id,
+            date: date
         })
 
     }

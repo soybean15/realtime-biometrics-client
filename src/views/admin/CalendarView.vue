@@ -23,7 +23,8 @@
           transition-next="jump-up"
         >
           <q-tab-panel class="p-5" :name="key"  v-for="(item,key) in holidays" :key="key">
-           <div class="text-4xl py-5">{{formatTime(key)}}</div>
+           <div class="text-4xl py-5">{{formatTime(key,'MMMM Do YYYY')}}</div>
+  
                 <div class="row justify-between items-center" v-for="i in item" :key="i.name">
 
                   <div>

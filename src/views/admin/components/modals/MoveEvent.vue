@@ -16,7 +16,7 @@
 
     <template v-slot:content>
       <div class="py-2">
-        <div class="text-lg font-bold">{{ formatTime(`${year}/${event.month}/${event.day}`) }}</div>
+        <div class="text-lg font-bold">{{ formatTime(oldDate ,'MMMM Do YYYY')}}</div>
         <div class="text-lg ">{{ event.name }}</div>
 
         <div class="text-lg text-secondary">{{ event.category }}</div>
@@ -31,7 +31,7 @@
       />
       </div>
       <div>
-        <q-btn  label="submit"/>
+        <q-btn  color="secondary" @click="calendarStore.moveEvent(event, newDate)" label="submit"/>
       </div>
     </template>
 
@@ -39,6 +39,7 @@
       <q-btn @click="open" label="Move" color="secondary" />
     </template>
   </PersistentDialog>
+
 </template>
 
 <script>
@@ -47,18 +48,26 @@ import { date } from "quasar";
 
 import formatTime from "@/composables/DateTimeFormat";
 import { ref } from 'vue';
+import {useCalendarStore} from '@/store/calendar'
 export default {
   props: ["event"],
   components: { PersistentDialog },
-  setup() {
+  setup(props) {
     const timeStamp = Date.now();
     const year = date.formatDate(timeStamp, "YYYY");
-    const newDate = ref(null)
+
+
+    const oldDate = ref(`${year}/${props.event.month}/${props.event.day}`)
+    console.log(oldDate.value)
+    const newDate = ref(date.formatDate(oldDate.value, "YYYY/MM/DD"))
+    const calendarStore  =useCalendarStore()
 
     return {
-      year,
+
       formatTime,
-      newDate
+      oldDate,
+      newDate,
+      calendarStore,
     };
   },
 };
