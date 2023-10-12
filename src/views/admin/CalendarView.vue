@@ -1,5 +1,5 @@
 <template>
-  <div class="m-10 p-5 shadow-md bg-surface">
+  <div class="m-10 p-5  shadow-md bg-surface">
     <div class="text-2xl row justify-between"> 
       
       <span>Calendar</span>
@@ -35,13 +35,38 @@
                   </div>
                  <MoveEvent :event="i"/>
                 </div>
+
           </q-tab-panel>
+        
         </q-tab-panels>
+        
+ 
       </template>
+      
+      
     </q-splitter>
 
 
+    <div class="row justify-end">
+      
+    
+      <q-fab
+      v-model="fab"
+      label="Actions"
+      label-position="left"
+      vertical-actions-align="right"
+      color="purple"
+      hide-icon
+      direction="up"
+    >
   
+  
+    <q-fab-action color="primary" @click="onClick" hide-icon label="Email" />
+    <q-fab-action color="secondary" @click="onClick" hide-icon label="Alarm" />
+    </q-fab>
+  </div>
+
+   
   </div>
 </template>
 
@@ -55,6 +80,31 @@ import formatTime from '@/composables/DateTimeFormat';
 import AddNewEvent from './components/modals/AddNewEvent.vue';
 
 import MoveEvent from './components/modals/MoveEvent.vue';
+
+const getEvents=(events, date)=>{
+
+  events[date]= []
+  const dates = Object.keys(events);
+
+
+  dates.sort();
+  console.log(dates)
+  console.log('date',date)
+  const index = dates.indexOf(date);
+
+  const beforeDate = dates[index - 1];
+  const afterDate = dates[index + 1];
+
+  const before = events[beforeDate];
+  const after = events[afterDate];
+  before.date = beforeDate
+  after.date = afterDate
+
+  return {before,after }
+
+
+
+}
 export default {
   components: {
     DatePicker,
@@ -65,20 +115,32 @@ export default {
 
 
     const current = Date.now()
-      const formattedString = date.formatDate(current, 'YYYY/MM/DD')
+    const formattedString = date.formatDate(current, 'YYYY/MM/DD')
     const calendarStore = useCalendarStore();
     const dateModel = ref(formattedString)
     const { holidays } = storeToRefs(calendarStore);
     const keys = ref([]);
+    const next = ref(null)
+    const prev = ref(null)
 
     onMounted(async () => {
       await calendarStore.index();
       keys.value = Object.keys(holidays.value);
-      console.log(keys);
+
+     
+      const {before, after}= getEvents(holidays.value,dateModel.value)
+      next.value = after
+
+      prev.value = before
+      console.log("before", before)
+      console.log("after",after)
     });
 
     return {
+      next,
+      prev,
       holidays,
+      
       keys,
       dateModel,
       formatTime,

@@ -14,7 +14,7 @@
       <span class="font-bold text-xl">Move Event </span>
     </template>
 
-    <template v-slot:content>
+    <template v-slot:content="{close}">
       <div class="py-2">
         <div class="text-lg font-bold">{{ formatTime(oldDate ,'MMMM Do YYYY')}}</div>
         <div class="text-lg ">{{ event.name }}</div>
@@ -31,7 +31,7 @@
       />
       </div>
       <div>
-        <q-btn  color="secondary" @click="calendarStore.moveEvent(event, newDate)" label="submit"/>
+        <q-btn  color="secondary" @click="onMoveEvent(event, newDate,close)" label="submit"/>
       </div>
     </template>
 
@@ -68,6 +68,11 @@ export default {
       oldDate,
       newDate,
       calendarStore,
+      onMoveEvent:async(event, newDate,close)=>{
+
+       await calendarStore.moveEvent(event, newDate,close)
+       close()
+      }
     };
   },
 };

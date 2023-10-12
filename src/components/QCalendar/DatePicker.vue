@@ -10,8 +10,7 @@
           :event-color="(date) => date[9] % 2 === 0 ? 'teal' : 'orange'"
         />
       </div>
-
-
+   
   </template>
   
   <script>
