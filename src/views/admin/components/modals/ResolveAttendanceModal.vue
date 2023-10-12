@@ -28,7 +28,7 @@
 
       <div class="px-10 text-lg ">Date: {{ formatTime(issue.date) }}</div>
       <div class="p-5">
-        <q-list  separator>
+        <q-list  separator> 
           <q-item clickable v-ripple>
         <q-item-section>
 

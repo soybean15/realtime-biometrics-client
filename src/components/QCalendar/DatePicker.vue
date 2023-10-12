@@ -10,8 +10,8 @@
           :event-color="(date) => date[9] % 2 === 0 ? 'teal' : 'orange'"
         />
       </div>
-
-
+      {{dateModel}}
+   
   </template>
   
   <script>
@@ -29,9 +29,13 @@ import {date} from 'quasar'
 
       const dateModel = ref(formattedString)
 
+      const emitDate = () => {
+        emit('onSelectDate', dateModel.value)
+    };
+
       watch(dateModel,()=>{
        
-        emit('onSelectDate', dateModel.value)
+        emitDate()
       })
      
       return {
