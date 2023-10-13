@@ -6,12 +6,27 @@
                 :title="'Attendance'"
                 titleStyle="font-bold text-lg text-green"
                 :value="'13/15'"
+                valueStyle="text-xl font-bold"
             />
 
             <SummaryCard
                 :title="'Lates'"
                 titleStyle="font-bold text-lg text-orange"
-                :value="'13/15'"
+                :value="'3'"
+                valueStyle="text-xl font-bold"
+            />
+
+            <SummaryCard
+                :title="'Absents'"
+                titleStyle="font-bold text-lg text-red"
+                :value="'0'"
+                valueStyle="text-xl font-bold"
+            />
+            <SummaryCard
+                :title="'To Resolve'"
+                titleStyle="font-bold text-lg text-red"
+                :value="'0'"
+                valueStyle="text-xl font-bold"
             />
         </div>
 
