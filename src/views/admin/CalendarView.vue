@@ -51,7 +51,6 @@
     
     </div>
 
-    {{ dateModel }}
   </div>
 </template>
 

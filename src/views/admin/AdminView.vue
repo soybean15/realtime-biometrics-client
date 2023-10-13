@@ -121,6 +121,13 @@ export default {
       {
         icon: "calendar_month",
         label: "Calendar",
+        separator: false,
+        to: "calendar",
+        hidden: false,
+      },
+      {
+        icon: "assignment_turned_in",
+        label: "Reports",
         separator: true,
         to: "calendar",
         hidden: false,
@@ -131,12 +138,7 @@ export default {
         separator: false,
       },
 
-      {
-        icon: "help",
-        iconColor: "primary",
-        label: "Help",
-        separator: false,
-      },
+  
       {
         icon: "exit_to_app",
         label: "Exit",

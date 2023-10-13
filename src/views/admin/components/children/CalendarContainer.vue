@@ -14,7 +14,7 @@
         >
           <q-tab name="weekly" label="Weekly" />
           <q-tab name="cutoff" label="CutOff" />
-          <q-tab name="movies" icon="movie" label="Movies" />
+          <q-tab name="summary"  label="Summary" />
         </q-tabs>
       </template>
 
@@ -39,11 +39,9 @@
       
           </q-tab-panel>
 
-          <q-tab-panel name="movies">
-            <div class="text-h4 q-mb-md">Movies</div>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In, libero.</p>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In, libero.</p>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In, libero.</p>
+          <q-tab-panel name="summary">
+            <div class="text-h4 q-mb-md">Summary</div>
+           <AttendanceSummary/>
           </q-tab-panel>
         </q-tab-panels>
       </template>
@@ -54,10 +52,12 @@
 <script>
 import WeeklyAgenda from '@/components/QCalendar/WeeklyAgenda.vue'
 import AttendanceTableVue from './AttendanceTable.vue'
+
 import { ref } from 'vue'
+import AttendanceSummary from './AttendanceSummary.vue'
 
 export default {
-    components:{WeeklyAgenda,AttendanceTableVue},
+    components:{WeeklyAgenda,AttendanceTableVue,AttendanceSummary},
     setup () {
       
     return {

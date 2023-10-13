@@ -22,6 +22,7 @@ export const useAttendanceStore = defineStore('attendance', () => {
 
 
     const employeeAttendance=ref([])
+    //const attendanceSummary= ref([])
 
     const getAttendance=async()=>{
 

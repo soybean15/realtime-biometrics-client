@@ -108,7 +108,13 @@ const routes = [
         component:() => import( '@/views/admin/CalendarView'),
         beforeEnter: setActiveOwner
       },
-     
+      {
+        path: 'report',
+        name: 'report',
+        meta: { owner: 'report' } ,
+        component:() => import( '@/views/admin/ReportView'),
+        beforeEnter: setActiveOwner
+      },
       
 
     ],
