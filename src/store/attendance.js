@@ -47,6 +47,11 @@ export const useAttendanceStore = defineStore('attendance', () => {
         )
     }
 
+    const getAttendanceSummary=async()=>{
+
+        await axios.post(`api/attendance/summary/${selectedEmployee.value.id}`)
+    }
+
 
 
 
@@ -56,7 +61,8 @@ export const useAttendanceStore = defineStore('attendance', () => {
         getAttendance,
         getAttendanceByCuOff,
         attendanceList,
-        resolve
+        resolve,
+        getAttendanceSummary
     }
 
 })
