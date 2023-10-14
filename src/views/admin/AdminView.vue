@@ -5,17 +5,13 @@
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
-          
           <q-avatar>
             <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
           </q-avatar>
           Admin
-
-          
         </q-toolbar-title>
 
-        <UserMenu/>
-        
+        <UserMenu />
       </q-toolbar>
     </q-header>
 
@@ -37,14 +33,15 @@
               clickable
               :active="menuItem.to === active"
               v-ripple
-
               v-if="!menuItem.hidden"
             >
               <q-item-section avatar>
                 <q-icon :name="menuItem.icon" />
               </q-item-section>
               <q-item-section>
-                {{ menuItem.label }}
+                <span class="text-sm">
+                  {{ menuItem.label }}
+                </span>
               </q-item-section>
             </q-item>
 
@@ -77,23 +74,23 @@ import { useNavStore } from "@/store/nav";
 import { useAuthStore } from "@/store/auth";
 import { storeToRefs } from "pinia";
 import UserMenu from "./components/UserMenu.vue";
-import {useSettingStore} from '@/store/settings'
+import { useSettingStore } from "@/store/settings";
 export default {
-  components:{UserMenu},
+  components: { UserMenu },
   setup() {
     const leftDrawerOpen = ref(false);
-    const settingStore = useSettingStore()
+    const settingStore = useSettingStore();
 
-    onMounted(()=>{
-      settingStore.get()
-    })
+    onMounted(() => {
+      settingStore.get();
+    });
 
     const nav = useNavStore();
 
-    const auth = useAuthStore()
+    const auth = useAuthStore();
 
     const { active } = storeToRefs(nav);
-    const {user} = storeToRefs(auth)
+    const { user } = storeToRefs(auth);
 
     const menuList = [
       {
@@ -138,7 +135,6 @@ export default {
         separator: false,
       },
 
-  
       {
         icon: "exit_to_app",
         label: "Exit",

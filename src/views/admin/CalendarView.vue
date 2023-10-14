@@ -1,5 +1,5 @@
 <template>
-  <div class="m-10 p-5 shadow-md bg-surface">
+  <div class="m-3 p-5 shadow-md bg-surface">
     <div class="text-2xl row justify-between">
       <span>Calendar</span>
 

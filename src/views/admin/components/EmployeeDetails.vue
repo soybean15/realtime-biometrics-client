@@ -65,7 +65,7 @@
     </div>
 
     <div class="row h-40 m-2 shadow-sm rounded-lg">
-      <div class="col-5 p-2 pr-1">
+      <div class="col-4 p-2 pr-1">
         <ProfileView
           :selectedEmployee="selectedEmployee"
           :upload="upload"
@@ -73,7 +73,7 @@
           :errors="errors"
         />
       </div>
-      <div class="col-7 p-2 pl-1">
+      <div class="col-8 p-2 pl-1">
 
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="profile">
