@@ -1,8 +1,8 @@
 <template>
   <div class="p-2 py-5 bg-surface rounded-lg shadow-lg">
     <div class="column">
-      <div class="row">
-        <div class="col-6 column items-center justify-center">
+      <div class="">
+        <div class="column items-center justify-center">
           <PhotoUpload
             @upload="upload"
             :attribute="'image'"
@@ -37,7 +37,7 @@
                   :titleClass="' font-bold'"
                   :value="selectedEmployee.firstname"
                   :attribute="'firstname'"
-                  :valueClass="'text-md '"
+                  :valueClass="'text-md font-secondary'"
                   @update="onUpdate"
                   :errors="errors"
                 />
@@ -48,7 +48,7 @@
                   :titleClass="' font-bold'"
                   :value="selectedEmployee.lastname"
                   :attribute="'lastname'"
-                  :valueClass="'text-md  '"
+                  :valueClass="'text-md font-secondary '"
                   @update="onUpdate"
                   :errors="errors"
                 />
@@ -62,105 +62,119 @@
                   :titleClass="' font-bold'"
                   :value="selectedEmployee.middlename"
                   :attribute="'middlename'"
-                  :valueClass="'text-md  '"
+                  :valueClass="'text-md font-secondary '"
                   @update="onUpdate"
                 />
               </div>
+
+              <LabelInput class="col-5"
+              :title="'Birth Date'"
+              :titleClass="'font-bold'"
+              :value="selectedEmployee.birthdate"
+              :type="'date'"
+              :valueClass="'text-md font-secondary '"
+              :attribute="'birthdate'"
+              @update="onUpdate"
+            />
             </div>
-            <LabelInput
+            <LabelInput class=""
               :title="'Email'"
               :titleClass="' font-bold'"
               :value="selectedEmployee.email"
               :attribute="'email'"
-              :valueClass="'text-md '"
+              :valueClass="'text-md font-secondary'"
               @update="onUpdate"
               :errors="errors"
             />
 
-            <LabelInput
+            <div class=" row">
+              <LabelInput class="col-6"
               :title="'Contact Number'"
               :titleClass="' font-bold'"
               :value="selectedEmployee.contact_number"
-              :valueClass="'text-md  '"
+              :valueClass="'text-md font-secondary '"
               :attribute="'contact_number'"
               @update="onUpdate"
               :errors="errors"
             />
 
-            <LabelInput
-              :title="'Birth Date'"
-              :titleClass="'font-bold'"
-              :value="selectedEmployee.birthdate"
-              :type="'date'"
-              :valueClass="'text-md  '"
-              :attribute="'birthdate'"
-              @update="onUpdate"
-            />
-
-            <LabelInput
+            <LabelInput class="col-5"
               :title="'Gender'"
               :titleClass="' font-bold'"
               :value="selectedEmployee.gender"
               :type="'select'"
               :data="['Male', 'Female']"
-              :valueClass="'text-md '"
+              :valueClass="'text-md font-secondary'"
               :attribute="'gender'"
               @update="onUpdate"
             />
-          </div>
-        </div>
 
-        <div class="col-6 column">
-          <div class="mb-5">
-            <div class=" font-bold text-sm">Position</div>
-            <div class="column">
-              <div
-                v-for="position in selectedEmployee.positions"
-                :key="position.id"
-              >
-                {{ position.name }}
+
+
+            </div>
+
+           
+           <div class="row">
+
+            <div class="col-6">
+              <div class="font-bold text-sm">Position</div>
+              <div class="column font-secondary">
+                <div class="py-1"
+                  v-for="position in selectedEmployee.positions"
+                  :key="position.id"
+                >
+                  {{ position.name }}
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="mb-5">
-            <div class=" text-sm font-bold">Deparment/s</div>
-            <div class="column">
-              <div
-                v-for="department in selectedEmployee.departments"
-                :key="department.id"
-              >
-                {{ department.name }}
+            <div class="col-5">
+              <div class="text-sm font-bold">Deparment/s</div>
+              <div class="column font-secondary">
+                <div class="py-1"
+                  v-for="department in selectedEmployee.departments"
+                  :key="department.id"
+                >
+                  {{ department.name }}
+                </div>
               </div>
             </div>
-          </div>
 
-          <LabelInput
-            :title="'Address'"
-            :titleClass="' font-bold'"
-            :value="selectedEmployee.address"
-            :valueClass="'text-md  '"
-            :attribute="'address'"
-            @update="onUpdate"
-          />
+           </div>
+            
 
-          <div class="mb-5">
-            <div class="font-bold text-sm">Date Created:</div>
+            <LabelInput
+              :title="'Address'"
+              :titleClass="' font-bold'"
+              :value="selectedEmployee.address"
+              :valueClass="'text-md font-secondary '"
+              :attribute="'address'"
+              @update="onUpdate"
+            />
+
+
+            <div class="row">
+              <div class="col-6">
+              <div class="font-bold text-sm">Date Created:</div>
+              <div class="font-secondary py-1">
+                {{ formatTime(selectedEmployee.created_at) }}
+              </div>
+            </div>
             <div class="">
-              {{ formatTime(selectedEmployee.created_at) }}
+              <div class="font-bold text-sm">Last Updated:</div>
+              <div class=" font-secondary py-1">
+                {{ formatTime(selectedEmployee.updated_at) }}
+              </div>
             </div>
-          </div>
-          <div class="mb-5">
-            <div class="font-bold text-sm">Last Updated:</div>
-            <div class=" ">
-              {{ formatTime(selectedEmployee.updated_at) }}
-            </div>
-          </div>
 
-          <div class="mb-5">
-            <div class="font-bold text-sm">Added By:</div>
-            <div class="font-bold">
-              {{ selectedEmployee.user.name }}
+
+            </div>
+            
+            <div class="">
+              <div class="font-bold text-sm">Added By:</div>
+              <div class="font-bold font-secondary py-1">
+                {{ selectedEmployee.user.name }}
+              </div>
             </div>
           </div>
         </div>
@@ -178,11 +192,10 @@ export default {
     PhotoUpload,
     LabelInput,
   },
-  props: ["selectedEmployee",'upload','onUpdate','errors'],
+  props: ["selectedEmployee", "upload", "onUpdate", "errors"],
   setup() {
     return {
-     formatTime,
-
+      formatTime,
     };
   },
 };
