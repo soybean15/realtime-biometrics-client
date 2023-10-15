@@ -36,20 +36,33 @@ export const useAttendanceStore = defineStore('attendance', () => {
         employeeAttendance.value = response.data
     }
 
+    const summary =ref(null)
+
     const resolve=async(type,timestamp)=>{
 
-        await axios.post('api/admin/employee/attendance/resolve',
+ await axios.post('api/admin/employee/attendance/resolve',
             {
                 employee_id:1,
                 type:type,
                 timestamp:timestamp
             }
         )
+
     }
 
-    const getAttendanceSummary=async()=>{
+    const getAttendanceSummary=async(data)=>{
 
-        await axios.post(`api/attendance/summary/${selectedEmployee.value.id}`)
+        const response = await axios.post(`api/admin/employee/attendance/summary/${selectedEmployee.value.id}`,{
+
+            start:data['start'],
+            end:data['end'],
+            month:data['month'],
+            year:data['year']
+
+        })
+        
+
+        summary.value= response.data
     }
 
 
@@ -62,7 +75,8 @@ export const useAttendanceStore = defineStore('attendance', () => {
         getAttendanceByCuOff,
         attendanceList,
         resolve,
-        getAttendanceSummary
+        getAttendanceSummary,
+        summary
     }
 
 })
