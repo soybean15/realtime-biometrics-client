@@ -17,27 +17,22 @@
 
     <template v-slot:title>
       <div class="row justify-between">
-
         <div class="px-10 text-lg font-semibold">Resolve Issue</div>
-   
       </div>
-    
     </template>
 
     <template v-slot:content>
-
-      <div class="px-10 text-lg ">Date: {{ formatTime(issue.date) }}</div>
+      <div class="px-10 text-lg">Date: {{ formatTime(issue.date) }}</div>
       <div class="p-5">
-        <q-list  separator> 
+        <q-list separator>
           <q-item clickable v-ripple>
-        <q-item-section>
-
-          <div class="row justify-between">
-            <span class="font-secondary font-bold text-lg">Remarks</span>
-            <span class="w-40"></span>
-          </div>
-        </q-item-section>
-      </q-item>
+            <q-item-section>
+              <div class="row justify-between">
+                <span class="font-secondary font-bold text-lg">Remarks</span>
+                <span class="w-40"></span>
+              </div>
+            </q-item-section>
+          </q-item>
 
           <div v-for="item in issue.remarks" :key="item.key">
             <q-item clickable v-ripple>
@@ -52,7 +47,6 @@
                     :label="item.title"
                     :color="getChipColor(item.key)"
                   />
-                
 
                   <div class="row items-center">
                     <q-input outlined dense v-model="time" mask="time">
@@ -78,20 +72,38 @@
                       </template>
                     </q-input>
 
-                    <q-btn
-                      @click="
-                       resolve(item.key,issue.date)
-                      "
-                      class="mx-3"
-                      dense
-                      rounded
-                      color="secondary"
-                      icon="check_circle"
-                    >
-                      <q-tooltip class="bg-indigo" :offset="[10, 10]">
-                        Resolve
-                      </q-tooltip>
-                    </q-btn>
+                    <!-- resolve(item.key,issue.date) -->
+                    <ConfirmDialog :width="'600px'">
+                      <template v-slot:open-button="{ open }">
+                        <q-btn
+                          @click="open"
+                          class="mx-3"
+                          dense
+                          rounded
+                          color="secondary"
+                          icon="check_circle"
+                        >
+                          <q-tooltip class="bg-indigo" :offset="[10, 10]">
+                            Resolve
+                          </q-tooltip>
+                        </q-btn>
+                      </template>
+
+                      <template v-slot:title>
+                        <div class="text-xl font-bold p-5 pt-0">Resolve Attendance</div>
+                      </template>
+
+                      <template v-slot:message>
+                        <div class=" p-5" >Confirm Resolve Attendance</div>
+                      </template>
+
+                      <template v-slot:buttons="{close}">
+
+                        <q-btn dense class="mx-1" color="primary" @click="resolve(item.key,issue.date)" label="Confirm"/>
+                        <q-btn dense class="mx-1" color="red" @click="close" label="close"/>
+
+                      </template>
+                    </ConfirmDialog>
                   </div>
                 </div>
 
@@ -106,13 +118,12 @@
               </q-item-section>
             </q-item>
 
-            <q-separator/>
+            <q-separator />
           </div>
         </q-list>
       </div>
     </template>
   </PersistentDialog>
-
 </template>
 
 <script>
@@ -124,16 +135,15 @@ import { ref } from "vue";
 import { useAttendanceStore } from "@/store/attendance";
 import formatTime from "@/composables/DateTimeFormat";
 
-
-
+import ConfirmDialog from "@/components/ConfirmDialog.vue";
 
 export default {
-  components: { PersistentDialog },
+  components: { PersistentDialog, ConfirmDialog },
   props: ["issue"],
   setup() {
     // const settingStore = useSettingStore();
     const attendanceStore = useAttendanceStore();
-    const time = ref('08:00');
+    const time = ref("08:00");
     // const { settings } = storeToRefs(settingStore);
 
     return {
@@ -149,12 +159,11 @@ export default {
       //   time.value = val[key] === null ? "8:00" : val[key];
       // },
 
-      resolve:(type,date)=>{
-
+      resolve: (type, date) => {
         const datePart = date.split(" ")[0];
 
-        attendanceStore.resolve(type,`${datePart} ${time.value}`)
-      }
+        attendanceStore.resolve(type, `${datePart} ${time.value}`);
+      },
     };
   },
 };
