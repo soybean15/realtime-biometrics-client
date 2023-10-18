@@ -126,7 +126,7 @@ export default {
         icon: "assignment_turned_in",
         label: "Reports",
         separator: true,
-        to: "calendar",
+        to: "report",
         hidden: false,
       },
       {

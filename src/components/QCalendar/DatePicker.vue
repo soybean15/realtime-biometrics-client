@@ -4,7 +4,7 @@
 
   
         <q-date
-        class="w-full"
+        class="w-full h-[699px]"
           v-model="dateModel"
           :events="events"
           :event-color="(date) => date[9] % 2 === 0 ? 'teal' : 'orange'"
