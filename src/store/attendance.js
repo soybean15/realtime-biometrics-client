@@ -12,6 +12,8 @@ export const useAttendanceStore = defineStore('attendance', () => {
     const {selectedEmployee} = storeToRefs(employeeStore)
     const attendanceList = ref([])
 
+    const pdfFile = ref(null)
+
 
     // window.echo.channel("zkTeco").listen(".get.attendance", (response) => {
     //     console.log(response)
@@ -65,6 +67,14 @@ export const useAttendanceStore = defineStore('attendance', () => {
         summary.value= response.data
     }
 
+    const generatePDF=async(action)=>{
+       const response =  await axios.get(`api/admin/employee/pdf/${action}/${selectedEmployee.value.id}`,{
+        responseType: 'blob'
+       })
+        pdfFile.value = window.URL.createObjectURL(new Blob([response.data]));
+        console.log(pdfFile.value)
+ 
+     }
 
 
 
@@ -76,7 +86,9 @@ export const useAttendanceStore = defineStore('attendance', () => {
         attendanceList,
         resolve,
         getAttendanceSummary,
-        summary
+        summary,
+        generatePDF,
+        pdfFile
     }
 
 })

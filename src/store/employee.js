@@ -191,7 +191,10 @@ export const useEmployeeStore = defineStore('employee', () => {
 
         data.value['employees'] = response.data.employees
 
+
     }
+
+
 
 
 
@@ -201,6 +204,7 @@ export const useEmployeeStore = defineStore('employee', () => {
         data,
         employeeForm,
         selectedEmployee,
+        
    
         add,
         errors,

@@ -27,13 +27,17 @@
       ]"
     >
       <template v-slot:top>
-        <div class="row items-center">
+        <div class="row items-center justify-between">
           <div>
             {{
               `${formatTime(employeeAttendance.date, "MMMM")} ${
                 employeeAttendance.cut_off
               }`
             }}
+          </div>
+
+          <div> 
+           <PDFViewer title="Attendance "/>
           </div>
         </div>
       </template>
@@ -184,7 +188,7 @@ import formatTime from "@/composables/DateTimeFormat";
 import ResolveAttendanceModal from "../modals/ResolveAttendanceModal.vue";
 import getChipColor from "@/composables/chipColor";
 import { useAttendanceStore } from "@/store/attendance";
-
+import PDFViewer from '../modals/PDFViewer.vue';
 const format = (val) => {
   return formatTime(val, "LTS") == "Invalid date"
     ? "No data"
@@ -258,7 +262,7 @@ const columns = [
   },
 ];
 export default {
-  components: { DataTable, ResolveAttendanceModal },
+  components: { DataTable, ResolveAttendanceModal,PDFViewer },
   setup() {
     const attendanceStore = useAttendanceStore();
 
@@ -270,6 +274,7 @@ export default {
 
     return {
       employeeAttendance,
+      attendanceStore,
       columns,
       formatTime,
       format,
