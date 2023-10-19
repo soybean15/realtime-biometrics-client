@@ -27,7 +27,7 @@
       ]"
     >
       <template v-slot:top>
-        <div class="row items-center justify-between">
+        <div class="row items-center w-full justify-between">
           <div>
             {{
               `${formatTime(employeeAttendance.date, "MMMM")} ${
