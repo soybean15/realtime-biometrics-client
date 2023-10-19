@@ -13,7 +13,7 @@
   <PersistentDialog :width="'100%'">
     <template v-slot:title>
       <div class="row items-center justify-between">
-        {{ title }}
+        <span class="text-lg font-bold">{{ title }}</span>
 
         <q-btn @click="downloadBlob" color="secondary" label="Download" />
       </div>

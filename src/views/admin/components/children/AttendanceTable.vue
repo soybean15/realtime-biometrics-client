@@ -48,7 +48,9 @@
               <div v-for="item in props.row.daily[0].remarks" :key="item.key">
                 <div
                   class="flex flex-wrap"
-                  v-if="item.key === 'no_time_in' || item.key === 'no_time_out'"
+                  v-if="item.key === 'no_time_in' 
+                  || item.key === 'no_time_out'
+                    || item.key === 'no_time_out'"
                 >
                   <q-chip
                     :color="getChipColor(item.key)"
@@ -84,7 +86,13 @@
             </div>
           </div>
           <div v-else>
-            {{ props.row.status}}
+            <div v-if=" props.row.status === 'No Attendance'" >
+              <q-chip  dense color="red" :label="props.row.status" />
+            </div>
+            <div v-else>
+
+            </div>
+           
           </div>
         </q-td>
       </template>
@@ -111,7 +119,7 @@
                 !props.row.daily[0].is_resolve,
             }"
           >
-            {{ props.row.date }}
+            {{ format(props.row.date, 'MMM Do') }}
           </div>
         </q-td>
       </template>
@@ -189,7 +197,11 @@ import ResolveAttendanceModal from "../modals/ResolveAttendanceModal.vue";
 import getChipColor from "@/composables/chipColor";
 import { useAttendanceStore } from "@/store/attendance";
 import PDFViewer from '../modals/PDFViewer.vue';
-const format = (val) => {
+const format = (val,format) => {
+  if(format){
+    return formatTime(val, format) 
+  }
+
   return formatTime(val, "LTS") == "Invalid date"
     ? "No data"
     : formatTime(val, "LT");
