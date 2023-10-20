@@ -36,7 +36,7 @@
             }}
           </div> -->
 
-          <cut-off-picker/>
+          <cut-off-picker @onSelect="onSelectCutOff"/>
 
           <div> 
            <PDFViewer title="Attendance "/>
@@ -293,6 +293,12 @@ export default {
       formatTime,
       format,
       getChipColor,
+
+      onSelectCutOff:(val)=>{
+
+        attendanceStore.getAttendanceByCuOff(val)
+
+      }
     };
   },
 };

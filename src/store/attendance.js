@@ -32,9 +32,12 @@ export const useAttendanceStore = defineStore('attendance', () => {
         employeeAttendance.value = response.data
     }
 
-    const getAttendanceByCuOff= async()=>{
+    const getAttendanceByCuOff= async(date)=>{
         employeeAttendance.value=[]
-        const response = await axios.get(`api/admin/employee/attendance/cutoff/${selectedEmployee.value.id}`)
+        
+        const response = await axios.post(`api/admin/employee/attendance/cutoff/${selectedEmployee.value.id}`,{
+            date:date
+        })
         employeeAttendance.value = response.data
     }
 
