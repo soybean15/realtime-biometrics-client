@@ -28,13 +28,15 @@
     >
       <template v-slot:top>
         <div class="row items-center w-full justify-between">
-          <div>
+          <!-- <div>
             {{
               `${formatTime(employeeAttendance.date, "MMMM")} ${
                 employeeAttendance.cut_off
               }`
             }}
-          </div>
+          </div> -->
+
+          <cut-off-picker/>
 
           <div> 
            <PDFViewer title="Attendance "/>
@@ -189,7 +191,6 @@
 
 <script>
 import DataTable from "@/components/DataTable.vue";
-
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
 import formatTime from "@/composables/DateTimeFormat";
@@ -197,6 +198,7 @@ import ResolveAttendanceModal from "../modals/ResolveAttendanceModal.vue";
 import getChipColor from "@/composables/chipColor";
 import { useAttendanceStore } from "@/store/attendance";
 import PDFViewer from '../modals/PDFViewer.vue';
+import CutOffPicker from '../CutOffPicker.vue';
 const format = (val,format) => {
   if(format){
     return formatTime(val, format) 
@@ -274,7 +276,7 @@ const columns = [
   },
 ];
 export default {
-  components: { DataTable, ResolveAttendanceModal,PDFViewer },
+  components: { DataTable, ResolveAttendanceModal,PDFViewer ,CutOffPicker},
   setup() {
     const attendanceStore = useAttendanceStore();
 
