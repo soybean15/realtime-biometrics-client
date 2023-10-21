@@ -33,7 +33,7 @@
               clickable
               :active="menuItem.to === active"
               v-ripple
-              v-if="!menuItem.hidden"
+              v-if="!menuItem.hidden && !menuItem.children"
             >
               <q-item-section avatar>
                 <q-icon :name="menuItem.icon" />
@@ -44,6 +44,36 @@
                 </span>
               </q-item-section>
             </q-item>
+
+            <q-expansion-item
+            
+             :icon="menuItem.icon"
+              :label="menuItem.label"
+              v-else
+            >
+              <q-card
+                :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'"
+                v-for="item in menuItem.children"
+                :key="item.label"
+              >
+                <q-item
+                  @click="onClick"
+                  :to="{ name: item.to }"
+                  clickable
+                  :active="item.to === active"
+                  v-ripple
+                >
+                  <q-item-section class="px-3" avatar>
+                    <q-icon  :name="item.icon" />
+                  </q-item-section>
+                  <q-item-section>
+                    <span class="text-xs">
+                      {{ item.label }}
+                    </span>
+                  </q-item-section>
+                </q-item>
+              </q-card>
+            </q-expansion-item>
 
             <q-separator :key="'sep' + index" v-if="menuItem.separator" />
           </template>
@@ -121,6 +151,29 @@ export default {
         separator: false,
         to: "calendar",
         hidden: false,
+      },
+      {
+        icon: "corporate_fare",
+        label: "Faculty",
+        separator: false,
+        to: "calendar",
+        hidden: false,
+        children: [
+          {
+            icon: "apartment",
+            label: "Department",
+            separator: false,
+            to: "department",
+            hidden: false,
+          },
+          {
+            icon: "person_2",
+            label: "Position",
+            separator: false,
+            to: "position",
+            hidden: false,
+          },
+        ],
       },
       {
         icon: "assignment_turned_in",

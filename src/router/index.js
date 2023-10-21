@@ -115,6 +115,20 @@ const routes = [
         component:() => import( '@/views/admin/ReportView'),
         beforeEnter: setActiveOwner
       },
+      {
+        path: 'position',
+        name: 'position',
+        meta: { owner: 'position' } ,
+        component:() => import( '@/views/admin/faculty/PositionView'),
+        beforeEnter: setActiveOwner
+      },
+      {
+        path: 'department',
+        name: 'department',
+        meta: { owner: 'department' } ,
+        component:() => import( '@/views/admin/faculty/DepartmentView'),
+        beforeEnter: setActiveOwner
+      },
       
 
     ],
