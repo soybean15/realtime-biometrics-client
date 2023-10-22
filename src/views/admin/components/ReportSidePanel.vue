@@ -7,21 +7,21 @@
 
       <div class="column">
         <q-radio
-          v-model="model"
+          v-model="tab"
           checked-icon="task_alt"
           unchecked-icon="panorama_fish_eye"
           val="date"
           label="Date"
         />
         <q-radio
-          v-model="model"
+          v-model="tab"
           checked-icon="task_alt"
           unchecked-icon="panorama_fish_eye"
           val="cut_off"
           label="Cut Off"
         />
         <q-radio
-          v-model="model"
+          v-model="tab"
           checked-icon="task_alt"
           unchecked-icon="panorama_fish_eye"
           val="month"
@@ -34,17 +34,23 @@
 
 <script>
 import SearchBar from "@/components/SearchBar.vue";
-import { ref } from 'vue';
+
+import {useReportStore} from '@/store/report'
+import { storeToRefs } from 'pinia';
 
 export default {
   components: { SearchBar },
   setup(){
 
-    const  model = ref('date')
+
+
+    const reportStore = useReportStore()
+
+    const {tab} = storeToRefs(reportStore)
 
     return{
 
-        model
+        tab
     }
   }
 };

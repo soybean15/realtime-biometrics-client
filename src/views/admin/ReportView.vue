@@ -16,7 +16,11 @@ import ReportSidePanel from './components/ReportSidePanel.vue'
 
 
 export default {
-  components:{ReportSidePanel,ReportContainer}
+  components:{ReportSidePanel,ReportContainer},
+  setup(){
+
+    
+  }
 
 }
 </script>
