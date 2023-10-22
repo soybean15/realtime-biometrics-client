@@ -28,6 +28,7 @@ import { ref } from "vue";
 const generateCutOffs = () => {
   const timeStamp = Date.now();
   let month = date.formatDate(timeStamp, "M");
+  let day = date.formatDate(timeStamp,'D')
   let year = date.formatDate(timeStamp, "YYYY");
   // const months = []
   const cuttOffs = [];
@@ -45,15 +46,20 @@ const generateCutOffs = () => {
     const adjusted1 = date.adjustDate(newDate, { month: month, date: 16 });
     const adjusted2 = date.adjustDate(newDate, { month: month, date: 1 });
 
-    let cutOff1 = {
+    if(day>16){
+      let cutOff1 = {
       label: monthString + " 16-" + daysInMonth,
       value: date.formatDate(adjusted1, "YYYY-MM-DD"),
     };
+    cuttOffs.push(cutOff1);
+
+    }
+
     let cutOff2 = {
       label: monthString + " 1-15",
       value: date.formatDate(adjusted2, "YYYY-MM-DD"),
     };
-    cuttOffs.push(cutOff1);
+  
     cuttOffs.push(cutOff2);
     month--;
   }
