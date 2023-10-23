@@ -83,7 +83,7 @@
     </template>
   </DataTable>
 
-{{report}}
+
 </template>
 
 <script>
