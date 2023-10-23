@@ -6,17 +6,24 @@ export const useReportStore = defineStore('report', () => {
 
     const tab = ref('date')
 
+    const report = ref(null)
 
-    const getReportByDate=async()=>{
 
-        await axios.get('api/admin/report')
+    const index =async()=>{
+
+        const response = await axios.get('api/admin/report')
+        report.value = response.data
+
+
+        console.log(report.value)
 
     }
 
 
     return {
         tab,
-        getReportByDate
+        index,
+        report
     }
 
 })
