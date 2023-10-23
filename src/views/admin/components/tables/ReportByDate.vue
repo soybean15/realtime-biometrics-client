@@ -1,5 +1,6 @@
 <template>
-  <DataTable>
+  <DataTable
+  >
 
     <template v-slot:top>
 
@@ -29,6 +30,17 @@ import {useReportStore} from '@/store/report'
 import { storeToRefs } from 'pinia'
 import formatTime from '@/composables/DateTimeFormat'
 
+const column =[
+
+{ name: "name",
+    label: "Name",
+    required: true,
+    align: "left",
+    field: (row) => row.name,
+  }
+
+]
+
 export default {
     components:{DataTable},
     setup(){
@@ -40,7 +52,8 @@ export default {
 
       return {
         report,
-        formatTime
+        formatTime,
+        column
       }
 
     }
