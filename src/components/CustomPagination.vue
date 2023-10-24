@@ -11,7 +11,7 @@
           class="shadow-md bg-secondary text-white p-2 m-0.5 cursor-pointer"
         ></div>
       </div>
-    </div>
+    </div> 
   </template>
   
   <script>

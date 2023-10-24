@@ -18,7 +18,10 @@
       />
     </template>
   </q-banner>
-  <DataTable :rows="departments" :columns="columns" :cells="['name', 'action']">
+  <DataTable :rows="departments" :columns="columns" :cells="['name', 'action']"
+  :pagination="paginationData" >
+             
+             <!-- :pagination="onChangePage(departments.links)"> -->
     <!-- <template v-slot:image="{ props }">
       <q-td :props="props">
        
@@ -170,6 +173,7 @@ export default {
         departmentStore.search(val == null ? "" : val);
         console.log(val);
       },
+     
     };
   },
 };

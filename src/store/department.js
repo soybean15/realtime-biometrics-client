@@ -19,6 +19,15 @@ export const useDepartmentStore = defineStore('department', () => {
      
     }
 
+    
+
+    const paginate = async(link)=>{
+
+        const response = await axios.get(link)
+        departments.value = response.data.departments
+
+    }
+
 
     const addDepartment = async () => {
         errors.value = [];
@@ -75,8 +84,6 @@ export const useDepartmentStore = defineStore('department', () => {
         
         const response = await axios.get(`api/admin/department/search/?val=${val}`)
         departments.value = response.data.departments
-
-
     }
 
       const resetStatus=  ()=>{
@@ -94,7 +101,8 @@ export const useDepartmentStore = defineStore('department', () => {
         destroy,
         resetStatus,
         update,
-        search
+        search,
+        paginate
     }
 
 })
