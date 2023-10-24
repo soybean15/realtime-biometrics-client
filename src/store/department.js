@@ -49,13 +49,13 @@ export const useDepartmentStore = defineStore('department', () => {
 
       }
 
-      const update= async(id,attribute,value)=>{
+      const update= async(id,value)=>{
         status.value= null
         try{
             const response = await axios.post('api/admin/department/update',{
                 id:id,
-                attribute:attribute,
-                value:value
+                name:value,
+           
     
             })
             status.value = response.data

@@ -51,7 +51,7 @@
         <div>
           {{ props.row.name }}
           <q-popup-edit
-            @update:model-value="onUpdate(props.row.id, 'name', $event)"
+            @update:model-value="onUpdate(props.row.id, $event)"
             v-model="props.row.name"
             v-slot="scope"
           >
@@ -162,8 +162,9 @@ export default {
         loading.value = false;
         close();
       },
-      onUpdate: (id, attribute, value) => {
-        departmentStore.update(id, attribute, value);
+      onUpdate: (id, value) => {
+        
+        departmentStore.update(id, value);
       },
       onSearch: (val) => {
         departmentStore.search(val == null ? "" : val);
