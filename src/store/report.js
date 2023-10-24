@@ -9,13 +9,13 @@ export const useReportStore = defineStore('report', () => {
     const report = ref(null)
 
 
-    const index =async()=>{
+    const index =async(date)=>{
 
-        const response = await axios.get('api/admin/report')
-        report.value = response.data
+        const response = await axios.post('api/admin/report',{
+            date:date
+        })
+        report.value = response.data.active
 
-
-        console.log(report.value)
 
     }
 

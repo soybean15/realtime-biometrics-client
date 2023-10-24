@@ -2,11 +2,16 @@ import moment from 'moment';
 
 class DateTimeFormatter {
   constructor(date, format) {
-    console.log(format)
-   
+
     this.date = moment(date);
 
-    this.formatStr = "MMM D, YYYY";
+    if(!format){
+      this.formatStr = format;
+     }else{
+      this.formatStr = "MMM D, YYYY";
+     }
+
+   
 
 
   }
