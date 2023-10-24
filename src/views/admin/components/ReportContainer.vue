@@ -3,7 +3,12 @@
    
     <q-tab-panels v-model="tab" vertical animated>
           <q-tab-panel name="date">
-            <ReportByDate/>
+
+            <div class="column">
+              <ReportByDate/>
+              <StatContainer/>
+            </div>
+          
           </q-tab-panel>
 
           <q-tab-panel name="cut_off">
@@ -27,8 +32,9 @@
 import ReportByDate from './tables/ReportByDate.vue'
 import  {useReportStore} from '@/store/report'
 import { storeToRefs } from 'pinia'
+import StatContainer from '@/views/admin/components/StatContainer.vue';
 export default {
-    components:{ReportByDate},
+    components:{ReportByDate,StatContainer},
 
     setup(){
         const reportStore = useReportStore()

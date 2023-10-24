@@ -7,7 +7,7 @@
       
       <report-container class="" />
 
-      <StatContainer/>
+    
 
 
 
@@ -22,10 +22,10 @@ import ReportSidePanel from "./components/ReportSidePanel.vue";
 
 import { useReportStore } from "@/store/report";
 import { onMounted } from "vue";
-import StatContainer from './components/StatContainer.vue';
+
 
 export default {
-  components: { ReportSidePanel, ReportContainer,StatContainer },
+  components: { ReportSidePanel, ReportContainer },
   setup() {
     const reportStore = useReportStore();
 

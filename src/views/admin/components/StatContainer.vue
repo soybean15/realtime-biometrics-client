@@ -12,7 +12,7 @@
         properties: 'text-secondary font-bold'
       }"
       :value="`${report[0].total}`"
-      :helperText="`${report[0].total}% active employee`"
+      :helperText="`${report[0].total}% total active employee`"
     
     
       
@@ -26,7 +26,7 @@
         properties: 'text-green font-bold'
       }"
       :value="`${report[0].present}`"
-      :helperText="`${report[0].present_percentage}% active employee`"
+      :helperText="`${report[0].present_percentage}% attendees`"
     
     
       

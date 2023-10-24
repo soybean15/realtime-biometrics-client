@@ -160,6 +160,8 @@ export default {
       columns,
       dateModel ,
       onUpdate:(val)=>{
+
+        reportStore.index(val)
         console.log(val)
       }
     };

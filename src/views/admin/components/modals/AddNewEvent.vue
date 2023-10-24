@@ -22,9 +22,9 @@
       <div>Add New Event</div>
     </template>
 
-    <template v-slot:content>
+    <template v-slot:content="close">
       <div>
-        <q-form @submit="onSubmit">
+        <q-form @submit="onSubmit(close)">
           <q-input
             v-model="eventForm.name"
             class="my-2"
@@ -147,8 +147,9 @@ export default {
           days.value.push(i);
         }
       },
-      onSubmit:()=>{
+      onSubmit:(onClose)=>{
         calendarStore.addEvent()
+        onClose()
       }
     };
   },
