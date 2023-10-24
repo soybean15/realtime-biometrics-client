@@ -12,10 +12,25 @@
  
   >
     <template v-slot:top>
-      <div class="row">
+      <div class="row w-full justify-between">
         <span class="text-lg font-bold" v-if="report">
           {{ `${formatTime(report.date, "MMMM Do")} Report` }}
         </span>
+
+
+        <q-input outlined dense v-model="dateModel"  label="Select Date" mask="date" :rules="['date']">
+      <template v-slot:append>
+        <q-icon name="event" class="cursor-pointer">
+          <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+            <q-date @update:model-value="onUpdate" v-model="dateModel">
+              <div class="row items-center justify-end">
+                <q-btn v-close-popup label="Close" color="primary" flat />
+              </div>
+            </q-date>
+          </q-popup-proxy>
+        </q-icon>
+      </template>
+    </q-input>
       </div>
     </template>
 
@@ -83,7 +98,6 @@
     </template>
   </DataTable>
 
-
 </template>
 
 <script>
@@ -91,6 +105,7 @@ import DataTable from "@/components/DataTable.vue";
 import { useReportStore } from "@/store/report";
 import { storeToRefs } from "pinia";
 import formatTime from "@/composables/DateTimeFormat";
+import { ref } from 'vue';
 
 
 const columns = [
@@ -131,12 +146,22 @@ export default {
   setup() {
     const reportStore = useReportStore();
 
+    const timeStamp = Date.now()
+
+    const dateModel = ref(formatTime(timeStamp,'L'))
+
+    
+
     const { report } = storeToRefs(reportStore);
 
     return {
       report,
       formatTime,
       columns,
+      dateModel ,
+      onUpdate:(val)=>{
+        console.log(val)
+      }
     };
   },
 };
