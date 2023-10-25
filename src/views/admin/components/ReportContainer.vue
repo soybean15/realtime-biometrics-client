@@ -12,8 +12,9 @@
           </q-tab-panel>
 
           <q-tab-panel name="cut_off">
-            <div class="text-h6">Alarms</div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            <div>
+              <ReportByCutOff/>
+            </div>
           </q-tab-panel>
 
           <q-tab-panel name="month">
@@ -33,8 +34,10 @@ import ReportByDate from './tables/ReportByDate.vue'
 import  {useReportStore} from '@/store/report'
 import { storeToRefs } from 'pinia'
 import StatContainer from '@/views/admin/components/StatContainer.vue';
+import ReportByCutOff from './tables/ReportByCutOff.vue'
+
 export default {
-    components:{ReportByDate,StatContainer},
+    components:{ReportByDate,StatContainer,ReportByCutOff},
 
     setup(){
         const reportStore = useReportStore()

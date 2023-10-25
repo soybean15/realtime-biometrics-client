@@ -8,6 +8,8 @@ export const useReportStore = defineStore('report', () => {
 
     const report = ref(null)
 
+    const reports = ref(null)
+
 
     const index =async(date)=>{
 
@@ -19,11 +21,29 @@ export const useReportStore = defineStore('report', () => {
 
     }
 
+    const getReportByCutOff=async(date)=>{
+
+     
+
+        const  response = await axios.post('api/admin/report/cut-off',{
+            date:date
+        })
+
+        
+
+        reports.value = response.data
+
+        console.log(reports.value)
+
+    }
+
 
     return {
         tab,
         index,
-        report
+        report,
+        reports,
+        getReportByCutOff
     }
 
 })
