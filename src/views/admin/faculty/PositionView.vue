@@ -23,6 +23,7 @@
     :columns="columns"
     :cells="['name', 'action']"
     :paginationLinks="positions ? positions.links : []"
+    :onChangePage="paginate"
   >
     <template v-slot:top>
       <div class="row text-lg font-semibold w-full justify-between">
@@ -167,6 +168,10 @@ export default {
         positionStore.search(val == null ? "" : val);
         console.log(val);
       },
+      paginate:(val)=>{
+
+        positionStore.paginate(val)
+      }
     };
   },
 };

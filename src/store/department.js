@@ -5,12 +5,10 @@ import { ref } from 'vue'
 export const useDepartmentStore = defineStore('department', () => {
 
     const departments = ref()
-    const selectedDepartments = ref([])
     const departmentForm = ref({
         name: null,
     })
 
-    const department = ref(null)
     const errors = ref([])
     const status = ref(null)
 
@@ -93,8 +91,6 @@ export const useDepartmentStore = defineStore('department', () => {
     return {
         getDepartments,
         departments,
-        selectedDepartments,
-        department,
         addDepartment,
         errors,
         departmentForm,

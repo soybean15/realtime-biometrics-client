@@ -11,9 +11,9 @@
       'position',
       'department',
     ]"
-    @onChangePage="onChangePage"
-  
+    :onChangePage="paginate"
     :paginationLinks="data['employees'].links"
+    
     v-if="data['employees']"
   >
     <!-- <template v-slot:image="{ props }">
@@ -121,24 +121,31 @@
       <div class="row justify-between w-full items-center">
         <div class="row w-[600px] items-center">
           <div class="q-table__title">Employees</div>
-
         </div>
 
         <div class="row items-center">
-
-          <SearchBar class="px-2 " @search="search" />
+          <SearchBar class="px-2" @search="search" />
           <CreateEditEmployeeModal :title="'Add New Employees'">
           </CreateEditEmployeeModal>
           <ArchiveModal />
         </div>
       </div>
 
-
-      <div class="row items-center ">
+      <div class="row items-center">
         <span class="pr-3">Filter :</span>
-        <SelectView class="m-2 ml-0" :data="departments" :label="'Department'" @onChange="filter($event,'departments')"/>
+        <SelectView
+          class="m-2 ml-0"
+          :data="departments ? departments.data : []"
+          :label="'Department'"
+          @onChange="filter($event, 'departments')"
+        />
 
-        <SelectView class="m-2 ml-0" :data="positions" :label="'Position'" @onChange="filter($event,'positions')"/>
+        <SelectView
+          class="m-2 ml-0"
+          :data="positions ? positions.data : []"
+          :label="'Position'"
+          @onChange="filter($event, 'positions')"
+        />
       </div>
     </template>
   </DataTable>
@@ -217,16 +224,16 @@ export default {
     SearchBar,
     CreateEditEmployeeModal,
     ArchiveModal,
-    SelectView
+    SelectView,
   },
   setup() {
     const store = useEmployeeStore();
 
-    const departmentStore = useDepartmentStore()
-    const positionStore = usePositionStore()
-    const {departments} = storeToRefs(departmentStore)
-    const {positions} = storeToRefs(positionStore)
-     const { data } = storeToRefs(store);
+    const departmentStore = useDepartmentStore();
+    const positionStore = usePositionStore();
+    const { departments } = storeToRefs(departmentStore);
+    const { positions } = storeToRefs(positionStore);
+    const { data } = storeToRefs(store);
 
     const loading = ref([]);
 
@@ -256,16 +263,17 @@ export default {
 
         store.paginate(name, data.value[name].links[page].url);
       },
-      filter:async(val, attribute)=>{
-
-        if(val){
-
-          store.filter(attribute,val.id)
+      filter: async (val, attribute) => {
+        if (val) {
+          store.filter(attribute, val.id);
         }
-
       },
-      search:(val)=>{
-        store.search(val)
+      search: (val) => {
+        store.search(val);
+      },
+      paginate:(val)=>{
+        store.paginate('employees',val)
+
       }
     };
   },

@@ -44,6 +44,8 @@ export const useEmployeeStore = defineStore('employee', () => {
         data.value['trashed'] = response.data.trashed
     }
 
+
+
     const paginate = async (name, path) => {
         const response = await axios.get(path)
         data.value[name] = response.data[name]
