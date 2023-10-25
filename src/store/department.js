@@ -1,27 +1,25 @@
 import axios from 'axios'
 import { defineStore } from 'pinia'
-import {  ref } from 'vue'
+import { ref } from 'vue'
 
 export const useDepartmentStore = defineStore('department', () => {
 
     const departments = ref()
-    const selectedDepartments = ref([])
     const departmentForm = ref({
         name: null,
     })
 
-    const department = ref(null)
     const errors = ref([])
-    const status =ref(null)
+    const status = ref(null)
 
-    const getDepartments = async()=>{
+    const getDepartments = async () => {
         departments.value = await (await (axios.get('api/admin/department'))).data.departments
-     
+
     }
 
-    
 
-    const paginate = async(link)=>{
+
+    const paginate = async (link) => {
 
         const response = await axios.get(link)
         departments.value = response.data.departments
@@ -31,7 +29,7 @@ export const useDepartmentStore = defineStore('department', () => {
 
     const addDepartment = async () => {
         errors.value = [];
-    
+
         try {
             await axios.post('api/admin/department/add', departmentForm.value);
 
@@ -42,59 +40,57 @@ export const useDepartmentStore = defineStore('department', () => {
         }
     }
 
-    const destroy= async(id)=>{
-        status.value= null
+    const destroy = async (id) => {
+        status.value = null
 
-        try{
-            const response = await axios.post('api/admin/department/delete',{
-                id:id
+        try {
+            const response = await axios.post('api/admin/department/delete', {
+                id: id
             })
-    
-            status.value = response.data      
-        }catch(e){
+
+            status.value = response.data
+        } catch (e) {
             status.value = e.response.data
 
         }
 
-      }
+    }
 
-      const update= async(id,value)=>{
-        status.value= null
-        try{
-            const response = await axios.post('api/admin/department/update',{
-                id:id,
-                name:value,
-           
-    
+    const update = async (id, value) => {
+        status.value = null
+        try {
+            const response = await axios.post('api/admin/department/update', {
+                id: id,
+                name: value,
+
+
             })
             status.value = response.data
-        }catch(e){
+        } catch (e) {
 
-            if(e.response.status === 422 || e.response.status ===404 ){
+            if (e.response.status === 422 || e.response.status === 404) {
                 status.value = e.response.data
 
             }
 
-         }
-      }
+        }
+    }
 
 
 
-      const search = async (val)=>{
-        
+    const search = async (val) => {
+
         const response = await axios.get(`api/admin/department/search/?val=${val}`)
         departments.value = response.data.departments
     }
 
-      const resetStatus=  ()=>{
-        status.value= null
+    const resetStatus = () => {
+        status.value = null
     }
 
     return {
         getDepartments,
         departments,
-        selectedDepartments,
-        department,
         addDepartment,
         errors,
         departmentForm,

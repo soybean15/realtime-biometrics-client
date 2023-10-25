@@ -4,22 +4,31 @@ import {  ref } from 'vue'
 
 export const usePositionStore = defineStore('position', () => {
 
-    const positions = ref()
+    const positions = ref(null)
     const errors = ref([])
     const status =ref(null)
 
-    const position = ref(null)
+
     const positionForm = ref({
         name: null,
     })
 
-    const selectedPositions = ref([])
+
 
     const getPositions=async()=>{
         positions.value = (await axios.get('api/admin/position')).data.positions
  
 
     }
+
+
+    const paginate = async (link) => {
+
+        const response = await axios.get(link)
+        positions.value = response.data.positions
+
+    }
+
 
     const addPosition = async () => {
         errors.value = [];
@@ -81,8 +90,6 @@ export const usePositionStore = defineStore('position', () => {
     return {
         positions,
         getPositions,
-        selectedPositions,
-        position,
         addPosition,
         positionForm,
         errors,
@@ -90,6 +97,7 @@ export const usePositionStore = defineStore('position', () => {
         search,
         update,
         destroy,
+        paginate,
  
     }
 
