@@ -4,7 +4,7 @@ import {  ref } from 'vue'
 
 export const usePositionStore = defineStore('position', () => {
 
-    const positions = ref()
+    const positions = ref(null)
     const errors = ref([])
     const status =ref(null)
 

@@ -12,7 +12,8 @@
       'department',
     ]"
     @onChangePage="onChangePage"
-    :pagination="{ max: data['employees'].last_page, max_pages: 6 }"
+  
+    :paginationLinks="data['employees'].links"
     v-if="data['employees']"
   >
     <!-- <template v-slot:image="{ props }">

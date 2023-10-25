@@ -18,10 +18,14 @@
       />
     </template>
   </q-banner>
-  <DataTable :rows="departments" :columns="columns" :cells="['name', 'action']"
-  :pagination="paginationData" >
-             
-             <!-- :pagination="onChangePage(departments.links)"> -->
+  <DataTable
+    :rows="departments ?departments.data : []"
+    :columns="columns"
+    :cells="['name', 'action']"
+    :paginationLinks="departments ?departments.links : []"
+    :onChangePage="paginate"
+  >
+    <!-- :pagination="onChangePage(departments.links)"> -->
     <!-- <template v-slot:image="{ props }">
       <q-td :props="props">
        
@@ -36,7 +40,6 @@
         </div>
 
         <div>
-         
           <CreateDepartmentModal />
         </div>
       </div>
@@ -166,14 +169,16 @@ export default {
         close();
       },
       onUpdate: (id, value) => {
-        
         departmentStore.update(id, value);
       },
       onSearch: (val) => {
         departmentStore.search(val == null ? "" : val);
         console.log(val);
       },
-     
+      paginate:(val)=>{
+        console.log(val)
+        departmentStore.paginate(val)
+      }
     };
   },
 };
