@@ -6,7 +6,7 @@
           -open-button
         #props :
           -width  // default 300px
-          -maxWidth // default 80vh 
+          -maxWidth // default 80vh
           -backgroundColor
        -->
   
@@ -16,19 +16,19 @@
       </template>
   
       <template v-slot:title>
-        <div>Add Department</div>
+        <div>Add Position</div>
       </template>
   
   
   
       <template v-slot:content>
-        <q-form @submit="departmentStore.addDepartment" @reset="onReset" class="q-gutter-md">
+        <q-form @submit="positionStore.addPosition" @reset="onReset" class="q-gutter-md">
   
           <span class="text-red-400" v-if="errors.name">{{ errors.name[0] }}</span>
           <q-input
             outlined
-            v-model="departmentForm.name"
-            label="Department *"
+            v-model="positionForm.name"
+            label="Position *"
           />
   
        
@@ -53,20 +53,20 @@
   
   <script>
   import PersistenDialog from "@/components/PersistentDialog.vue";
-  import {useDepartmentStore} from '@/store/department'
+  import {usePositionStore} from '@/store/position'
   import { storeToRefs } from 'pinia';
   export default {
     components: { PersistenDialog },
   
     setup() {
   
-      const departmentStore = useDepartmentStore()
-      const {departmentForm, errors}=storeToRefs(departmentStore)
+      const positionStore =  usePositionStore()
+      const {positionForm, errors}=storeToRefs(positionStore)
       return {
       
-        departmentForm,
-        departmentStore,
-        errors
+         positionForm,
+         positionStore,
+         errors
   
       };
     },

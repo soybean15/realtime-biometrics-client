@@ -3,7 +3,7 @@
     :title="'Users'"
     :rows="users.data"
     :columns="columns"
-    :cells="['actions','role']"
+    :cells="['actions','role']" 
     :pagination="{ max: users.last_page, max_pages: 6 }"
     v-if="users"
   >
