@@ -115,7 +115,7 @@ import { useDepartmentStore } from "@/store/department";
 import { onMounted, ref } from "vue";
 import { storeToRefs } from "pinia";
 import SearchBar from "@/components/SearchBar.vue";
-import CreateDepartmentModal from "../faculty/components/CreateDepartmentModal.vue";
+import CreateDepartmentModal from "./components/CreateDepartmentModal.vue";
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
 
 const columns = [
