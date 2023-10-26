@@ -54,6 +54,7 @@
 
 
 import CustomPagination from './CustomPagination.vue';
+
 export default {
   components:{CustomPagination},
   props: ["rows", "columns", "title", "cells", "paginationLinks",'onChangePage'],

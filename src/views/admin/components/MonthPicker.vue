@@ -52,7 +52,6 @@ import { ref } from 'vue';
 
         return months
 
-
   }
   export default {
 

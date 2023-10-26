@@ -7,6 +7,7 @@ export const useReportStore = defineStore('report', () => {
     const tab = ref('date')
 
     const report = ref(null)
+    const filter =ref('')
 
     const reports = ref(null)
 
@@ -55,7 +56,8 @@ export const useReportStore = defineStore('report', () => {
         report,
         reports,
         getReportByCutOff,
-        getReportByMonth
+        getReportByMonth,
+        filter
     }
 
 })

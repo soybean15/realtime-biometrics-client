@@ -224,7 +224,8 @@ export default {
     return {
       tab,
       report,
-      reports
+      reports,
+      
     };
   },
 };

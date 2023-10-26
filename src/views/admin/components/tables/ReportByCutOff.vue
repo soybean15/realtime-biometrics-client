@@ -6,6 +6,7 @@
     :columns="columns"
     color="primary"
     row-key="name"
+    :filter="filter"
   >
     <template v-slot:top-left>
       <div>
@@ -100,7 +101,7 @@ export default {
   components:{CutOffPicker},
   setup() {
     const reportStore = useReportStore();
-    const { reports } = storeToRefs(reportStore);
+    const { reports,filter } = storeToRefs(reportStore);
     const $q = useQuasar();
     onMounted(() => {
       reportStore.getReportByCutOff();
@@ -109,6 +110,7 @@ export default {
     return {
       columns,
       reports,
+      filter,
       onSelect:(val)=>{
         console.log(val)
 

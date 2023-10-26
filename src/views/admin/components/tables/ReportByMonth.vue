@@ -7,6 +7,7 @@
       :columns="columns"
       color="primary"
       row-key="name"
+      :filter="filter"
     >
       <template v-slot:top-right>
         <q-btn
@@ -109,7 +110,7 @@
     components:{MonthPicker},
     setup() {
       const reportStore = useReportStore();
-      const { reports } = storeToRefs(reportStore);
+      const { reports,filter } = storeToRefs(reportStore);
       const $q = useQuasar()
       onMounted(() => {
         reportStore.getReportByMonth();
@@ -118,6 +119,7 @@
       return {
         columns,
         reports,
+        filter,
         onSelect:(val)=>{
             console.log(val)
             reportStore.getReportByMonth(val)
