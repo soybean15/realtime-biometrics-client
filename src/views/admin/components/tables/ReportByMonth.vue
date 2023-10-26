@@ -17,7 +17,16 @@
           @click="exportTable"
         />
       </template>
+
+      <template v-slot:top-left>
+
+        <MonthPicker @onSelect="onSelect"/>
+
+        
+
+      </template>        
     </q-table>
+    
   </template>
   
   <script>
@@ -25,6 +34,8 @@
   import { onMounted } from "vue";
   import { storeToRefs } from "pinia";
   import { exportFile, useQuasar } from 'quasar'
+
+    import MonthPicker from '../MonthPicker.vue';
   const columns = [
     {
       name: "employee_id",
@@ -95,6 +106,7 @@
     return `"${formatted}"`
   }
   export default {
+    components:{MonthPicker},
     setup() {
       const reportStore = useReportStore();
       const { reports } = storeToRefs(reportStore);
@@ -106,6 +118,10 @@
       return {
         columns,
         reports,
+        onSelect:(val)=>{
+            console.log(val)
+            reportStore.getReportByMonth(val)
+        },
         exportTable() {
   
           const rows = reports.value.reports

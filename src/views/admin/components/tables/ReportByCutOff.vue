@@ -2,12 +2,16 @@
   <q-table
     flat
     bordered
-    title="Treats"
     :rows="reports ? reports.reports : []"
     :columns="columns"
     color="primary"
     row-key="name"
   >
+    <template v-slot:top-left>
+      <div>
+        <CutOffPicker @onSelect="onSelect" />
+      </div>
+    </template>
     <template v-slot:top-right>
       <q-btn
         color="primary"
@@ -24,7 +28,9 @@
 import { useReportStore } from "@/store/report";
 import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
-import { exportFile, useQuasar } from 'quasar'
+import { exportFile, useQuasar } from "quasar";
+
+import CutOffPicker from "../CutOffPicker.vue";
 const columns = [
   {
     name: "employee_id",
@@ -59,7 +65,7 @@ const columns = [
     label: "Lates",
     align: "center",
     field: (row) => row.lates,
-    format: (val, row) => `${val??0}/${row.attended}`,
+    format: (val, row) => `${val ?? 0}/${row.attended}`,
     sortable: true,
   },
 
@@ -74,17 +80,13 @@ const columns = [
   },
 ];
 
+function wrapCsvValue(val, formatFn, row) {
+  let formatted = formatFn !== void 0 ? formatFn(val, row) : val;
 
-function wrapCsvValue (val, formatFn, row) {
-  let formatted = formatFn !== void 0
-    ? formatFn(val, row)
-    : val
+  formatted =
+    formatted === void 0 || formatted === null ? "" : String(formatted);
 
-  formatted = formatted === void 0 || formatted === null
-    ? ''
-    : String(formatted)
-
-  formatted = formatted.split('"').join('""')
+  formatted = formatted.split('"').join('""');
   /**
    * Excel accepts \n and \r in strings, but some other CSV parsers do not
    * Uncomment the next two lines to escape new lines
@@ -92,13 +94,14 @@ function wrapCsvValue (val, formatFn, row) {
   // .split('\n').join('\\n')
   // .split('\r').join('\\r')
 
-  return `"${formatted}"`
+  return `"${formatted}"`;
 }
 export default {
+  components:{CutOffPicker},
   setup() {
     const reportStore = useReportStore();
     const { reports } = storeToRefs(reportStore);
-    const $q = useQuasar()
+    const $q = useQuasar();
     onMounted(() => {
       reportStore.getReportByCutOff();
     });
@@ -106,9 +109,14 @@ export default {
     return {
       columns,
       reports,
-      exportTable() {
+      onSelect:(val)=>{
+        console.log(val)
 
-        const rows = reports.value.reports
+        reportStore.getReportByCutOff(val)
+
+      },
+      exportTable() {
+        const rows = reports.value.reports;
 
         // naive encoding to csv format
         const content = [columns.map((col) => wrapCsvValue(col.label))]
@@ -139,6 +147,7 @@ export default {
           });
         }
       },
+
     };
   },
 };

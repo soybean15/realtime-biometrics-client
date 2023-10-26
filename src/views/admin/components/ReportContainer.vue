@@ -64,6 +64,19 @@
           <stat-container>
             <div class="row rounded-md" v-if="reports">
 
+
+
+              <stat-view
+                class="m-0.5"
+                :backgroundColor="'bg-onSurface'"
+                :title="{
+                  value: 'Active Employees',
+                  properties: 'text-primary font-bold',
+                }"
+             
+                :value="reports.total_employee"
+              />
+
               <stat-view
                 class="m-0.5"
                 :backgroundColor="'bg-onSurface'"
@@ -75,21 +88,36 @@
               >
 
               <template v-slot:helper>
-                <div class="column ">
+                <div class="column text-xs ">
                   <div class="">
-                    <span class="font-secondary pr-2 "> Attendance Rate %</span> 
-                    <span class="text-green"> {{100 - reports.absentee_rate}}%</span>
+                    <span class="font-secondary  pr-2 "> Attendance Rate %</span> 
+                    <span class="text-green">   {{ (100 - reports.absentee_rate).toFixed(2) }}%</span>
                   </div>
 
                  <div>
-                    <span class="font-secondary pr-2"> Absentee Rate %</span> 
-                    <span class="text-red"> {{reports.absentee_rate}}%</span>
+                    <span class="font-secondary  pr-2"> Absentee Rate %</span> 
+                    <span class="text-red"> {{(reports.absentee_rate).toFixed(2)}}%</span>
                   </div>
 
                 </div>
 
               </template>
               </stat-view>
+
+
+
+              <stat-view
+                class="m-0.5"
+                :backgroundColor="'bg-onSurface'"
+                :title="{
+                  value: 'Total Lates',
+                  properties: 'text-orange font-bold',
+                }"
+             
+                :value="reports.total_lates"
+                :helperText="`${((reports.total_lates/reports.total_attendance)*100).toFixed(2)}% late percentage`"
+              />
+            
 
               
 
@@ -101,6 +129,68 @@
       <q-tab-panel name="month">
         <div>
           <report-by-month />
+
+          <stat-container>
+            <div class="row rounded-md" v-if="reports">
+
+
+
+              <stat-view
+                class="m-0.5"
+                :backgroundColor="'bg-onSurface'"
+                :title="{
+                  value: 'Active Employees',
+                  properties: 'text-primary font-bold',
+                }"
+             
+                :value="reports.total_employee"
+              />
+
+              <stat-view
+                class="m-0.5"
+                :backgroundColor="'bg-onSurface'"
+                :title="{
+                  value: 'Total working days',
+                  properties: 'text-secondary font-bold',
+                }"
+                :value="`${reports.working_days}`"
+              >
+
+              <template v-slot:helper>
+                <div class="column text-xs ">
+                  <div class="">
+                    <span class="font-secondary  pr-2 "> Attendance Rate %</span> 
+                    <span class="text-green">   {{ (100 - reports.absentee_rate).toFixed(2) }}%</span>
+                  </div>
+
+                 <div>
+                    <span class="font-secondary  pr-2"> Absentee Rate %</span> 
+                    <span class="text-red"> {{(reports.absentee_rate).toFixed(2)}}%</span>
+                  </div>
+
+                </div>
+
+              </template>
+              </stat-view>
+
+
+              <stat-view
+                class="m-0.5"
+                :backgroundColor="'bg-onSurface'"
+                :title="{
+                  value: 'Total lates',
+                  properties: 'text-orange font-bold',
+                }"
+             
+                :value="reports.total_lates"
+                :helperText="`${((reports.total_lates/reports.total_attendance)*100).toFixed(2)}% late percentage`"
+              />
+
+              
+
+            </div>
+          </stat-container>
+          
         </div>
       </q-tab-panel>
     </q-tab-panels>

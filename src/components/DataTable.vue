@@ -42,7 +42,7 @@
       </template>
       <template v-slot:bottom>
         <div class="row w-full justify-end">
-          <CustomPagination @onChange="onChangePage" :links="paginationLinks" v-if="paginationLinks"/>
+          <CustomPagination @onChange="onChangePage" :links="paginationLinks" v-if="paginationLinks" :type="type"/>
           
         </div>
       </template>
@@ -59,6 +59,11 @@ export default {
   props: ["rows", "columns", "title", "cells", "paginationLinks",'onChangePage'],
 
   setup() {
+
+
+    return{
+      type: 'test'
+    }
 
   },
 };

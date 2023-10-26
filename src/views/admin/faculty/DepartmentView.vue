@@ -178,7 +178,8 @@ export default {
       paginate:(val)=>{
         console.log(val)
         departmentStore.paginate(val)
-      }
+      },
+   
     };
   },
 };
