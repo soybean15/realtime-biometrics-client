@@ -135,14 +135,14 @@
         <span class="pr-3">Filter :</span>
         <SelectView
           class="m-2 ml-0"
-          :data="departments ? departments.data : []"
+          :data="departments"
           :label="'Department'"
           @onChange="filter($event, 'departments')"
         />
 
         <SelectView
           class="m-2 ml-0"
-          :data="positions ? positions.data : []"
+          :data="positions"
           :label="'Position'"
           @onChange="filter($event, 'positions')"
         />

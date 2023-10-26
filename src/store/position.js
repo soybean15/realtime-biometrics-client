@@ -16,11 +16,13 @@ export const usePositionStore = defineStore('position', () => {
 
 
     const getPositions=async()=>{
-        positions.value = (await axios.get('api/admin/position')).data.positions
+        positions.value = (await axios.get('api/admin/position/get')).data.positions
  
-
     }
 
+    const index = async()=>{
+        positions.value = (await axios.get('api/admin/position')).data.positions
+    }
 
     const paginate = async (link) => {
 
@@ -98,6 +100,7 @@ export const usePositionStore = defineStore('position', () => {
         update,
         destroy,
         paginate,
+        index
  
     }
 

@@ -152,13 +152,14 @@ export default {
 
     
 
-    const { report } = storeToRefs(reportStore);
+    const { report, filter } = storeToRefs(reportStore);
 
     return {
       report,
       formatTime,
       columns,
       dateModel ,
+      filter,
       onUpdate:(val)=>{
 
         reportStore.index(val)

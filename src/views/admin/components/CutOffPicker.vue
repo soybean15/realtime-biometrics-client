@@ -75,7 +75,7 @@ export default {
 
     return {
       onItemClick(val) {
-        console.log("Clicked on an Item");
+    
         label.value = val.label;
         emit('onSelect',val.value)
       },

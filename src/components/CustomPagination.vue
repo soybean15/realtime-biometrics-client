@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-      <div v-for="link in links" :key="link.label">
+      <div v-for="(key,link) in links" :key="key" >
         <div
           v-html="link.label"
           @click="onClick(link.url)"
@@ -17,7 +17,7 @@
   <script>
   import {  onMounted, ref } from "vue";
   export default {
-    props: ["links"],
+    props: ["links" ,'type'],
     emits: ["onChange"],
     setup(props, { emit }) {
       const page = ref(1);

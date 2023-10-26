@@ -1,6 +1,6 @@
 <template>
   <div class="column p-5 bg-surface shadow-lg" >
-    <search-bar />
+   <q-input outlined dense label="Search" v-model="filter"/>
 
     <div class="bg-onSurface my-5 p-4 shadow-lg rounded-md">
       <div class="font-secondary text-sm">Generate By:</div>
@@ -33,24 +33,23 @@
 </template>
 
 <script>
-import SearchBar from "@/components/SearchBar.vue";
 
 import {useReportStore} from '@/store/report'
 import { storeToRefs } from 'pinia';
 
 export default {
-  components: { SearchBar },
+
   setup(){
 
 
 
     const reportStore = useReportStore()
 
-    const {tab} = storeToRefs(reportStore)
+    const {tab,filter} = storeToRefs(reportStore)
 
     return{
 
-        tab
+        tab,filter
     }
   }
 };

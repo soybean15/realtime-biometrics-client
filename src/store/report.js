@@ -7,6 +7,7 @@ export const useReportStore = defineStore('report', () => {
     const tab = ref('date')
 
     const report = ref(null)
+    const filter =ref('')
 
     const reports = ref(null)
 
@@ -28,12 +29,23 @@ export const useReportStore = defineStore('report', () => {
         const  response = await axios.post('api/admin/report/cut-off',{
             date:date
         })
-
-        
+   
 
         reports.value = response.data
 
-        console.log(reports.value)
+    }
+
+
+    const getReportByMonth=async(date)=>{
+
+     
+
+        const  response = await axios.post('api/admin/report/month',{
+            date:date
+        })
+   
+
+        reports.value = response.data
 
     }
 
@@ -43,7 +55,9 @@ export const useReportStore = defineStore('report', () => {
         index,
         report,
         reports,
-        getReportByCutOff
+        getReportByCutOff,
+        getReportByMonth,
+        filter
     }
 
 })
