@@ -1,5 +1,5 @@
 <template>
-  <q-input dense @keyup.enter="onSearch"  standout="bg-white" outlined  borderless v-model="text"  type="search" label="Search">
+  <q-input dense @keyup.enter="onSearch"   outlined  borderless v-model="text"  type="search" label="Search">
     <template  v-slot:prepend>
       <q-icon name="search" />
     </template>

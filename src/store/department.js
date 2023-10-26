@@ -12,8 +12,12 @@ export const useDepartmentStore = defineStore('department', () => {
     const errors = ref([])
     const status = ref(null)
 
-    const getDepartments = async () => {
+    const index = async ()=>{
         departments.value = await (await (axios.get('api/admin/department'))).data.departments
+    }
+
+    const getDepartments = async () => {
+        departments.value = await (await (axios.get('api/admin/department/get'))).data.departments
 
     }
 
@@ -98,7 +102,8 @@ export const useDepartmentStore = defineStore('department', () => {
         resetStatus,
         update,
         search,
-        paginate
+        paginate,
+        index
     }
 
 })

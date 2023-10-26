@@ -15,12 +15,12 @@ export default {
     EmployeeTable,
   },
   setup() {
-    const position = usePositionStore()
-    const deparment = useDepartmentStore()
+    const positionStore = usePositionStore()
+    const deparmentStore = useDepartmentStore()
 
     onMounted(()=>{
-      position.getPositions()
-      deparment.getDepartments()
+      positionStore.index()
+      deparmentStore.index()
 
     })
 
