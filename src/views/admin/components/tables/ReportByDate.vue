@@ -1,5 +1,5 @@
 <template>
-  <DataTable 
+  <!-- <DataTable 
   :columns="columns" 
   :cells="[
     'name',
@@ -96,29 +96,113 @@
       </q-td>
 
     </template>
-  </DataTable>
+  </DataTable> -->
 
+  <q-table
+    :columns="columns"
+    :rows="report && report.reports ? report.reports.data : []"
+  >
+    <template v-slot:top-left>
+      <span class="text-lg font-bold" v-if="report">
+        {{ `${formatTime(report.date, "MMMM Do")} Report` }}
+      </span>
+    </template>
+
+    <template v-slot:top-right>
+      <q-input
+        outlined
+        dense
+        v-model="dateModel"
+        label="Select Date"
+        mask="date"
+        :rules="['date']"
+      >
+        <template v-slot:append>
+          <q-icon name="event" class="cursor-pointer">
+            <q-popup-proxy
+              cover
+              transition-show="scale"
+              transition-hide="scale"
+            >
+              <q-date @update:model-value="onUpdate" v-model="dateModel">
+                <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="Close" color="primary" flat />
+                </div>
+              </q-date>
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
+    </template>
+
+    <template v-slot:body="props ">
+      <q-tr :props="props">
+        <q-td key="name" :props="props">
+          <div class="row items-center">
+          <q-avatar class="px-1">
+            <img :src="props.row.image" />
+          </q-avatar>
+
+          <span class="px-2">
+            {{props.row.full_name}}
+          </span>
+        </div>
+        </q-td>
+
+        <q-td key="time_in" :props="props">
+          <q-badge :color="props.row.late? 'orange':'green'">
+            {{ formatTime(props.row.time_in,'LT') }}
+          </q-badge>
+        </q-td>
+
+
+
+        <q-td key="break_out" :props="props">
+          <q-badge :color="props.row.late? 'orange':'green'">
+            {{ formatTime(props.row.break_out,'LT') }}
+          </q-badge>
+        </q-td>
+
+        <q-td key="break_in" :props="props">
+          <q-badge :color="props.row.late? 'orange':'green'">
+            {{ formatTime(props.row.break_in,'LT') }}
+          </q-badge>
+        </q-td>
+
+
+
+        <q-td key="time_out" :props="props">
+          <q-badge :color="props.row.late? 'orange':'green'">
+            {{ formatTime(props.row.time_out,'LT') }}
+          </q-badge>
+        </q-td>
+
+        
+      </q-tr>
+    </template>
+  </q-table>
 </template>
 
 <script>
-import DataTable from "@/components/DataTable.vue";
 import { useReportStore } from "@/store/report";
 import { storeToRefs } from "pinia";
 import formatTime from "@/composables/DateTimeFormat";
-import { ref } from 'vue';
-
+import { ref } from "vue";
 
 const columns = [
   {
     name: "name",
     label: "Name",
     required: true,
+    field: (row) => row.full_name,
     align: "left",
   },
   {
     name: "time_in",
     label: "Time in",
     required: true,
+    field: (row) => row.time_in,
+
     align: "center",
   },
   {
@@ -142,15 +226,12 @@ const columns = [
 ];
 
 export default {
-  components: { DataTable },
   setup() {
     const reportStore = useReportStore();
 
-    const timeStamp = Date.now()
+    const timeStamp = Date.now();
 
-    const dateModel = ref(formatTime(timeStamp,'L'))
-
-    
+    const dateModel = ref(formatTime(timeStamp, "L"));
 
     const { report, filter } = storeToRefs(reportStore);
 
@@ -158,13 +239,12 @@ export default {
       report,
       formatTime,
       columns,
-      dateModel ,
+      dateModel,
       filter,
-      onUpdate:(val)=>{
-
-        reportStore.index(val)
-        console.log(val)
-      }
+      onUpdate: (val) => {
+        reportStore.index(val);
+        console.log(val);
+      },
     };
   },
 };
