@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-
+import { date } from "quasar";
 export const useCalendarStore = defineStore('calendar', () => {
 
 
@@ -14,6 +14,10 @@ export const useCalendarStore = defineStore('calendar', () => {
 
     })
 
+    const current = Date.now();
+    const formattedString = date.formatDate(current, "YYYY/MM/DD");
+
+    const dateModel = ref(formattedString)
     const errors = ref(null)
     const index = async () => {
 
@@ -34,14 +38,9 @@ export const useCalendarStore = defineStore('calendar', () => {
             }
 
         }
-
-
-
     }
 
     const moveEvent = async (event, date) => {
-
-
 
         await axios.post('api/admin/holiday/move', {
             id: event.id,
@@ -58,6 +57,7 @@ export const useCalendarStore = defineStore('calendar', () => {
         index,
         eventForm,
         addEvent,
-        moveEvent
+        moveEvent,
+        dateModel
     }
 })

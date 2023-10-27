@@ -9,10 +9,10 @@
     </div>
     <q-splitter v-model="splitterModel">
       <template v-slot:before>
-        <q-list>
-          <q-item v-for="(holiday, key) in holidays" :key="key">
+        <q-list class="h-screen" bordered style="max-height:700px;">
+          <q-item v-for="(holiday, key) in holidays" :key="key" clickable @click="selectEvent(key)">
             <q-item-section>
-              <q-item-label class="font-bold">{{ formatTime(key, "MMMM Do") }}</q-item-label>
+              <q-item-label class="font-bold text-orange">{{ formatTime(key, "MMMM Do") }}</q-item-label>
 
               <q-list>
                 <div class="ml-2" v-for="item in holiday" :key="item.id">
@@ -107,11 +107,11 @@ export default {
     MoveEvent,
   },
   setup() {
-    const current = Date.now();
-    const formattedString = date.formatDate(current, "YYYY/MM/DD");
-    const calendarStore = useCalendarStore();
-    const dateModel = ref(formattedString);
-    const { holidays } = storeToRefs(calendarStore);
+    // const current = Date.now();
+    // const formattedString = date.formatDate(current, "YYYY/MM/DD");
+     const calendarStore = useCalendarStore();
+    // const dateModel = ref(formattedString);
+    const { holidays, dateModel } = storeToRefs(calendarStore);
     const keys = ref([]);
 
     onMounted(async () => {
@@ -129,6 +129,11 @@ export default {
       selectDate: (val) => {
         dateModel.value = val;
       },
+
+      selectEvent:(val)=>{
+
+        dateModel.value = date.formatDate(val, "YYYY/MM/DD");
+      }
     };
   },
 };

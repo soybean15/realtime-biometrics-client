@@ -1,6 +1,6 @@
 <template>
-
-      <div class="w-full row">
+     
+      <div class="px-3 w-full row">
 
   
         <q-date
@@ -11,12 +11,15 @@
         />
       </div>
 
+
+
    
   </template>
   
   <script>
-  import { ref, watch } from 'vue'
-import {date} from 'quasar'
+  import {  watch } from 'vue'
+import {useCalendarStore} from '@/store/calendar'
+import { storeToRefs } from 'pinia'
 
   
   export default {
@@ -24,10 +27,10 @@ import {date} from 'quasar'
     emits:['onSelectDate'],
     setup (props,{emit}) {
     
-      const current = Date.now()
-      const formattedString = date.formatDate(current, 'YYYY/MM/DD')
+      const calendarStore = useCalendarStore()
 
-      const dateModel = ref(formattedString)
+      const {dateModel} = storeToRefs(calendarStore)
+
 
       const emitDate = () => {
         emit('onSelectDate', dateModel.value)
