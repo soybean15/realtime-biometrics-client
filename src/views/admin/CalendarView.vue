@@ -9,12 +9,50 @@
     </div>
     <q-splitter v-model="splitterModel">
       <template v-slot:before>
-        <div class=" ">
-          <DatePicker :events="keys" @onSelectDate="selectDate" />
-        </div>
+        <q-list>
+          <q-item v-for="(holiday, key) in holidays" :key="key">
+            <q-item-section>
+              <q-item-label class="font-bold">{{ formatTime(key, "MMMM Do") }}</q-item-label>
+
+              <q-list>
+                <div class="ml-2" v-for="item in holiday" :key="item.id">
+                  <div class=""> {{ item.name }}</div>
+                  <div class="text-xs font-secondary "> {{ item.category }}</div>
+                </div>
+              </q-list>
+            </q-item-section>
+
+            <q-item-section side top>
+              <q-item-label caption>{{
+                moment(key, "YYYYMMDD").fromNow()
+              }}</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <!-- <q-item v-for="(holiday, key) in holidays" :key="key">
+            <q-item-section>
+              <q-item-label>{{ formatTime(key, "MMMM Do YYYY") }}</q-item-label>
+              <q-item-label caption lines="2"
+                >Secondary line text. Lorem ipsum dolor sit amet, consectetur
+                adipiscit elit.</q-item-label
+              >
+            </q-item-section>
+
+            <q-item-section side top>
+              <q-item-label caption>{{
+                moment(key, "YYYYMMDD").fromNow()
+              }}</q-item-label>
+              <q-icon name="star" color="yellow" />
+            </q-item-section>
+          </q-item> -->
+        </q-list>
       </template>
 
       <template v-slot:after>
+        <div class="mt-5">
+          <DatePicker :events="keys" @onSelectDate="selectDate" />
+        </div>
+
         <q-tab-panels
           v-model="dateModel"
           animated
@@ -47,10 +85,7 @@
       </template>
     </q-splitter>
 
-    <div class="row justify-end">
-    
-    </div>
-
+    <div class="row justify-end"></div>
   </div>
 </template>
 
@@ -62,9 +97,8 @@ import { storeToRefs } from "pinia";
 import { date } from "quasar";
 import formatTime from "@/composables/DateTimeFormat";
 import AddNewEvent from "./components/modals/AddNewEvent.vue";
-
+import moment from "moment";
 import MoveEvent from "./components/modals/MoveEvent.vue";
-
 
 export default {
   components: {
@@ -83,25 +117,18 @@ export default {
     onMounted(async () => {
       await calendarStore.index();
       keys.value = Object.keys(holidays.value);
-
-  
     });
 
     return {
-
       holidays,
-
+      moment,
       keys,
       dateModel,
       formatTime,
       splitterModel: ref(30),
       selectDate: (val) => {
         dateModel.value = val;
-
-    
       },
-
-   
     };
   },
 };

@@ -100,7 +100,8 @@
 
   <q-table
     :columns="columns"
-    :rows="report && report.reports ? report.reports.data : []"
+    :rows="report  ? report.reports : []"
+    :filter="filter"
   >
     <template v-slot:top-left>
       <span class="text-lg font-bold" v-if="report">

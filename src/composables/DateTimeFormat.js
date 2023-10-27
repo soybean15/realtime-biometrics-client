@@ -11,8 +11,6 @@ class DateTimeFormatter {
       this.formatStr = "MMM D, YYYY";
      }
 
-   
-
 
   }
 
