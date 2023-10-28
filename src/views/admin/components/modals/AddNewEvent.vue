@@ -9,7 +9,7 @@
     -maxWidth // default 80vh
     -backgroundColor
  -->
-  <PersistentDialog :width="'600px'">
+  <PersistentDialog :width="'400px'">
     <template v-slot:open-button="{ open }">
       <q-btn
         @click="open"
@@ -19,10 +19,12 @@
       />
     </template>
     <template v-slot:title>
-      <div>Add New Event</div>
+      <div class="font-bold">Add New Event</div>
     </template>
 
-    <template v-slot:content="close">
+    <template v-slot:content="{close}">
+
+      {{errors}}
       <div>
         <q-form @submit="onSubmit(close)">
           <q-input
@@ -119,11 +121,12 @@ export default {
   setup() {
     const calendarStore = useCalendarStore();
 
-    const { eventForm } = storeToRefs(calendarStore);
+    const { eventForm,errors } = storeToRefs(calendarStore);
     const days = ref([]);
 
     return {
       months,
+      errors,
       days,
       categories,
       eventForm,
@@ -147,9 +150,13 @@ export default {
           days.value.push(i);
         }
       },
-      onSubmit:(onClose)=>{
-        calendarStore.addEvent()
+      onSubmit:async(onClose)=>{
+        
+       await calendarStore.addEvent()
+       if(errors){
         onClose()
+       }
+       
       }
     };
   },

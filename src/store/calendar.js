@@ -1,38 +1,49 @@
 import axios from 'axios'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-
+import { date } from "quasar";
 export const useCalendarStore = defineStore('calendar', () => {
 
 
     const holidays = ref(null)
     const eventForm = ref({
-        name:null,
-        month:null,
-        day:null,
-        category:null
+        name: null,
+        month: null,
+        day: null,
+        category: null
 
     })
 
-    const index = async ()=>{
+    const current = Date.now();
+    const formattedString = date.formatDate(current, "YYYY/MM/DD");
+
+    const dateModel = ref(formattedString)
+    const errors = ref(null)
+    const index = async () => {
 
         const response = await axios.get('api/admin/holiday')
         holidays.value = response.data.holidays
     }
 
-    const addEvent=async()=>{
+    const addEvent = async () => {
+        errors.value =null
+        try {
+            await axios.post('api/admin/holiday/store', eventForm.value)
 
-     
-      await axios.post('api/admin/holiday/store' ,eventForm.value)
+            await index()
 
+        } catch (e) {
+            if(e.response.status === 422){
+                errors.value = e.response.data.errors
+            }
+
+        }
     }
 
-    const moveEvent = async(event,date)=>{
+    const moveEvent = async (event, date) => {
 
-  
-
-        await axios.post('api/admin/holiday/move' ,{
-            id:event.id,
+        await axios.post('api/admin/holiday/move', {
+            id: event.id,
             date: date
         })
 
@@ -42,9 +53,11 @@ export const useCalendarStore = defineStore('calendar', () => {
     return {
 
         holidays,
+        errors,
         index,
         eventForm,
         addEvent,
-        moveEvent
+        moveEvent,
+        dateModel
     }
 })
