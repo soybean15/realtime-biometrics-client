@@ -1,49 +1,66 @@
 <template>
   <div class="">
+    <div class="text-lg row justify-between">
+      <span>{{ title }}</span>
 
-    
-    <div class="text-lg row">
-        <span>{{title}}</span>
-
-        <q-select outlined v-model="selectModel" :options="options" label="Outlined" />
-
+      <q-select
+        outlined
+        dense
+        v-model="selectModel"
+        :options="options"
+        label="Filter"
+        @update:model-value="onChange"
+        
+      />
     </div>
     <apexchart
       type="pie"
       width="100%"
-      height="200px"
+      height="300px"
       :options="chartOptions"
       :series="series"
     ></apexchart>
   </div>
+
+  {{seriesProps}}
 </template>
 
 <script>
-import {  ref } from 'vue';
+import { ref } from "vue";
 import VueApexCharts from "vue3-apexcharts";
-import { date } from 'quasar'
+// import { date } from "quasar";
 
 export default {
-    components: {
+  components: {
     apexchart: VueApexCharts,
-    
   },
-  props:['title','options'],
+  props: ["title", "options",'pieData'],
+  emits:['onChange'],
 
-  setup() {
-    const timeStamp = Date.now()
-    const selectModel= ref(date.formatDate(timeStamp, 'MMM YYYY'))
+  setup(props,{emit}) {
+    //const timeStamp = Date.now();
+   // const selectModel = ref(date.formatDate(timeStamp, "MMM YYYY"));
+
+    const selectModel = ref(props.options[0].label);
+    console.log(props.options)
 
 
     return {
-        selectModel,
-      series: [44, 55, 13, 43, 22],
+      selectModel,
+
+      onChange:(value)=>{
+
+        emit('onChange',value.value)
+
+       
+      },
+      series: props.pieData.series,
       chartOptions: {
         chart: {
           width: 380,
           type: "pie",
         },
-        labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
+        labels: props.pieData.labels,
         responsive: [
           {
             breakpoint: 480,

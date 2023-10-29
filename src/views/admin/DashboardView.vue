@@ -7,7 +7,7 @@
     </div>
 
     <div class="row">
-      <div class="col-8 column">
+      <div class="col-7 column">
         <div class="p-3 bg-surface my-2 shadow-md rounded-md">
           <bar-chart
             :title="'Attendance Rate'"
@@ -45,11 +45,13 @@
           </div>
       </div>
 
-      <div class="col-4 p-2 rounded-md">
+      <div class="col-5 p-2 rounded-md">
         <div class="bg-surface p-4">
           <PieChart :title="'Attendance Rate by Department'"
             :options="pieChartOption"
-          />
+            :pieData="pieData"
+            @onChange="onChange"
+          v-if="pieData"/>
         </div>
       </div>
     </div>
@@ -82,6 +84,7 @@ export default {
     const { dashboard, user, summary } = storeToRefs(dashboardStore);
 
     const pieChartOption = ref(null)
+    const pieData = ref(null)
     onMounted(async () => {
       await dashboardStore.index();
 
@@ -99,7 +102,7 @@ export default {
         }
       )
 
-      generatePieChartData()
+      pieData.value = generatePieChartData(summary.value.data [pieChartOption.value[0].value])
     });
 
     return {
@@ -107,7 +110,13 @@ export default {
       user,
       series,
       summary,
-      pieChartOption
+      pieChartOption ,
+      pieData,
+      onChange:(value)=>{
+      
+        pieData.value =  generatePieChartData(summary.value.data [value])
+
+      }
     };
   },
 };

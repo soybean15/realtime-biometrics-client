@@ -5,7 +5,7 @@
     </div>
     <apexchart
       width="100%"
-      height="400px"
+      height="350px"
       type="bar"
       :options="chartOptions"
       :series="series"
