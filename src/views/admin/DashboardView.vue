@@ -49,9 +49,9 @@
         <div class="bg-surface p-4">
           <PieChart :title="'Attendance Rate by Department'"
             :options="pieChartOption"
-            :pieData="pieData"
+            
             @onChange="onChange"
-          v-if="pieData"/>
+          v-if="pieChartOption"/>
         </div>
       </div>
     </div>
@@ -81,14 +81,13 @@ export default {
     const dashboardStore = useDashboardStore();
 
     const series = ref(null);
-    const { dashboard, user, summary } = storeToRefs(dashboardStore);
+    const { dashboard, user, summary,pieChartData } = storeToRefs(dashboardStore);
 
     const pieChartOption = ref(null)
-    const pieData = ref(null)
+
     onMounted(async () => {
       await dashboardStore.index();
 
-      console.log(summary.value.data);
       series.value = generateBarChartData(summary.value.data);
 
   
@@ -102,7 +101,7 @@ export default {
         }
       )
 
-      pieData.value = generatePieChartData(summary.value.data [pieChartOption.value[0].value])
+      pieChartData.value = generatePieChartData(summary.value.data [pieChartOption.value[0].value])
     });
 
     return {
@@ -111,10 +110,9 @@ export default {
       series,
       summary,
       pieChartOption ,
-      pieData,
       onChange:(value)=>{
       
-        pieData.value =  generatePieChartData(summary.value.data [value])
+        pieChartData.value =  generatePieChartData(summary.value.data [value])
 
       }
     };
