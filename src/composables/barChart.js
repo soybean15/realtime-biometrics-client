@@ -3,11 +3,9 @@
 
     const latesData = [];
     const attendendData = [];
-  
     const categories = [];
   
     for (let date in data) {
-      console.log(data[date].month);
   
       const lates = data[date].total_lates;
       const attendance = data[date].total_attendance;
