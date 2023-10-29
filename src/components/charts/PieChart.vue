@@ -18,49 +18,52 @@
       width="100%"
       height="300px"
       :options="chartOptions"
-      :series="series"
+      :series="pieChartData.series"
     ></apexchart>
   </div>
 
-  {{seriesProps}}
 </template>
 
 <script>
 import { ref } from "vue";
 import VueApexCharts from "vue3-apexcharts";
 // import { date } from "quasar";
+import {useDashboardStore} from '@/store/dashboard'
+import { storeToRefs } from 'pinia';
 
 export default {
   components: {
     apexchart: VueApexCharts,
   },
-  props: ["title", "options",'pieData'],
+  props: ["title", "options"],
   emits:['onChange'],
 
   setup(props,{emit}) {
     //const timeStamp = Date.now();
    // const selectModel = ref(date.formatDate(timeStamp, "MMM YYYY"));
 
+   const dashboardStore = useDashboardStore()
+   const {pieChartData}= storeToRefs(dashboardStore)
     const selectModel = ref(props.options[0].label);
     console.log(props.options)
 
 
     return {
       selectModel,
-
+      pieChartData,
       onChange:(value)=>{
 
-        emit('onChange',value.value)
+       emit('onChange',value.value)
 
-       
+     
       },
-      series: props.pieData.series,
+   
       chartOptions: {
         chart: {
           width: 380,
           type: "pie",
         },
-        labels: props.pieData.labels,
+        labels: pieChartData.value.labels,
         responsive: [
           {
             breakpoint: 480,
