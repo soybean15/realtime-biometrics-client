@@ -8,6 +8,29 @@
 
     <div class="row">
       <div class="col-7 column">
+
+        <div class=" row rounded-md my-1 p-1">
+              <StatView
+                class="mx-0.5"
+                :backgroundColor="'bg-surface'"
+                :title="{
+                  value: 'Total Users',
+                  properties: 'text-green',
+                }"
+                :value="dashboard.user_count"
+                v-if="dashboard"
+              />
+              <StatView
+                class="mx-0.5"
+                :backgroundColor="'bg-surface'"
+                :title="{
+                  value: 'Total Employees',
+                  properties: 'text-green',
+                }"
+                :value="dashboard.employee_count"
+                v-if="dashboard"
+              />
+            </div>
         <div class="p-3 bg-surface my-2 shadow-md rounded-md">
           <bar-chart
             :title="'Attendance Rate'"
@@ -19,30 +42,7 @@
       
         </div>
 
-        <div class="row px-1">
-            <div class="bg-surface row rounded-md my-1 p-1">
-              <StatView
-                class="mx-0.5"
-                :backgroundColor="'bg-onSurface'"
-                :title="{
-                  value: 'Total Users',
-                  properties: 'text-green',
-                }"
-                :value="dashboard.user_count"
-                v-if="dashboard"
-              />
-              <StatView
-                class="mx-0.5"
-                :backgroundColor="'bg-onSurface'"
-                :title="{
-                  value: 'Total Employees',
-                  properties: 'text-green',
-                }"
-                :value="dashboard.employee_count"
-                v-if="dashboard"
-              />
-            </div>
-          </div>
+       
       </div>
 
       <div class="col-5 p-2 rounded-md">
