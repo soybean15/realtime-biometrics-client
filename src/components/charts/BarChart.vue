@@ -1,8 +1,11 @@
 <template>
   <div>
+    <div class="text-lg">
+      {{title}}
+    </div>
     <apexchart
       width="100%"
-      height="400px"
+      height="350px"
       type="bar"
       :options="chartOptions"
       :series="series"
@@ -18,12 +21,12 @@ export default {
     apexchart: VueApexCharts,
   },
 
-  props: ["seriesProps", "categoriesProps"],
+  props: ["seriesProps", "categoriesProps",'title'],
   setup(props) {
     return {
       series: props.seriesProps,
       chartOptions: {
-        colors: ["#168216", "#b05713"],
+        colors: ["#168216", "#ff7e05"],
         chart: {
           type: "bar",
           height: 350,
@@ -50,10 +53,10 @@ export default {
         plotOptions: {
           bar: {
             horizontal: false,
-            borderRadius: 10,
+            borderRadius: 0,
             dataLabels: {
               total: {
-                enabled: true,
+       
                 style: {
                   fontSize: "13px",
                   fontWeight: 900,
