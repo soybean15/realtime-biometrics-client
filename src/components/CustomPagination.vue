@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-      <div v-for="(key,link) in links" :key="key" >
+      <div v-for="link in links" :key="link.url" >
         <div
           v-html="link.label"
           @click="onClick(link.url)"

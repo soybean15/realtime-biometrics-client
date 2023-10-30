@@ -1,6 +1,6 @@
 <template>
-  <div class="column">
-    <div>
+  <div class="column p-5">
+    <div  >
       <div class="text-4xl font-thin">Dashboard</div>
 
       <div class="text-md font-secondary">Welcome back, {{ user.name }}</div>
