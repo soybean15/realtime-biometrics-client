@@ -129,7 +129,13 @@ const routes = [
         component:() => import( '@/views/admin/faculty/DepartmentView'),
         beforeEnter: setActiveOwner
       },
+      {
+        path: '/settings',
+        name : 'settings',
+        meta: { owner: 'settings' } ,
+        component : () => import('@/views/components/SettingsView.vue'), 
       
+      },
 
     ],
   
