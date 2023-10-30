@@ -15,6 +15,7 @@ export const useAuthStore = defineStore('auth', () => {
 
 
 
+
     const loginForm = ref({
         email: '',
         password: ''
@@ -154,6 +155,20 @@ export const useAuthStore = defineStore('auth', () => {
 
     }
 
+    const updateProfileInfo= async(current_password, password)=>{
+        await axios.put('user/profile-information',{
+            name: user.value.name,
+            email: user.value.email
+        })
+
+
+        await axios.put ('user/password',{
+            current_password:current_password,
+            password_confirmation:password,
+            password:password
+        })
+    }
+
 
         return {
             users,
@@ -167,6 +182,8 @@ export const useAuthStore = defineStore('auth', () => {
             registerForm,
             errors,
             enable,
-            search
+            search,
+            updateProfileInfo ,
+            
         }
     })

@@ -137,13 +137,7 @@ export default {
         separator: false,
         hidden: false,
       },
-      {
-        icon: "group",
-        label: "Users",
-        to: "user",
-        separator: false,
-        hidden: !user.value.admin,
-      },
+     
 
       {
         icon: "calendar_month",
@@ -182,9 +176,18 @@ export default {
         to: "report",
         hidden: false,
       },
+
+      {
+        icon: "group",
+        label: "Users",
+        to: "user",
+        separator: false,
+        hidden: !user.value.admin,
+      },
       {
         icon: "settings",
         label: "Settings",
+        to: "settings",
         separator: false,
       },
 
