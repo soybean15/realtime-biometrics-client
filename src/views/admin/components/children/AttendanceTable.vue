@@ -28,7 +28,7 @@
             {{ format(props.row.time_in) ?? "N/A" }}
           </q-td>
           <q-td key="break_out" :props="props">
-            {{ props.row.break_out ?? "N/A" }}
+            {{ format(props.row.break_out) ?? "N/A" }}
           </q-td>
           <q-td key="break_in" :props="props">
             {{ format(props.row.break_in) ?? "N/A" }}
@@ -186,7 +186,7 @@ export default {
           return "text-red";
         }
 
-        if (row.daily[0]) {
+        if (row.daily && row.daily[0]) {
           if (
             row.daily[0].no_time_in ||
             row.daily[0].no_time_out ||

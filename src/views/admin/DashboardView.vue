@@ -33,7 +33,7 @@
             class="m-0.5"
             :backgroundColor="'bg-surface'"
             :title="{
-              value: 'Total working days',
+              value: 'Total Attendance',
               properties: 'text-green',
             }"
             :value="currentAttendance ? currentAttendance.total_attendance : 0"

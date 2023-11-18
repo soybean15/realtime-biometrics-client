@@ -21,7 +21,8 @@
       :rows="rows"
       :columns="columns"
       row-key="name"
-     
+      :rows-per-page-options="[0]"
+
     >
       <!-- <slot v-for="cell in cells" :key="cell" name="cell"></slot> -->
 
