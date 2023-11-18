@@ -8,6 +8,7 @@ export const useDashboardStore = defineStore('dashboard',()=>{
 
     const dashboard = ref(null)
     const summary = ref(null)
+    const descrepancy = ref(null)
 
     const authStore = useAuthStore()
     const {user} = storeToRefs(authStore)
@@ -25,13 +26,20 @@ export const useDashboardStore = defineStore('dashboard',()=>{
     
     }
 
+    const getDescrepancy = async()=>{
+        const response = await axios.get('api/admin/dashboard/descrepancy')
+        descrepancy.value = response.data
+    }
+
 
     return {
         dashboard,
         index,
         user,
         summary,
-        pieChartData
+        pieChartData,
+        getDescrepancy,
+        descrepancy
 
     }
 

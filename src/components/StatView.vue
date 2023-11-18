@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4" :class="backgroundColor" style="min-width: 200px">
+  <div class="p-4 rounded-md" :class="backgroundColor" style="min-width: 200px">
     <div class="text-lg" :class="title.properties">{{ title.value }}</div>
     <div class="text-3xl row font-semibold items-center">
       {{ value }}

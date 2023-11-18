@@ -53,6 +53,8 @@ export const useAttendanceStore = defineStore('attendance', () => {
             }
         )
 
+        getAttendanceByCuOff()
+
     }
 
     const getAttendanceSummary = async (data) => {
