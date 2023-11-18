@@ -1,6 +1,6 @@
 <template>
   <DataTable
-    :rows="data['employees'].data"
+    :rows="data['employees']??[]"
     :columns="columns"
     :cells="[
       'employee_id',
@@ -11,8 +11,8 @@
       'position',
       'department',
     ]"
-    :onChangePage="paginate"
-    :paginationLinks="data['employees'].links"
+
+   
     
     v-if="data['employees']"
   >

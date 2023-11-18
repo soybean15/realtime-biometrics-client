@@ -17,7 +17,7 @@
 
     <q-drawer
       v-model="leftDrawerOpen"
-      show-if-above
+
       :width="200"
       :breakpoint="500"
       bordered

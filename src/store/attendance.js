@@ -9,7 +9,7 @@ export const useAttendanceStore = defineStore('attendance', () => {
     const attendance = ref(null)
 
     const employeeStore = useEmployeeStore()
-    const {selectedEmployee} = storeToRefs(employeeStore)
+    const { selectedEmployee } = storeToRefs(employeeStore)
     const attendanceList = ref([])
 
     const pdfFile = ref(null)
@@ -23,61 +23,61 @@ export const useAttendanceStore = defineStore('attendance', () => {
 
 
 
-    const employeeAttendance=ref([])
+    const employeeAttendance = ref([])
     //const attendanceSummary= ref([])
 
-    const getAttendance=async()=>{
+    const getAttendance = async () => {
 
         const response = await axios.get(`api/admin/employee/attendance/${selectedEmployee.value.id}`)
         employeeAttendance.value = response.data
     }
 
-    const getAttendanceByCuOff= async(date)=>{
-        employeeAttendance.value=[]
-        
-        const response = await axios.post(`api/admin/employee/attendance/cutoff/${selectedEmployee.value.id}`,{
-            date:date
+    const getAttendanceByCuOff = async (date) => {
+        employeeAttendance.value = []
+
+        const response = await axios.post(`api/admin/employee/attendance/cutoff/${selectedEmployee.value.id}`, {
+            date: date
         })
         employeeAttendance.value = response.data
     }
 
-    const summary =ref(null)
+    const summary = ref(null)
 
-    const resolve=async(type,timestamp)=>{
+    const resolve = async (id, type, timestamp) => {
 
- await axios.post('api/admin/employee/attendance/resolve',
+        await axios.post('api/admin/employee/attendance/resolve',
             {
-                employee_id:1,
-                type:type,
-                timestamp:timestamp
+                employee_id: id,
+                type: type,
+                timestamp: timestamp
             }
         )
 
     }
 
-    const getAttendanceSummary=async(data)=>{
+    const getAttendanceSummary = async (data) => {
 
-        const response = await axios.post(`api/admin/employee/attendance/summary/${selectedEmployee.value.id}`,{
+        const response = await axios.post(`api/admin/employee/attendance/summary/${selectedEmployee.value.id}`, {
 
-            start:data['start'],
-            end:data['end'],
-            month:data['month'],
-            year:data['year']
+            start: data['start'],
+            end: data['end'],
+            month: data['month'],
+            year: data['year']
 
         })
-        
 
-        summary.value= response.data
+
+        summary.value = response.data
     }
 
-    const generatePDF=async(action)=>{
-       const response =  await axios.get(`api/admin/employee/pdf/${action}/${selectedEmployee.value.id}`,{
-        responseType: 'blob'
-       })
+    const generatePDF = async (action) => {
+        const response = await axios.get(`api/admin/employee/pdf/${action}/${selectedEmployee.value.id}`, {
+            responseType: 'blob'
+        })
         pdfFile.value = window.URL.createObjectURL(new Blob([response.data]));
         console.log(pdfFile.value)
- 
-     }
+
+    }
 
 
 

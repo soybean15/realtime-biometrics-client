@@ -39,7 +39,7 @@
               <q-item-section>
                 <div
                   class="row justify-between item-center"
-                  v-if="item.key === 'no_time_out' || item.key === 'no_time_in'"
+                  v-if="item.key === 'no_time_out' || item.key === 'no_time_in' || item.key === 'half_day'" 
                 >
                   <q-chip
                     outline

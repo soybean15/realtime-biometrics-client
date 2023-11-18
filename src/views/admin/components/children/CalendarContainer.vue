@@ -61,7 +61,7 @@ export default {
     setup () {
       
     return {
-      tab: ref('weekly'),
+      tab: ref('cutoff'),
       splitterModel: ref(11)
     }
   }

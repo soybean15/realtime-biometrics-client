@@ -137,7 +137,7 @@ export default {
       positions,
       loading,
       errors,
-      tab: ref("profile"),
+      tab: ref("attendance"),
       back: () => {
         router.go(-1);
       },

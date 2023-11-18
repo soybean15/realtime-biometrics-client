@@ -22,7 +22,7 @@
     <template v-slot:content>
       <DataTable
         :columns="columns"
-        :rows="data['trashed'].data"
+        :rows="data['trashed']"
         :cells="['actions']"
         :pagination="{
           max: data['trashed'].last_page,
