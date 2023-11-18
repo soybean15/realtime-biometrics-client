@@ -13,202 +13,89 @@
     -top
     -bottom -->
   <div>
-    <DataTable
-      :columns="columns"
+    <q-table
+      title="Treats"
       :rows="employeeAttendance.attendance"
-      :cells="[
-        'remarks',
-        'date',
-        'time_in',
-        'break_out',
-        'break_in',
-        'time_out',
-        'action',
-      ]"
+      :columns="columns"
+      row-key="name"
     >
-      <template v-slot:top>
-        <div class="row items-center w-full justify-between">
-          <!-- <div>
-            {{
-              `${formatTime(employeeAttendance.date, "MMMM")} ${
-                employeeAttendance.cut_off
-              }`
-            }}
-          </div> -->
+      <template #body="props">
+        <q-tr :props="props" :class="getColor(props.row)">
+          <q-td key="date" :props="props">
+            {{ format(props.row.date, "MMM Do") }}
+          </q-td>
+          <q-td key="time_in" :props="props">
+            {{ format(props.row.time_in) ?? "N/A" }}
+          </q-td>
+          <q-td key="break_out" :props="props">
+            {{ props.row.break_out ?? "N/A" }}
+          </q-td>
+          <q-td key="break_in" :props="props">
+            {{ format(props.row.break_in) ?? "N/A" }}
+          </q-td>
+          <q-td key="time_out" :props="props">
+            {{ format(props.row.time_out) ?? "N/A" }}
+          </q-td>
 
-          <cut-off-picker @onSelect="onSelectCutOff"/>
+          <q-td key="actions" :props="props">
+            <q-btn-dropdown
+              flat
+             
+              dropdown-icon="change_history"
+              v-if="getActions(props.row)"
+            >
+              <q-list>
+                <q-item  @click="resolve('no_time_in')" clickable v-close-popup  v-if="props.row.daily[0].no_time_in">
+                  <q-item-section>
+                    <q-item-label>Resolve No Time in</q-item-label>
+                  </q-item-section>
+                </q-item>
 
-          <div> 
-           <PDFViewer title="Attendance "/>
-          </div>
-        </div>
+                <q-item @click="resolve('no_time_out')" clickable v-close-popup  v-if="props.row.daily[0].no_time_out">
+                  <q-item-section>
+                    <q-item-label>Resolve Time out</q-item-label>
+                  </q-item-section>
+                </q-item>
+
+                <q-item @click="resolve('half_day_in')" clickable v-close-popup  v-if="props.row.daily[0].half_day_in">
+                  <q-item-section>
+                    <q-item-label>Resolve Half Day</q-item-label>
+                  </q-item-section>
+                </q-item>
+
+                <q-item  @click="resolve('half_day_out')" clickable v-close-popup  v-if="props.row.daily[0].half_day_out">
+                  <q-item-section>
+                    <q-item-label>Resolve Half Day</q-item-label>
+                  </q-item-section>
+                </q-item>
+
+              </q-list>
+            </q-btn-dropdown>
+          </q-td>
+        </q-tr>
       </template>
-      <template v-slot:remarks="{ props }">
-        <q-td :props="props"  >
-          <div  v-if="props.row.daily && props.row.daily[0]">
-            <div v-if="!props.row.daily[0].is_resolve">
-              <div v-for="item in props.row.daily[0].remarks" :key="item.key">
-                <div
-                  class="flex flex-wrap"
-                  v-if="item.key === 'no_time_in' 
-                  || item.key === 'no_time_out'
-                    || item.key === 'no_time_out'"
-                >
-                  <q-chip
-                    :color="getChipColor(item.key)"
-                    dense
-                    :label="item.title"
-                    :class="{
-                      'cursor-pointer':
-                        item.key === 'no_time_in' 
-                        || item.key === 'no_time_out' 
-                        || item.key === 'half_day_in'
-                        || item.key === 'half_day_out',
-                    }"
-                  >
-                    <q-tooltip class="bg-indigo" :offset="[10, 10]">
-                      {{ item.details }}
-                    </q-tooltip>
-                  </q-chip>
-                </div>
-              </div>
-            </div>
-
-            <div v-else>
-              <div v-for="item in props.row.daily[0].remarks" :key="item.key">
-                <q-chip
-                  :color="getChipColor(item.key)"
-                  dense
-                  :label="item.title"
-                  v-if="item.key == 'late' || item.key == 'undertime'"
-                >
-                  <q-tooltip class="bg-indigo" :offset="[10, 10]">
-                    {{ item.details }}
-
-                  </q-tooltip>
-                </q-chip>
-              </div>
-            </div>
-          </div>
-          <div v-else>
-            <div v-if=" props.row.status === 'No Attendance'" >
-              <q-chip  dense color="red" :label="props.row.status" />
-            </div>
-            <div v-else>
-
-            </div>
-           
-          </div>
-        </q-td>
-      </template>
-
-      <template v-slot:action="{ props }">
-        <q-td :props="props">
-
-          <div  v-if="props.row.daily && props.row.daily[0]">
-          <div class="row items-center" v-if="!props.row.daily[0].is_resolve">
-            <ResolveAttendanceModal :issue="props.row.daily[0]" />
-          </div>
-          <span class="italic text-sm" v-else>No Action Needed</span>
-          </div>
-        </q-td>
-      </template>
-
-      <template v-slot:date="{ props }">
-        <q-td :props="props">
-          <div
-            :class="{
-              'text-orange-700':
-                props.row.daily &&
-                props.row.daily[0] &&
-                !props.row.daily[0].is_resolve,
-            }"
-          >
-            {{ format(props.row.date, 'MMM Do') }}
-          </div>
-        </q-td>
-      </template>
-
-      <template v-slot:time_in="{ props }">
-        <q-td :props="props">
-          <div
-            :class="{
-              'text-orange-700':
-                props.row.daily &&
-                props.row.daily[0] &&
-                !props.row.daily[0].is_resolve,
-            }"
-          >
-            {{ format(props.row.time_in) }}
-          </div>
-        </q-td>
-      </template>
-
-      <template v-slot:break_out="{ props }">
-        <q-td :props="props">
-          <div
-            :class="{
-              'text-orange-700':
-                props.row.daily &&
-                props.row.daily[0] &&
-                !props.row.daily[0].is_resolve,
-            }"
-          >
-            {{ format(props.row.break_out) }}
-          </div>
-        </q-td>
-      </template>
-
-      <template v-slot:break_in="{ props }">
-        <q-td :props="props">
-          <div
-            :class="{
-              'text-orange-700':
-                props.row.daily &&
-                props.row.daily[0] &&
-                !props.row.daily[0].is_resolve,
-            }"
-          >
-            {{ format(props.row.break_in) }}
-          </div>
-        </q-td>
-      </template>
-
-      <template v-slot:time_out="{ props }">
-        <q-td :props="props">
-          <div
-            :class="{
-              'text-orange-700':
-                props.row.daily &&
-                props.row.daily[0] &&
-                !props.row.daily[0].is_resolve,
-            }"
-          >
-            {{ format(props.row.time_out) }}
-          </div>
-        </q-td>
-      </template>
-    </DataTable>
+    </q-table>
   </div>
+  <resolve-modal/>
 </template>
 
 <script>
-import DataTable from "@/components/DataTable.vue";
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
 import formatTime from "@/composables/DateTimeFormat";
-import ResolveAttendanceModal from "../modals/ResolveAttendanceModal.vue";
 import getChipColor from "@/composables/chipColor";
 import { useAttendanceStore } from "@/store/attendance";
-import PDFViewer from '../modals/PDFViewer.vue';
-import CutOffPicker from '../CutOffPicker.vue';
-const format = (val,format) => {
-  if(format){
-    return formatTime(val, format) 
+import {useResolveStore} from '@/store/resolve'
+import ResolveModal from '../modals/ResolveModal.vue';
+// import PDFViewer from '../modals/PDFViewer.vue';
+// import CutOffPicker from '../CutOffPicker.vue';
+const format = (val, format) => {
+  if (format) {
+    return formatTime(val, format);
   }
 
   return formatTime(val, "LTS") == "Invalid date"
-    ? "No data"
+    ? null
     : formatTime(val, "LT");
 };
 
@@ -261,27 +148,21 @@ const columns = [
   },
 
   {
-    name: "remarks",
+    name: "actions",
     required: true,
-    label: "Remarks",
-    align: "center",
-    style: "width: 50px",
-    //  sortable: true,
-  },
-
-  {
-    name: "action",
-    required: true,
-    label: "Action",
+    label: "Actions",
     align: "center",
     style: "width: 50px",
     //  sortable: true,
   },
 ];
 export default {
-  components: { DataTable, ResolveAttendanceModal,PDFViewer ,CutOffPicker},
+  components: {ResolveModal},
   setup() {
     const attendanceStore = useAttendanceStore();
+    const resolveStore  =useResolveStore()
+
+    const {dialog, status,title} = storeToRefs(resolveStore)
 
     const { employeeAttendance } = storeToRefs(attendanceStore);
 
@@ -297,11 +178,62 @@ export default {
       format,
       getChipColor,
 
-      onSelectCutOff:(val)=>{
+      onSelectCutOff: (val) => {
+        attendanceStore.getAttendanceByCuOff(val);
+      },
+      getColor: (row) => {
+        if (row.status == "No Attendance") {
+          return "text-red";
+        }
 
-        attendanceStore.getAttendanceByCuOff(val)
+        if (row.daily[0]) {
+          if (
+            row.daily[0].no_time_in ||
+            row.daily[0].no_time_out ||
+            row.daily[0].half_day_in ||
+            row.daily[0].half_day_out
+          ) {
+            return "text-orange";
+          }
 
+          if (row.daily[0].late) {
+            return "text-orange-4";
+          }
+
+          return 'text-secondary'
+        }
+      },
+      getActions: (row) => {
+        if (row.daily) {
+          return (
+            row.daily[0].no_time_in ||
+            row.daily[0].no_time_out ||
+            row.daily[0].half_day_in ||
+            row.daily[0].half_day_out
+          );
+        } else {
+          return false;
+        }
+      },
+      resolve:(val)=>{
+
+        const titles = 
+         { 
+          'no_time_in':'Resolve No Time in',
+          'no_time_out': 'Resolve No Time out',
+          'half_day_in': 'Resolve Half Day', 
+          'half_day_out': 'Resolve Half Day',
+        }
+
+        
+
+        dialog.value = true
+        status.value = val
+        title.value = titles[val]
       }
+        
+        
+      
     };
   },
 };
