@@ -10,6 +10,7 @@ export const useResolveStore = defineStore('resolve',()=>{
     const dialog = ref(false)
     const status = ref(null)
     const title = ref('Persisten')
+    const row = ref()
    
     const settingStore = useSettingStore()
     const {settings} = storeToRefs(settingStore)
@@ -20,6 +21,7 @@ export const useResolveStore = defineStore('resolve',()=>{
         dialog,
         status,
         title,
-        settings
+        settings,
+        row
     }
 })

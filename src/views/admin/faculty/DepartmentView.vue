@@ -19,11 +19,10 @@
     </template>
   </q-banner>
   <DataTable
-    :rows="departments ?departments.data : []"
+    :rows="departments"
     :columns="columns"
     :cells="['name', 'action']"
-    :paginationLinks="departments ?departments.links : []"
-    :onChangePage="paginate"
+  
   >
     <!-- :pagination="onChangePage(departments.links)"> -->
     <!-- <template v-slot:image="{ props }">

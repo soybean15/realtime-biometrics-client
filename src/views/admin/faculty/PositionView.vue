@@ -19,11 +19,10 @@
     </template>
   </q-banner>
   <DataTable
-    :rows="positions ? positions.data : []"
+    :rows="positions"
     :columns="columns"
     :cells="['name', 'action']"
-    :paginationLinks="positions ? positions.links : []"
-    :onChangePage="paginate"
+
   >
     <template v-slot:top>
       <div class="row text-lg font-semibold w-full justify-between">

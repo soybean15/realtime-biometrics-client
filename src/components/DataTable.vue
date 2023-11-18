@@ -21,7 +21,7 @@
       :rows="rows"
       :columns="columns"
       row-key="name"
-      :rows-per-page-options="[0]"
+     
     >
       <!-- <slot v-for="cell in cells" :key="cell" name="cell"></slot> -->
 
@@ -40,12 +40,7 @@
       <template v-slot:top>
         <slot name="top"></slot>
       </template>
-      <template v-slot:bottom>
-        <div class="row w-full justify-end">
-          <CustomPagination @onChange="onChangePage" :links="paginationLinks" v-if="paginationLinks" :type="type"/>
-          
-        </div>
-      </template>
+      
     </q-table>
   </div>
 </template>
@@ -53,10 +48,9 @@
   <script>
 
 
-import CustomPagination from './CustomPagination.vue';
 
 export default {
-  components:{CustomPagination},
+  components:{},
   props: ["rows", "columns", "title", "cells", "paginationLinks",'onChangePage'],
 
   setup() {

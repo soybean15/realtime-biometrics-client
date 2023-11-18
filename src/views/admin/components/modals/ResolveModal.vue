@@ -42,6 +42,8 @@
           <div class="row w-full justify-end py-3">
             <q-btn @click="resolve" label="Submit" color="secondary"  />
         </div>
+
+        {{row}}
           
         </q-card-section>
 
@@ -57,10 +59,12 @@
 import { useResolveStore } from "@/store/resolve";
 import { storeToRefs } from "pinia";
 import { ref, watchEffect } from "vue";
+import { useAttendanceStore } from '@/store/attendance';
 export default {
   setup() {
     const resolveStore = useResolveStore();
-    const { dialog, status, title, settings } = storeToRefs(resolveStore);
+    const attendanceStore = useAttendanceStore()
+    const { dialog, status, title, settings,row } = storeToRefs(resolveStore);
     const time = ref("8:00");
 
     watchEffect(() => {
@@ -87,6 +91,17 @@ export default {
       title,
       time,
       settings,
+      row,
+      resolve:()=>{
+
+        const date  = row.value.date
+
+        attendanceStore.resolve(
+            row.value.employee_id,
+            status.value,
+            `${date} ${time.value}`
+        )
+      }
     };
   },
 };

@@ -45,25 +45,25 @@
               v-if="getActions(props.row)"
             >
               <q-list>
-                <q-item  @click="resolve('no_time_in')" clickable v-close-popup  v-if="props.row.daily[0].no_time_in">
+                <q-item  @click="resolve('no_time_in',props.row.daily[0])" clickable v-close-popup  v-if="props.row.daily[0].no_time_in">
                   <q-item-section>
                     <q-item-label>Resolve No Time in</q-item-label>
                   </q-item-section>
                 </q-item>
 
-                <q-item @click="resolve('no_time_out')" clickable v-close-popup  v-if="props.row.daily[0].no_time_out">
+                <q-item @click="resolve('no_time_out',props.row.daily[0])" clickable v-close-popup  v-if="props.row.daily[0].no_time_out">
                   <q-item-section>
                     <q-item-label>Resolve Time out</q-item-label>
                   </q-item-section>
                 </q-item>
 
-                <q-item @click="resolve('half_day_in')" clickable v-close-popup  v-if="props.row.daily[0].half_day_in">
+                <q-item @click="resolve('half_day_in',props.row.daily[0])" clickable v-close-popup  v-if="props.row.daily[0].half_day_in">
                   <q-item-section>
                     <q-item-label>Resolve Half Day</q-item-label>
                   </q-item-section>
                 </q-item>
 
-                <q-item  @click="resolve('half_day_out')" clickable v-close-popup  v-if="props.row.daily[0].half_day_out">
+                <q-item  @click="resolve('half_day_out',props.row.daily[0])" clickable v-close-popup  v-if="props.row.daily[0].half_day_out">
                   <q-item-section>
                     <q-item-label>Resolve Half Day</q-item-label>
                   </q-item-section>
@@ -162,7 +162,7 @@ export default {
     const attendanceStore = useAttendanceStore();
     const resolveStore  =useResolveStore()
 
-    const {dialog, status,title} = storeToRefs(resolveStore)
+    const {dialog, status,title,row} = storeToRefs(resolveStore)
 
     const { employeeAttendance } = storeToRefs(attendanceStore);
 
@@ -215,7 +215,7 @@ export default {
           return false;
         }
       },
-      resolve:(val)=>{
+      resolve:(val,_row)=>{
 
         const titles = 
          { 
@@ -230,6 +230,7 @@ export default {
         dialog.value = true
         status.value = val
         title.value = titles[val]
+        row.value= _row
       }
         
         
