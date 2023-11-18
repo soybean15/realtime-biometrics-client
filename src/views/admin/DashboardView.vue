@@ -115,9 +115,7 @@
             v-if="series"
           />
         </div>
-      </div>
 
-      <div class="col-5 p-2 rounded-md">
         <div class="bg-surface p-4">
           <PieChart
             :title="'Attendance Rate by Department'"
@@ -126,6 +124,11 @@
             v-if="pieChartOption"
           />
         </div>
+      </div>
+
+      <div class="col-5 p-2 rounded-md">
+        
+        <NotificationPanel/>
       </div>
     </div>
   </div>
@@ -143,12 +146,14 @@ import PieChart from "@/components/charts/PieChart.vue";
 import generateBarChartData from "@/composables/barChart";
 import generatePieChartData from "@/composables/pieChart";
 import { date } from "quasar";
+import NotificationPanel from './components/NotificationPanel.vue';
 
 export default {
   components: {
     BarChart,
     StatView,
     PieChart,
+    NotificationPanel
   },
   setup() {
     const dashboardStore = useDashboardStore();

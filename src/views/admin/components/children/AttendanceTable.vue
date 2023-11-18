@@ -42,9 +42,9 @@
               flat
              
               dropdown-icon="change_history"
-              v-if="getActions(props.row)"
+              v-if="props.row.daily && props.row.daily[0] && !props.row.daily[0].is_resolve"
             >
-              <q-list>
+              <q-list >
                 <q-item  @click="resolve('no_time_in',props.row.daily[0])" clickable v-close-popup  v-if="props.row.daily[0].no_time_in">
                   <q-item-section>
                     <q-item-label>Resolve No Time in</q-item-label>
@@ -203,18 +203,7 @@ export default {
           return 'text-secondary'
         }
       },
-      getActions: (row) => {
-        if (row.daily) {
-          return (
-            row.daily[0].no_time_in ||
-            row.daily[0].no_time_out ||
-            row.daily[0].half_day_in ||
-            row.daily[0].half_day_out
-          );
-        } else {
-          return false;
-        }
-      },
+    
       resolve:(val,_row)=>{
 
         const titles = 
