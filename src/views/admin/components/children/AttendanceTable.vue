@@ -60,7 +60,10 @@
                     :label="item.title"
                     :class="{
                       'cursor-pointer':
-                        item.key === 'no_time_in' || item.key === 'no_time_out',
+                        item.key === 'no_time_in' 
+                        || item.key === 'no_time_out' 
+                        || item.key === 'half_day_in'
+                        || item.key === 'half_day_out',
                     }"
                   >
                     <q-tooltip class="bg-indigo" :offset="[10, 10]">
