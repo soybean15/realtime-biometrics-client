@@ -91,12 +91,13 @@
         <q-item-section top side v-if="!item.is_resolve">
           <div class="text-grey-8 q-gutter-xs">
             <q-btn class="gt-xs" size="12px" flat dense round icon="delete" />
-            <q-btn class="gt-xs" size="12px" flat dense round icon="done" />
+            <q-btn  @click="resolve(getStatus(item).label, item)" class="gt-xs" size="12px" flat dense round icon="done" />
           </div>
         </q-item-section>
       </q-item>
     </q-list>
   </div>
+  <resolve-modal/>
 </template>
 
 <script>
@@ -104,11 +105,17 @@ import { useDashboardStore } from "@/store/dashboard";
 import { computed, onMounted, ref } from "vue";
 import { storeToRefs } from "pinia";
 import getChipColor from "@/composables/chipColor";
+import {useResolveStore} from '@/store/resolve'
+
+import ResolveModal from './modals/ResolveModal.vue';
 export default {
+  components:{ResolveModal},
   setup() {
     const dashboardStore = useDashboardStore();
 
     const { descrepancy } = storeToRefs(dashboardStore);
+    const resolveStore = useResolveStore()
+    const {row,dialog,status,title} = storeToRefs(resolveStore)
 
     const active = ref("all");
     onMounted(() => {
@@ -139,9 +146,15 @@ export default {
       computedData,
       active,
       getStatus: (item) => {
-        if (item.half_day_in || item.half_day_out) {
+        if (item.half_day_in ) {
           return {
-            label: "Half Day",
+            label: "Half Day(in)",
+            color: getChipColor("half_day_in"),
+          };
+        }
+        if (item.half_day_out) {
+          return {
+            label: "Half Day(out)",
             color: getChipColor("half_day_out"),
           };
         }
@@ -167,6 +180,35 @@ export default {
       filter: (val) => {
         active.value = val;
       },
+      resolve:(val, _row)=>{
+
+       let type = ''
+
+        switch(val){
+          case'Half Day(in)':{
+            type = 'half_day_in'
+            break
+          }
+          case'Half Day(out)':{
+            type ='half_day_out'
+            break
+          }
+          case'No Time in':{
+            type = 'no_time_in'
+            break
+          }
+          case'No Time out':{
+            type = 'no_time_out'
+            break
+          }
+        }
+
+        dialog.value = true
+        status.value = type
+        title.value = val
+        row.value= _row
+
+      }
     };
   },
 };

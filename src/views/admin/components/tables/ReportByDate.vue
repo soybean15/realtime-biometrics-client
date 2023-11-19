@@ -152,7 +152,7 @@
 
         <q-td key="time_in" :props="props">
           <q-badge :color="props.row.late? 'orange':'green'">
-            {{ formatTime(props.row.time_in,'LT') }}
+            {{ format(props.row.break_out)??'N/A' }}
           </q-badge>
         </q-td>
 
@@ -160,13 +160,13 @@
 
         <q-td key="break_out" :props="props">
           <q-badge :color="props.row.late? 'orange':'green'">
-            {{ formatTime(props.row.break_out,'LT') }}
+            {{format(props.row.break_out)??'N/A' }}
           </q-badge>
         </q-td>
 
         <q-td key="break_in" :props="props">
           <q-badge :color="props.row.late? 'orange':'green'">
-            {{ formatTime(props.row.break_in,'LT') }}
+            {{ format(props.row.break_in) ?? 'N/A' }}
           </q-badge>
         </q-td>
 
@@ -174,7 +174,7 @@
 
         <q-td key="time_out" :props="props">
           <q-badge :color="props.row.late? 'orange':'green'">
-            {{ formatTime(props.row.time_out,'LT') }}
+            {{ format(props.row.time_out)??'N/A'}}
           </q-badge>
         </q-td>
 
@@ -246,6 +246,12 @@ export default {
         reportStore.index(val);
         console.log(val);
       },
+      format:(time)=>{
+        if(time){
+         return formatTime(time,'LT') 
+        }
+        return null
+      }
     };
   },
 };

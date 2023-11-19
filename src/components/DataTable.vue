@@ -22,6 +22,7 @@
       :columns="columns"
       row-key="name"
       :rows-per-page-options="[0]"
+      :filter='filter'
 
     >
       <!-- <slot v-for="cell in cells" :key="cell" name="cell"></slot> -->
@@ -52,7 +53,7 @@
 
 export default {
   components:{},
-  props: ["rows", "columns", "title", "cells", "paginationLinks",'onChangePage'],
+  props: ["rows", "columns", "title", "cells", "paginationLinks",'onChangePage','filter'],
 
   setup() {
 
