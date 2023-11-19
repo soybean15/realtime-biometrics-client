@@ -12,6 +12,7 @@
       'department',
     ]"
 
+    :filter="search"
    
     
     v-if="data['employees']"
@@ -124,15 +125,16 @@
         </div>
 
         <div class="row items-center">
-          <SearchBar class="px-2" @search="search" />
+          <!-- <SearchBar class="px-2" @search="search" /> -->
           <CreateEditEmployeeModal :title="'Add New Employees'">
           </CreateEditEmployeeModal>
           <ArchiveModal />
         </div>
       </div>
 
-      <div class="row items-center">
-        <span class="pr-3">Filter :</span>
+      <div class="row items-center  w-full justify-between">
+        <div class="row  items-center">
+          <span class="pr-3">Filter :</span>
         <SelectView
           class="m-2 ml-0"
           :data="departments"
@@ -146,6 +148,17 @@
           :label="'Position'"
           @onChange="filter($event, 'positions')"
         />
+        </div>
+
+        <div>
+          <q-input outlined label="Search" dense v-model="search" >
+        <template v-slot:append>
+          <q-icon name="search" />
+        </template>
+      </q-input>
+         
+        </div>
+        
       </div>
     </template>
   </DataTable>
@@ -156,7 +169,7 @@ import DataTable from "@/components/DataTable.vue";
 import CreateEditEmployeeModal from "../modals/CreateEditEmployeeModal.vue";
 import ArchiveModal from "../modals/ArchiveModal.vue";
 import { useEmployeeStore } from "@/store/employee";
-import SearchBar from "@/components/SearchBar.vue";
+// import SearchBar from "@/components/SearchBar.vue";
 import { onMounted, ref } from "vue";
 import { storeToRefs } from "pinia";
 import SelectView from "@/components/SelectView.vue";
@@ -221,7 +234,7 @@ const columns = [
 export default {
   components: {
     DataTable,
-    SearchBar,
+   
     CreateEditEmployeeModal,
     ArchiveModal,
     SelectView,
@@ -268,13 +281,14 @@ export default {
           store.filter(attribute, val.id);
         }
       },
-      search: (val) => {
-        store.search(val);
-      },
+      // search: (val) => {
+      //   store.search(val);
+      // },
       paginate:(val)=>{
         store.paginate('employees',val)
 
-      }
+      },
+      search:ref('')
     };
   },
 };

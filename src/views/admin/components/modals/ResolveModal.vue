@@ -43,7 +43,7 @@
             <q-btn @click="resolve" label="Submit" color="secondary"  />
         </div>
 
-
+        {{row}}
           
         </q-card-section>
 
@@ -97,7 +97,8 @@ export default {
         const date  = row.value.date
 
         await attendanceStore.resolve(
-            row.value.employee_id,
+            row.value.id,
+           row.value.employee_id,
             status.value,
             `${date} ${time.value}`
         )
