@@ -43,8 +43,7 @@
             <q-btn @click="resolve" label="Submit" color="secondary"  />
         </div>
 
-        {{row}}
-          
+  
         </q-card-section>
 
         <q-card-actions align="right" class="bg-white text-teal">
