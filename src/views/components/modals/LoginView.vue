@@ -44,7 +44,7 @@
               (val) => isPasswordValid(val),
             ]"
           />
-        <div class="hover:underline hover:cursor-pointer">   <router-link   :to="{name:'forgotPassword'}"> Forgot Password </router-link></div>
+        <!-- <div class="hover:underline hover:cursor-pointer">   <router-link   :to="{name:'forgotPassword'}"> Forgot Password </router-link></div> -->
 
 
           <div class="row justify-center">

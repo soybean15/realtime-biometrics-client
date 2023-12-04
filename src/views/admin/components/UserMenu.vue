@@ -1,27 +1,32 @@
 <template>
   <q-btn flat color="white" :label="user.name">
-    <q-menu transition-show="jump-down" transition-hide="jump-up">
+    <q-menu transition-show="jump-down" transition-hide="jump-up" style="width: 300px;">
       <div class="p-5">
-        <q-form @submit="store.updateProfileInfo(current_password,password)">
-          <q-input dense v-model="user.name" label="Name" />
 
-          <q-input dense v-model="user.email" label="Email" />
+        <q-form @submit="updateUser">
+          <div class="text-red-400 py-1" v-if="errors.name"> {{errors.name[0]}}</div>
+          <q-input  v-model="user.name" label="Name" />
 
+          <div class="text-red-400 py-1" v-if="errors.email"> {{errors.email[0]}}</div>
+          <q-input  v-model="user.email" label="Email" />
+
+          <div class="text-red-400 py-1" v-if="errors.password"> {{errors.password[0]}}</div>
           <q-input
             type="password"
-            dense
+            
             v-model="current_password"
             label="Current Password"
           />
 
+          
           <q-input
             type="password"
-            dense
+            
             v-model="password"
             label="New Password"
           />
 
-          <q-btn type="submit" color="secondary" label="Submit" />
+          <q-btn class="my-1" type="submit" color="secondary" label="Submit" />
         </q-form>
       </div>
 
@@ -68,13 +73,18 @@ export default {
     const current_password = ref(null);
     const password = ref("");
 
-    const { user } = storeToRefs(store);
+
+    const { user,errors } = storeToRefs(store);
 
     return {
       user,
       current_password,
       password,
-      store
+      store,
+      errors,
+      updateUser:()=>{
+        store.updateProfileInfo(current_password.value,password.value)
+      }
     };
   },
 };

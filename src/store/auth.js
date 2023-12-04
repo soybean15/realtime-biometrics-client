@@ -68,6 +68,7 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
 
+
     const login = async (close) => {
 
         errors.value = []
@@ -154,17 +155,27 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     const updateProfileInfo= async(current_password, password)=>{
-        await axios.put('user/profile-information',{
-            name: user.value.name,
-            email: user.value.email
-        })
 
+        try{
 
-        await axios.put ('user/password',{
-            current_password:current_password,
-            password_confirmation:password,
-            password:password
-        })
+            await axios.put('user/profile-information',{
+                name: user.value.name,
+                email: user.value.email
+            })
+    
+    
+            await axios.put ('user/password',{
+                current_password:current_password,
+                password_confirmation:password,
+                password:password
+            })
+        }catch(error){
+
+            if(error.response.status === 422){
+                errors.value = error.response.data.errors
+            }
+        }
+
     }
 
 
