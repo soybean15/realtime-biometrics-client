@@ -30,6 +30,12 @@ const routes = [
         component: () => import('@/views/components/ErrorView.vue'), 
       },
 
+      {
+        path: '/forgot-password', 
+        name: 'forgotPassword',
+        component: () => import('@/views/ForgotPassword.vue'), 
+      },
+
     ],
     
   },
