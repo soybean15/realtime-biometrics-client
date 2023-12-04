@@ -30,12 +30,19 @@ const routes = [
         component: () => import('@/views/components/ErrorView.vue'), 
       },
 
+      {
+        path: '/forgot-password', 
+        name: 'forgotPassword',
+        component: () => import('@/views/ForgotPassword.vue'), 
+      },
+
     ],
     
   },
   {
     path: '/admin',
     name: 'admin',
+    redirect:{name:'dashboard'},
     component: () => import( '@/views/admin/AdminView'),
     beforeEnter: async (to, from, next) => {
       const store = useAuthStore()

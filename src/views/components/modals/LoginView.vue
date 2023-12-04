@@ -44,6 +44,7 @@
               (val) => isPasswordValid(val),
             ]"
           />
+        <!-- <div class="hover:underline hover:cursor-pointer">   <router-link   :to="{name:'forgotPassword'}"> Forgot Password </router-link></div> -->
 
 
           <div class="row justify-center">
@@ -107,8 +108,8 @@ export default {
         loading.value = true;
 
         try {
-          const delayDuration = 2000;
-          await new Promise((resolve) => setTimeout(resolve, delayDuration));
+         // const delayDuration = 2000;
+       //   await new Promise((resolve) => setTimeout(resolve, delayDuration));
           await store.login(close);
           loading.value = false;
         } catch (error) {
