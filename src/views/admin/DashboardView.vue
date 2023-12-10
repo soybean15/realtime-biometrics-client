@@ -108,6 +108,14 @@
           </StatView>
         </div>
         <div class="p-3 bg-surface my-2 shadow-md rounded-md">
+        <NotificationPanel/>
+
+        </div>
+       
+      </div>
+
+      <div class="col-5 p-2 rounded-md">
+        <div class="p-3 bg-surface my-2 shadow-md rounded-md">
           <bar-chart
             :title="'Attendance Rate'"
             :seriesProps="series.series"
@@ -124,11 +132,8 @@
             v-if="pieChartOption"
           />
         </div>
-      </div>
-
-      <div class="col-5 p-2 rounded-md">
         
-        <NotificationPanel/>
+       
       </div>
     </div>
   </div>

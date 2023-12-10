@@ -87,6 +87,14 @@ export const useAttendanceStore = defineStore('attendance', () => {
 
     }
 
+    const generateAllPDF=async()=>{
+        await axios.get('api/admin/employee/pdf/all')
+
+
+
+
+    }
+
 
 
     return {
@@ -99,7 +107,8 @@ export const useAttendanceStore = defineStore('attendance', () => {
         getAttendanceSummary,
         summary,
         generatePDF,
-        pdfFile
+        pdfFile,
+        generateAllPDF
     }
 
 })

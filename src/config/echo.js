@@ -4,7 +4,6 @@ import Echo from 'laravel-echo'
 
 
 
-
 Pusher.logToConsole = false
 
 console.log(process.env.VUE_APP_PUSHER_APP_KEY)
