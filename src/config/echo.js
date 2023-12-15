@@ -4,7 +4,7 @@ import Echo from 'laravel-echo'
 
 
 
-Pusher.logToConsole = false
+Pusher.logToConsole = true
 
 console.log(process.env.VUE_APP_PUSHER_APP_KEY)
 window.echo = new Echo({

@@ -13,7 +13,7 @@
       :options="positionOptions"
       option-label="name"
       @filter="filterPosition"
-      hint="Basic filtering"
+     
     >
       <template v-slot:no-option>
         <q-item>
@@ -23,7 +23,7 @@
     </q-select>
   </div>
 
-  <div class="q-gutter-md">
+  <div class="q-gutter-md my-5">
     <span>Select Position</span>
     <q-select
       outlined
@@ -35,7 +35,7 @@
       :options="departmentOptions"
       option-label="name"
       @filter="filterDepartment"
-      hint="Basic filtering"
+    
     >
       <template v-slot:no-option>
         <q-item>

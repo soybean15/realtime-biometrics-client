@@ -12,7 +12,7 @@
         <q-item-section>
           <q-item-label lines="1">        
             {{ item.employee.full_name }}
-            <span class="text-green">(Time in)</span>
+            <span class="text-green">{{item.type}}</span>
           </q-item-label>
           <q-item-label caption lines="2">
           
