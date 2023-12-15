@@ -8,6 +8,7 @@ export const useDepartmentStore = defineStore('department', () => {
     const departmentForm = ref({
         name: null,
     })
+    const department = ref(null)//dont remove
 
     const errors = ref([])
     const status = ref(null)
@@ -98,6 +99,7 @@ export const useDepartmentStore = defineStore('department', () => {
         addDepartment,
         errors,
         departmentForm,
+        department,
         destroy,
         resetStatus,
         update,

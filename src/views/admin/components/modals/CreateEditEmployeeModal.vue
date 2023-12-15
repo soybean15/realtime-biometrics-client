@@ -45,6 +45,7 @@
           :done="step > 2"
         >
           <PositionAndDepartmentStep />
+         
         </q-step>
 
         <q-step :name="3" title="Summary" icon="add_comment">

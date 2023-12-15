@@ -9,6 +9,7 @@ export const usePositionStore = defineStore('position', () => {
     const status =ref(null)
 
 
+    const position =ref(null)//dont remove
     const positionForm = ref({
         name: null,
     })
@@ -95,6 +96,7 @@ export const usePositionStore = defineStore('position', () => {
         addPosition,
         positionForm,
         errors,
+        position,
         status,
         search,
         update,
