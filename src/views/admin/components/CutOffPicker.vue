@@ -46,7 +46,7 @@ const generateCutOffs = () => {
     const adjusted1 = date.adjustDate(newDate, { month: month, date: 16 });
     const adjusted2 = date.adjustDate(newDate, { month: month, date: 1 });
 
-    if(day>16){
+    if(day>15){
       let cutOff1 = {
       label: monthString + " 16-" + daysInMonth,
       value: date.formatDate(adjusted1, "YYYY-MM-DD"),
@@ -77,6 +77,7 @@ export default {
       onItemClick(val) {
     
         label.value = val.label;
+      //  console.log(val.value)
         emit('onSelect',val.value)
       },
       label,

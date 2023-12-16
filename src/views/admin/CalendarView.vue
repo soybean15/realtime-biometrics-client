@@ -111,12 +111,12 @@ export default {
     // const formattedString = date.formatDate(current, "YYYY/MM/DD");
      const calendarStore = useCalendarStore();
     // const dateModel = ref(formattedString);
-    const { holidays, dateModel } = storeToRefs(calendarStore);
-    const keys = ref([]);
+    const { holidays, dateModel,keys } = storeToRefs(calendarStore);
+    //const keys = ref([]);
 
     onMounted(async () => {
       await calendarStore.index();
-      keys.value = Object.keys(holidays.value);
+    
     });
 
     return {

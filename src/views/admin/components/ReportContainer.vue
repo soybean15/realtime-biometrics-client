@@ -39,15 +39,24 @@
                 :helperText="`${report[0].lates}% of ${report[0].present} attendees`"
               />
 
-              <stat-view
-                class="m-0.5"
+
+              <ReportModal class="m-0.5 " :employees="report.absent_employee">
+                <template #open-button="{open}">
+                  <stat-view
+                  @click="open"
+                class="h-full cursor-pointer"
                 :backgroundColor="'bg-onSurface'"
                 :title="{
                   value: 'Absents',
                   properties: 'text-red font-bold',
                 }"
-                :value="`${report[0].absents}`"
+                :value="`${report.absent_employee.length}`"
               />
+                </template>
+          
+
+              </ReportModal>
+            
 
 
             
@@ -206,6 +215,7 @@ import ReportByCutOff from "./tables/ReportByCutOff.vue";
 import StatView from "@/components/StatView.vue";
 
 import ReportByMonth from "./tables/ReportByMonth.vue";
+import ReportModal from "@/components/ReportModal.vue";
 
 export default {
   components: {
@@ -214,7 +224,8 @@ export default {
     ReportByCutOff,
     ReportByMonth,
     StatView,
-  },
+    ReportModal
+},
 
   setup() {
     const reportStore = useReportStore();

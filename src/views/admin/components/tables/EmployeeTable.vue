@@ -132,7 +132,7 @@
 
           <ArchiveModal />
 
-          <q-btn @click="attendanceStore.generateAllPDF()" label="Print Attendance" />
+     
         </div>
       </div>
 
@@ -179,7 +179,7 @@ import { storeToRefs } from "pinia";
 import SelectView from "@/components/SelectView.vue";
 import { useDepartmentStore } from "@/store/department";
 import { usePositionStore } from "@/store/position";
-import { useAttendanceStore } from '@/store/attendance';
+
 const columns = [
   {
     name: "employee_id",
@@ -246,7 +246,7 @@ export default {
   },
   setup() {
     const store = useEmployeeStore();
-    const attendanceStore = useAttendanceStore()
+    
 
     const departmentStore = useDepartmentStore();
     const positionStore = usePositionStore();
@@ -295,7 +295,7 @@ export default {
 
       },
       search:ref('') ,
-      attendanceStore
+      
     };
   },
 };

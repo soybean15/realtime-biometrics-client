@@ -1,9 +1,14 @@
 <template>
   <div class="column p-5">
     <div  >
-      <div class="text-4xl font-thin">Dashboard</div>
+      <div class="text-4xl w-full justify-between row font-thin">Dashboard
+
+
+        <DistributePDF/>
+      </div>
 
       <div class="text-md font-secondary">Welcome back, {{ user.name }}</div>
+     
     </div>
 
     <div class="row">
@@ -152,13 +157,13 @@ import generateBarChartData from "@/composables/barChart";
 import generatePieChartData from "@/composables/pieChart";
 import { date } from "quasar";
 import NotificationPanel from './components/NotificationPanel.vue';
-
+import DistributePDF from "./components/modals/DistributePDF.vue";
 export default {
   components: {
     BarChart,
     StatView,
     PieChart,
-    NotificationPanel
+    NotificationPanel,DistributePDF
   },
   setup() {
     const dashboardStore = useDashboardStore();

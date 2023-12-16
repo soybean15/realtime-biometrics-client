@@ -31,7 +31,7 @@ export const useEmployeeStore = defineStore('employee', () => {
         email: '',
         department_id: null,
         position_id: null,
-        user_id: user.value ===null ? null :user.value.id
+         user_id: user.value ===null ? null :user.value.id
     })
 
     const selectedEmployee = ref(null)

@@ -26,9 +26,7 @@
 
           <q-separator />
 
-          <q-item :to="{ name: 'settings' }" clickable>
-            <q-item-section>Settings</q-item-section>
-          </q-item>
+          
           <q-item clickable v-close-popup>
             <q-item-section>Help</q-item-section>
           </q-item>
@@ -39,9 +37,7 @@
       View
       <q-menu>
         <q-list dense style="min-width: 200px">
-          <q-item clickable v-close-popup>
-            <q-item-section>Side Panel</q-item-section>
-          </q-item>
+        
           <q-item clickable v-close-popup>
             <q-item-section>Show Lates</q-item-section>
           </q-item>
