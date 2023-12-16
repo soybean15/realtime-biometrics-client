@@ -19,6 +19,12 @@
       :columns="columns"
       row-key="name"
     >
+    <template #top-left>
+<CutOffPicker @onSelect="onSelectCutOff"/>
+    </template>
+    <template #top-right>
+<PDFViewer/>
+    </template>
       <template #body="props">
         <q-tr :props="props" :class="getColor(props.row)">
           <q-td key="date" :props="props">
@@ -87,8 +93,8 @@ import getChipColor from "@/composables/chipColor";
 import { useAttendanceStore } from "@/store/attendance";
 import {useResolveStore} from '@/store/resolve'
 import ResolveModal from '../modals/ResolveModal.vue';
-// import PDFViewer from '../modals/PDFViewer.vue';
-// import CutOffPicker from '../CutOffPicker.vue';
+ import PDFViewer from '../modals/PDFViewer.vue';
+ import CutOffPicker from '../CutOffPicker.vue';
 const format = (val, format) => {
   if (format) {
     return formatTime(val, format);
@@ -157,14 +163,14 @@ const columns = [
   },
 ];
 export default {
-  components: {ResolveModal},
+  components: {ResolveModal,CutOffPicker,PDFViewer},
   setup() {
     const attendanceStore = useAttendanceStore();
     const resolveStore  =useResolveStore()
 
     const {dialog, status,title,row} = storeToRefs(resolveStore)
 
-    const { employeeAttendance } = storeToRefs(attendanceStore);
+    const { employeeAttendance,date } = storeToRefs(attendanceStore);
 
     onMounted(() => {
       attendanceStore.getAttendanceByCuOff();
@@ -179,6 +185,7 @@ export default {
       getChipColor,
 
       onSelectCutOff: (val) => {
+        date.value=val
         attendanceStore.getAttendanceByCuOff(val);
       },
       getColor: (row) => {

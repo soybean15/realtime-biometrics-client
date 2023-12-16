@@ -21,7 +21,7 @@
       <!-- <q-btn @click="attendanceStore.generatePDF('download')" color="secondary" label="Download"/> -->
     </template>
     <template v-slot:open-button="{ open }">
-      <q-btn @click="open" color="secondary" label="Print" />
+      <q-btn @click="openModal(open)" color="secondary" label="Print" />
     </template>
 
     <template v-slot:content>
@@ -44,7 +44,7 @@ export default {
     const { pdfFile } = storeToRefs(attendanceStore);
 
     onMounted(() => {
-      attendanceStore.generatePDF("stream");
+      attendanceStore.generatePDF();
     });
 
     return {
@@ -61,6 +61,10 @@ export default {
 
      
       },
+      openModal:(open)=>{
+        open()
+        attendanceStore.generatePDF();
+      }
     };
   },
 };
