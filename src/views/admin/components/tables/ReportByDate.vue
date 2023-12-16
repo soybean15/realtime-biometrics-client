@@ -151,21 +151,21 @@
         </q-td>
 
         <q-td key="time_in" :props="props">
-          <q-badge :color="props.row.late? 'orange':'green'">
-            {{ format(props.row.break_out)??'N/A' }}
+          <q-badge :color="props.row.time_in==null ?'red': props.row.late? 'orange':'green'">
+            {{ format(props.row.time_in)??'N/A' }}
           </q-badge>
         </q-td>
 
 
 
         <q-td key="break_out" :props="props">
-          <q-badge :color="props.row.late? 'orange':'green'">
+          <q-badge :color="props.row.time_in==null ?'red': props.row.late? 'orange':'green'">
             {{format(props.row.break_out)??'N/A' }}
           </q-badge>
         </q-td>
 
         <q-td key="break_in" :props="props">
-          <q-badge :color="props.row.late? 'orange':'green'">
+          <q-badge :color="props.row.time_in==null ?'red': props.row.late? 'orange':'green'">
             {{ format(props.row.break_in) ?? 'N/A' }}
           </q-badge>
         </q-td>
@@ -173,7 +173,7 @@
 
 
         <q-td key="time_out" :props="props">
-          <q-badge :color="props.row.late? 'orange':'green'">
+          <q-badge :color="props.row.time_in==null ?'red': props.row.late? 'orange':'green'">
             {{ format(props.row.time_out)??'N/A'}}
           </q-badge>
         </q-td>
@@ -197,6 +197,7 @@ const columns = [
     required: true,
     field: (row) => row.full_name,
     align: "left",
+    sortable:true
   },
   {
     name: "time_in",

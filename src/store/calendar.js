@@ -16,13 +16,14 @@ export const useCalendarStore = defineStore('calendar', () => {
 
     const current = Date.now();
     const formattedString = date.formatDate(current, "YYYY/MM/DD");
-
+    const keys = ref([]);
     const dateModel = ref(formattedString)
     const errors = ref(null)
     const index = async () => {
 
         const response = await axios.get('api/admin/holiday')
         holidays.value = response.data.holidays
+        keys.value = Object.keys(holidays.value);
     }
 
     const addEvent = async () => {
@@ -30,7 +31,7 @@ export const useCalendarStore = defineStore('calendar', () => {
         try {
             await axios.post('api/admin/holiday/store', eventForm.value)
 
-            await index()
+             index()
 
         } catch (e) {
             if(e.response.status === 422){
@@ -46,6 +47,7 @@ export const useCalendarStore = defineStore('calendar', () => {
             id: event.id,
             date: date
         })
+         index()
 
     }
 
@@ -58,6 +60,6 @@ export const useCalendarStore = defineStore('calendar', () => {
         eventForm,
         addEvent,
         moveEvent,
-        dateModel
+        dateModel,keys
     }
 })
