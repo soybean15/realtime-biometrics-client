@@ -74,6 +74,7 @@ export default {
           "http://localhost:8000"
         );
       attendanceList.value.unshift(response.attendance);
+      console.log(response);
     });
 
     return {

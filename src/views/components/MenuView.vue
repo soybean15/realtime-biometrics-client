@@ -100,7 +100,7 @@ export default {
         zk.value = false
       }
       
-      console.log(response);
+      
     });
     return {
       user,
