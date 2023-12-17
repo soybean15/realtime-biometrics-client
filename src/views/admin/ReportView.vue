@@ -7,9 +7,6 @@
       
       <report-container class="" />
 
-    
-
-
 
     </div>
    

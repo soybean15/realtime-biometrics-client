@@ -84,6 +84,7 @@ export default {
       errors,
       updateUser:()=>{
         store.updateProfileInfo(current_password.value,password.value)
+        current_password.value = ""
       }
     };
   },

@@ -38,9 +38,7 @@
       <q-menu>
         <q-list dense style="min-width: 200px">
         
-          <q-item clickable v-close-popup>
-            <q-item-section>Show Lates</q-item-section>
-          </q-item>
+       
           <q-item   @click="zkStore.enableRealtimeUpdate(zk.config.isLive)" clickable v-if="zk">
             <q-item-section >
               <div class="row items-center justify-between">

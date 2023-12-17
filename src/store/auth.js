@@ -12,10 +12,6 @@ export const useAuthStore = defineStore('auth', () => {
     const users = ref(null)
 
 
-
-
-
-
     const loginForm = ref({
         email: '',
         password: ''
@@ -169,6 +165,7 @@ export const useAuthStore = defineStore('auth', () => {
                 password_confirmation:password,
                 password:password
             })
+            errors.value = []
         }catch(error){
 
             if(error.response.status === 422){
