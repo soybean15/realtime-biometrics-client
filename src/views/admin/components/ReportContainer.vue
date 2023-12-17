@@ -28,39 +28,36 @@
                 :helperText="`${report[0].present_percentage}% attendees`"
               />
 
-              <stat-view
-                class="m-0.5"
-                :backgroundColor="'bg-onSurface'"
-                :title="{
-                  value: 'Lates',
-                  properties: 'text-orange font-bold',
-                }"
-                :value="`${report[0].lates}`"
-                :helperText="`${report[0].lates}% of ${report[0].present} attendees`"
-              />
-
-
-              <ReportModal class="m-0.5 " :employees="report.absent_employee">
-                <template #open-button="{open}">
+              <ReportModal title="Lates" class="m-0.5" :employees="report.late_employee">
+                <template #open-button="{ open }">
                   <stat-view
-                  @click="open"
-                class="h-full cursor-pointer"
-                :backgroundColor="'bg-onSurface'"
-                :title="{
-                  value: 'Absents',
-                  properties: 'text-red font-bold',
-                }"
-                :value="`${report.absent_employee.length}`"
-              />
+                    @click="open"
+                    class=""
+                    :backgroundColor="'bg-onSurface'"
+                    :title="{
+                      value: 'Lates',
+                      properties: 'text-orange font-bold',
+                    }"
+                    :value="`${report[0].lates}`"
+                    :helperText="`${report[0].lates}% of ${report[0].present} attendees`"
+                  />
                 </template>
-          
-
               </ReportModal>
-            
 
-
-            
-  
+              <ReportModal title="Absents" class="m-0.5" :employees="report.absent_employee">
+                <template #open-button="{ open }">
+                  <stat-view
+                    @click="open"
+                    class="h-full cursor-pointer"
+                    :backgroundColor="'bg-onSurface'"
+                    :title="{
+                      value: 'Absents',
+                      properties: 'text-red font-bold',
+                    }"
+                    :value="`${report.absent_employee.length}`"
+                  />
+                </template>
+              </ReportModal>
             </div>
           </StatContainer>
         </div>
@@ -72,9 +69,6 @@
 
           <stat-container>
             <div class="row rounded-md" v-if="reports">
-
-
-
               <stat-view
                 class="m-0.5"
                 :backgroundColor="'bg-onSurface'"
@@ -82,7 +76,6 @@
                   value: 'Active Employees',
                   properties: 'text-primary font-bold',
                 }"
-             
                 :value="reports.total_employee"
               />
 
@@ -95,25 +88,26 @@
                 }"
                 :value="`${reports.working_days}`"
               >
+                <template v-slot:helper>
+                  <div class="column text-xs">
+                    <div class="">
+                      <span class="font-secondary pr-2">
+                        Attendance Rate %</span
+                      >
+                      <span class="text-green">
+                        {{ (100 - reports.absentee_rate).toFixed(2) }}%</span
+                      >
+                    </div>
 
-              <template v-slot:helper>
-                <div class="column text-xs ">
-                  <div class="">
-                    <span class="font-secondary  pr-2 "> Attendance Rate %</span> 
-                    <span class="text-green">   {{ (100 - reports.absentee_rate).toFixed(2) }}%</span>
+                    <div>
+                      <span class="font-secondary pr-2"> Absentee Rate %</span>
+                      <span class="text-red">
+                        {{ reports.absentee_rate.toFixed(2) }}%</span
+                      >
+                    </div>
                   </div>
-
-                 <div>
-                    <span class="font-secondary  pr-2"> Absentee Rate %</span> 
-                    <span class="text-red"> {{(reports.absentee_rate).toFixed(2)}}%</span>
-                  </div>
-
-                </div>
-
-              </template>
+                </template>
               </stat-view>
-
-
 
               <stat-view
                 class="m-0.5"
@@ -122,14 +116,12 @@
                   value: 'Total Lates',
                   properties: 'text-orange font-bold',
                 }"
-             
                 :value="reports.total_lates"
-                :helperText="`${((reports.total_lates/reports.total_attendance)*100).toFixed(2)}% late percentage`"
+                :helperText="`${(
+                  (reports.total_lates / reports.total_attendance) *
+                  100
+                ).toFixed(2)}% late percentage`"
               />
-            
-
-              
-
             </div>
           </stat-container>
         </div>
@@ -141,9 +133,6 @@
 
           <stat-container>
             <div class="row rounded-md" v-if="reports">
-
-
-
               <stat-view
                 class="m-0.5"
                 :backgroundColor="'bg-onSurface'"
@@ -151,7 +140,6 @@
                   value: 'Active Employees',
                   properties: 'text-primary font-bold',
                 }"
-             
                 :value="reports.total_employee"
               />
 
@@ -164,24 +152,26 @@
                 }"
                 :value="`${reports.working_days}`"
               >
+                <template v-slot:helper>
+                  <div class="column text-xs">
+                    <div class="">
+                      <span class="font-secondary pr-2">
+                        Attendance Rate %</span
+                      >
+                      <span class="text-green">
+                        {{ (100 - reports.absentee_rate).toFixed(2) }}%</span
+                      >
+                    </div>
 
-              <template v-slot:helper>
-                <div class="column text-xs ">
-                  <div class="">
-                    <span class="font-secondary  pr-2 "> Attendance Rate %</span> 
-                    <span class="text-green">   {{ (100 - reports.absentee_rate).toFixed(2) }}%</span>
+                    <div>
+                      <span class="font-secondary pr-2"> Absentee Rate %</span>
+                      <span class="text-red">
+                        {{ reports.absentee_rate.toFixed(2) }}%</span
+                      >
+                    </div>
                   </div>
-
-                 <div>
-                    <span class="font-secondary  pr-2"> Absentee Rate %</span> 
-                    <span class="text-red"> {{(reports.absentee_rate).toFixed(2)}}%</span>
-                  </div>
-
-                </div>
-
-              </template>
+                </template>
               </stat-view>
-
 
               <stat-view
                 class="m-0.5"
@@ -190,16 +180,14 @@
                   value: 'Total lates',
                   properties: 'text-orange font-bold',
                 }"
-             
                 :value="reports.total_lates"
-                :helperText="`${((reports.total_lates/reports.total_attendance)*100).toFixed(2)}% late percentage`"
+                :helperText="`${(
+                  (reports.total_lates / reports.total_attendance) *
+                  100
+                ).toFixed(2)}% late percentage`"
               />
-
-              
-
             </div>
           </stat-container>
-          
         </div>
       </q-tab-panel>
     </q-tab-panels>
@@ -224,19 +212,18 @@ export default {
     ReportByCutOff,
     ReportByMonth,
     StatView,
-    ReportModal
-},
+    ReportModal,
+  },
 
   setup() {
     const reportStore = useReportStore();
 
-    const { tab, report,reports } = storeToRefs(reportStore);
+    const { tab, report, reports } = storeToRefs(reportStore);
 
     return {
       tab,
       report,
       reports,
-      
     };
   },
 };

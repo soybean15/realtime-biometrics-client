@@ -10,7 +10,7 @@
 
     <template #title>
 
-        Absents
+        {{title}}
     </template>
     <template #content>
        <div>
@@ -44,7 +44,7 @@
 import PersistentDialog from './PersistentDialog.vue'
 export default {
   components: { PersistentDialog },
-  props:['employees']
+  props:['employees','title']
 
 }
 </script>
